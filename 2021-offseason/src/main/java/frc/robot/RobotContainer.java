@@ -45,8 +45,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller, XboxController.Button.kA.value).whenPressed(new RunCommand(s_intake::startIntake, s_intake)).whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
-    new JoystickButton(controller, XboxController.Button.kY.value).whenPressed(new RunCommand(s_intake::startInverted, s_intake)).whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); }
+    new JoystickButton(controller, XboxController.Button.kA.value)
+    .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
+    .whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
+    new JoystickButton(controller, XboxController.Button.kY.value)
+    .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
+    .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

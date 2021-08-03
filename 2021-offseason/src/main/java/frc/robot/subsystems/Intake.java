@@ -12,18 +12,17 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
 
-  private TalonSRX intake;
-  private DoubleSolenoid pnuematic;
+  private TalonSRX intakeTalon;
+  private DoubleSolenoid solenoid;
 
   public Intake() {
-    intake = new TalonSRX(0);
-    intake.setInverted(false);
-    pnuematic = new DoubleSolenoid(Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
+    intakeTalon = new TalonSRX(0);
+    intakeTalon.setInverted(false);
+    solenoid = new DoubleSolenoid(Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
 
-    pnuematic.set(DoubleSolenoid.Value.kOff);
-    pnuematic.set(DoubleSolenoid.Value.kForward);
+    solenoid.set(DoubleSolenoid.Value.kOff);
+    solenoid.set(DoubleSolenoid.Value.kForward);
   }
 
   @Override
@@ -37,13 +36,13 @@ public class Intake extends SubsystemBase {
   }  
 
   public void startIntake() {
-    intake.set(ControlMode.PercentOutput, Constants.kIntake.INTAKE_SPEED);
+    intakeTalon.set(ControlMode.PercentOutput, Constants.kIntake.INTAKE_SPEED);
   }
   public void stopIntake() {
-    intake.set(ControlMode.PercentOutput, 0);
+    intakeTalon.set(ControlMode.PercentOutput, 0);
   }
-  public void startInverted() {
-    intake.set(ControlMode.PercentOutput, -Constants.kIntake.INTAKE_SPEED);
+  public void startReverse() {
+    intakeTalon.set(ControlMode.PercentOutput, -Constants.kIntake.INTAKE_SPEED);
   }
 
 }
