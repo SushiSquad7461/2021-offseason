@@ -8,7 +8,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,8 +27,13 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  private final XboxController controller = new XboxController(Constants.kOI.CONTROLLER_PORT);
+
+  private final Intake s_intake;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    s_intake = new Intake();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -34,7 +44,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    new JoystickButton(controller, XboxController.Button.kA.value).whenPressed(new RunCommand(s_intake::startIntake, s_intake)).whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
+    new JoystickButton(controller, XboxController.Button.kY.value).whenPressed(new RunCommand(s_intake::startInverted, s_intake)).whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
