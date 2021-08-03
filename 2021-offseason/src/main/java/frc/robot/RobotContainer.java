@@ -33,10 +33,20 @@ public class RobotContainer {
   //Operator Controller
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
+  private final Drivetrain s_Drivetrain;
+
+  private static final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
+  
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_intake = new Intake();
+
+    s_Drivetrain = new Drivetrain();
     // Configure the button bindings
+    s_Drivetrain.setDefaultCommand(new RunCommand(
+      () -> s_Drivetrain.curveDrive(OI.getTriggers(driveController), OI.getLeftStick(driveController), driveController.getXButton()), s_Drivetrain
+      ));
     configureButtonBindings();
   }
 
@@ -75,6 +85,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_autoCommand; 
   }
 }

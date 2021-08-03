@@ -49,4 +49,8 @@ public final class Constants {
         public static final int OPEN_LOOP_RAMP = 0;
         public static final double SLOW_SPEED = 0.1;
     }
+    public static final class kOI{//koi fish 
+        public static final int DRIVE_CONTROLLER = 0;
+        //public static final int OPERATOR_CONTROLLER = 0;
+    }
 }
