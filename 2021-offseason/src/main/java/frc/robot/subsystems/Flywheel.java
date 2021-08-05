@@ -42,6 +42,7 @@ public class Flywheel extends SubsystemBase {
       Constants.kFlywheel.kA
     );
     
+    //basic configuring
     flywheelMain.restoreFactoryDefaults();
     flywheelFollower.restoreFactoryDefaults();
     
@@ -52,7 +53,7 @@ public class Flywheel extends SubsystemBase {
     flywheelFollower.setInverted(Constants.kFlywheel.FOLLOWER_INVERTED);
     flywheelFollower.follow(flywheelMain, true);
 
-    pidController.setTolerance(Constants.kFlywheel.ERR_TOLERANCE);
+    pidController.setTolerance(0,Constants.kFlywheel.ERR_TOLERANCE);
 
   }
 
@@ -66,9 +67,19 @@ public class Flywheel extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
+  //will automatically be called periodically
+  protected void useOutput(double output, TrapezoidProfile.State setpoint){
+    double fForward = feedForward.calculate(setpoint.position, setpoint.velocity)/12;
+    flywheelMain.set(output+fForward);
+
+  }
+
   protected double getMeasurement(){
     return flywheelMain.getEncoder().getVelocity();
   }
 
-  
+  public void setGoal(double goal){
+    pidController.setGoal(goal);
+  }
+
 }
