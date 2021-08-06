@@ -30,13 +30,13 @@ public class Hopper extends SubsystemBase {
 
   public void moveForward(){
     left.set(ControlMode.PercentOutput, Constants.kHopper.FORWARD_SPEED);
-    right.set(ControlMode.PercentOutput, Constants.kHopper.FORWARD_SPEED);
-    kicker.set(ControlMode.PercentOutput, Constants.kHopper.FORWARD_SPEED);
   }
 
   public void moveBackward(){
     left.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
-    right.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
-    kicker.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
+  }
+
+  public void stop(){
+    left.set(ControlMode.PercentOutput, 0);
   }
 }

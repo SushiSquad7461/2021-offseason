@@ -21,4 +21,10 @@ public final class Constants {
         public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
         public static final boolean INVERTED = false;
     }
+
+    public static final class kOI{
+        public static final int DRIVE_CONTROLLER = 0;
+        public static final int OPERATOR_CONTROLLER = 1;
+    }
 }
+
