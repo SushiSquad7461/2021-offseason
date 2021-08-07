@@ -27,8 +27,8 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
-  XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
+  private XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
+  private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

@@ -13,7 +13,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class kHopper{
+    public static final class kHopper {
         public static final int LEFT_ID = 0;
         public static final int RIGHT_ID = 0;
         public static final int KICKER_ID = 0;
@@ -22,7 +22,7 @@ public final class Constants {
         public static final boolean INVERTED = false;
     }
 
-    public static final class kOI{
+    public static final class kOI {
         public static final int DRIVE_CONTROLLER = 0;
         public static final int OPERATOR_CONTROLLER = 1;
     }

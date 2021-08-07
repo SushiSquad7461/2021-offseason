@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Hopper extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
   private final VictorSPX left, right, kicker;
   
   public Hopper() {
@@ -28,15 +27,19 @@ public class Hopper extends SubsystemBase {
     kicker.setInverted(Constants.kHopper.INVERTED);
   }
 
-  public void moveForward(){
-    left.set(ControlMode.PercentOutput, Constants.kHopper.FORWARD_SPEED);
+  public void moveForward() {
+    moveMotor(Constants.kHopper.FORWARD_SPEED);
   }
 
-  public void moveBackward(){
-    left.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
+  public void moveBackward() {
+    moveMotor(Constants.kHopper.REVERSE_SPEED);
   }
 
-  public void stop(){
-    left.set(ControlMode.PercentOutput, 0);
+  public void stop() {
+    moveMotor(0);
+  }
+
+  public void moveMotor(double velocity) {
+    left.set(ControlMode.PercentOutput, velocity);
   }
 }
