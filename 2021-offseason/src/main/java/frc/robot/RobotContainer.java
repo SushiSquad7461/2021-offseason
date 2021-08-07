@@ -6,12 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Hopper;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,11 +27,15 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
+  //Intake 
+  private final Intake s_intake;
+
+  //Operator Controller
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    s_intake = new Intake();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -42,7 +46,19 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
+  //Assign operator controller buttons A and Y to startIntake and startReverse respectively
   private void configureButtonBindings() {
+    // A button -> run intake forward
+    new JoystickButton(operatorController, XboxController.Button.kA.value)
+        .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
+        .whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
+
+    // B button -> run intake reverse
+    new JoystickButton(operatorController, XboxController.Button.kB.value)
+      .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
+      .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
+
     new JoystickButton(operatorController, XboxController.Button.kX.value)
       .whenPressed(new RunCommand(m_hopper::moveForward, m_hopper))
       .whenReleased(new RunCommand(m_hopper::stop, m_hopper));

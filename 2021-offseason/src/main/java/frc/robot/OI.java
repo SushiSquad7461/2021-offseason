@@ -1,4 +1,3 @@
-package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID;
 
@@ -14,4 +13,3 @@ public class OI {
         return Math.pow(controller.getX(GenericHID.Hand.kLeft), 3);
     }
 }
-
