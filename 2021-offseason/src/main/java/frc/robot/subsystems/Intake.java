@@ -36,18 +36,18 @@ public class Intake extends SubsystemBase {
   }  
 
   public void startIntake() {
-    MoveIntake(Constants.kIntake.INTAKE_SPEED);
+    moveIntake(Constants.kIntake.INTAKE_SPEED);
   }
 
   public void stopIntake() {
-    MoveIntake(0);
+    moveIntake(0);
   }
 
   public void startReverse() {
-    MoveIntake(-Constants.kIntake.INTAKE_SPEED);
+    moveIntake(-Constants.kIntake.INTAKE_SPEED);
   }
 
-  public void MoveIntake(double velocity) {
+  public void moveIntake(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
   }
 }
