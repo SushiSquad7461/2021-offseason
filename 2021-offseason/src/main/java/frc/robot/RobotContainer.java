@@ -51,13 +51,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // A button -> run intake forward
     new JoystickButton(operatorController, XboxController.Button.kA.value)
-    .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
-    .whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
+        .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
+        .whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
 
     // B button -> run intake reverse
     new JoystickButton(operatorController, XboxController.Button.kY.value)
-    .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
-    .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
+        .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
+        .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
   }
 
   /**
