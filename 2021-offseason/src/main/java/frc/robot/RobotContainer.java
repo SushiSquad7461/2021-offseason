@@ -27,8 +27,9 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final XboxController controller = new XboxController(Constants.kOI.CONTROLLER_PORT);
+  private final XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_PORT);
 
+  //Intake 
   private final Intake s_intake;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -44,13 +45,20 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+  
+
+  //Assign operator controller buttons A and Y to startIntake and startReverse respectively
   private void configureButtonBindings() {
-    new JoystickButton(controller, XboxController.Button.kA.value)
+    // A button -> run intake forward
+    new JoystickButton(operatorController, XboxController.Button.kA.value)
     .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
     .whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
-    new JoystickButton(controller, XboxController.Button.kY.value)
+
+    // B button -> run intake reverse
+    new JoystickButton(operatorController, XboxController.Button.kY.value)
     .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
-    .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); }
+    .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

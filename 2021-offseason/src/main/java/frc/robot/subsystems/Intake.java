@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
   private DoubleSolenoid solenoid;
 
   public Intake() {
-    intakeTalon = new TalonSRX(0);
+    intakeTalon = new TalonSRX(Constants.kIntake.INTAKE_PORT);
     intakeTalon.setInverted(false);
     solenoid = new DoubleSolenoid(Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
 
@@ -25,24 +25,30 @@ public class Intake extends SubsystemBase {
     solenoid.set(DoubleSolenoid.Value.kForward);
   }
 
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }  
 
+
   public void startIntake() {
     intakeTalon.set(ControlMode.PercentOutput, Constants.kIntake.INTAKE_SPEED);
   }
+
+
   public void stopIntake() {
     intakeTalon.set(ControlMode.PercentOutput, 0);
   }
+
+
   public void startReverse() {
     intakeTalon.set(ControlMode.PercentOutput, -Constants.kIntake.INTAKE_SPEED);
   }
-
 }
