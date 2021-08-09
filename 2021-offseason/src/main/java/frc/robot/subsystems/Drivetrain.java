@@ -43,7 +43,7 @@ public class Drivetrain extends SubsystemBase {
     backRight.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
   }
 
-  public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn){
+  public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn) {
     difDrive.curvatureDrive(linearVelocity, angularVelocity, isQuickturn);
   }
 
