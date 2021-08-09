@@ -27,10 +27,11 @@ public class Drivetrain extends SubsystemBase {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
-    frontLeft.setInverted(driveInverted);
+    frontLeft.setInverted(!driveInverted);
     frontRight.setInverted(driveInverted);
-    backLeft.setInverted(driveInverted);
+    backLeft.setInverted(!driveInverted);
     backRight.setInverted(driveInverted);
+
     frontLeft.setOpenLoopRampRate(Constants.kDrivetrain.OPEN_LOOP_RAMP);
     frontRight.setOpenLoopRampRate(Constants.kDrivetrain.OPEN_LOOP_RAMP);
     backLeft.setOpenLoopRampRate(Constants.kDrivetrain.OPEN_LOOP_RAMP);
@@ -42,7 +43,7 @@ public class Drivetrain extends SubsystemBase {
     backRight.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
   }
 
-  public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn) {
+  public void curveDrive (double linearVelocity, double angularVelocity, boolean isQuickturn) {
     difDrive.curvatureDrive(linearVelocity, angularVelocity, isQuickturn);
   }
 
