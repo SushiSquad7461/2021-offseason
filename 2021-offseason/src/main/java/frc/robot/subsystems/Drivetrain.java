@@ -11,7 +11,6 @@ import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
-
   private final DifferentialDrive difDrive;
   private final boolean driveInverted;
 
