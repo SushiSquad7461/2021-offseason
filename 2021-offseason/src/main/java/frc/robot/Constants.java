@@ -37,19 +37,22 @@ public final class Constants {
         public static final int OPERATOR_CONTROLLER = 1;
     }
     
-    public static final class kDrivetrain{
-        public static final int frontLeft_ID = 18;
-        public static final int frontRight_ID = 15;
-        public static final int backLeft_ID = 1;
-        public static final int backRight_ID = 14;
+    public static final class kDrivetrain {
+        public static final int FRONT_LEFT_ID = 18;
+        public static final int FRONT_RIGHT_ID = 15;
+        public static final int BACK_LEFT_ID = 1;
+        public static final int BACK_RIGHT_ID = 14;
+
 
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
 
         public static final int CURRENT_LIMIT = 35;
         public static final int OPEN_LOOP_RAMP = 0;
         public static final double SLOW_SPEED = 0.1;
+
+        public static final boolean DRIVE_INVERTED = false;
     }
-    public static final class kOI{//koi fish 
+    public static final class kOI {
         public static final int DRIVE_CONTROLLER = 0;
         //public static final int OPERATOR_CONTROLLER = 0;
     }

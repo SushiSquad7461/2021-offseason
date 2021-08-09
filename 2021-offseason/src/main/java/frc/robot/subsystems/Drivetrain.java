@@ -5,24 +5,23 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
-  private CANSparkMax frontLeft, frontRight, backLeft, backRight;
+  private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
 
-  private DifferentialDrive difDrive;
-  private boolean driveInverted;
-  /** Creates a new ExampleSubsystem. */
+  private final DifferentialDrive difDrive;
+  private final boolean driveInverted;
+
   public Drivetrain() {
-    driveInverted = false;
+    driveInverted = Constants.kDrivetrain.DRIVE_INVERTED;
 
-    frontLeft = new CANSparkMax(Constants.kDrivetrain.frontLeft_ID, Constants.kDrivetrain.MOTOR_TYPE);
-    frontRight = new CANSparkMax(Constants.kDrivetrain.frontRight_ID, Constants.kDrivetrain.MOTOR_TYPE);
-    backLeft = new CANSparkMax(Constants.kDrivetrain.backLeft_ID, Constants.kDrivetrain.MOTOR_TYPE);
-    backRight = new CANSparkMax(Constants.kDrivetrain.backRight_ID, Constants.kDrivetrain.MOTOR_TYPE);
+    frontLeft = new CANSparkMax(Constants.kDrivetrain.FRONT_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
+    frontRight = new CANSparkMax(Constants.kDrivetrain.FRONT_RIGHT_ID, Constants.kDrivetrain.MOTOR_TYPE);
+    backLeft = new CANSparkMax(Constants.kDrivetrain.BACK_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
+    backRight = new CANSparkMax(Constants.kDrivetrain.BACK_RIGHT_ID, Constants.kDrivetrain.MOTOR_TYPE);
 
     difDrive = new DifferentialDrive(frontLeft, frontRight);
     //front motors are controlled, others follow corresponding
@@ -45,7 +44,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn){
-      difDrive.curvatureDrive(linearVelocity, angularVelocity, isQuickturn);
+    difDrive.curvatureDrive(linearVelocity, angularVelocity, isQuickturn);
   }
 
   @Override
