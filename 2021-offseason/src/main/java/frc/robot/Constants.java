@@ -29,8 +29,26 @@ public final class Constants {
 
         public static final boolean DRIVE_INVERTED = false;
     }
+  
+    public static final class kIntake { 
+        public static final int INTAKE_PORT = 0;
+        public static final int INTAKE_SPEED = 1;
+        public static final int SOLENOID_FRONT = 0;
+        public static final int SOLENOID_BACK = 1;
+        public static final boolean INVERTED = false;
+    }
+
+    public static final class kHopper {
+        public static final int LEFT_ID = 0;
+        public static final int RIGHT_ID = 0;
+        public static final int KICKER_ID = 0;
+        public static final double FORWARD_SPEED = 0.2;
+        public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
+        public static final boolean INVERTED = false;
+    }
+
     public static final class kOI {
         public static final int DRIVE_CONTROLLER = 0;
-        //public static final int OPERATOR_CONTROLLER = 0;
+        public static final int OPERATOR_CONTROLLER = 1;
     }
 }
