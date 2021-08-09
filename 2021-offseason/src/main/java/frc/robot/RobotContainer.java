@@ -26,7 +26,7 @@ public class RobotContainer {
 
   private final Drivetrain s_drivetrain;
 
-  public static final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
+  private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
