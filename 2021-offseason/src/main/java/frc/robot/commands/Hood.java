@@ -30,6 +30,7 @@ public class Hood extends SubsystemBase {
     private PhotonCamera camera;
     private double curdeg = 0;
     private DigitalInput limitswitch = new DigitalInput(Constants.Hood.LIMIT_PORT);
+    private boolean isZeroOn = false;
     public Hood() {
     
         SmartDashboard.putNumber("kP", Constants.Hood.kP);
@@ -51,10 +52,18 @@ public class Hood extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("real output", hoodMain.getAppliedOutput());
         SmartDashboard.putNumber("bruh position", hoodEncoder.getPosition());
+        if (isZeroOn) tareHood();
     }
 
-    public void zeroHood() {
-        if (limitswitch.get()) hoodMain.set(0);
+    public void setZero() {
+        isZeroOn = true;
+    }
+
+    private void tareHood() {
+        if (limitswitch.get()) {
+            hoodMain.set(0);
+            isZeroOn = false;
+        }
         else hoodMain.set(0.7);
     }
 
