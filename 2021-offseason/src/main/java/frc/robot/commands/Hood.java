@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import org.photonvision.*;
+import org.photonvision.PhotonCamera;
 
 public class Hood extends SubsystemBase {
     private CANSparkMax hoodMain;
