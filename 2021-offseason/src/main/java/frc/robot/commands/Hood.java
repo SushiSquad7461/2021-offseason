@@ -22,14 +22,14 @@ import frc.robot.Constants;
 import org.photonvision.PhotonCamera;
 
 public class Hood extends SubsystemBase {
-    private CANSparkMax hoodMain;
-    private CANEncoder hoodEncoder;
-    private CANPIDController hoodController;
+    private final CANSparkMax hoodMain;
+    private final CANEncoder hoodEncoder;
+    private final CANPIDController hoodController;
     private InterpolatingTreeMap closeTreeMap;
     private InterpolatingTreeMap farTreeMap;
     private PhotonCamera camera;
     private double curdeg = 0;
-    private DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
+    private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
     private boolean isTaring = false;
     
     public Hood() {
