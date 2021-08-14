@@ -72,6 +72,5 @@ public class Hood extends SubsystemBase {
         curdeg+=amount;
         curdeg=Math.max(0, curdeg);
         setSetpoint(curdeg+Constants.kHood.INITIAL_SETPOINT);
-    }
-    
+    }   
 }
