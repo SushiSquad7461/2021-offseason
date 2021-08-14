@@ -33,7 +33,6 @@ public class Hood extends SubsystemBase {
     private boolean isZeroOn = false;
     
     public Hood() {
-    
         SmartDashboard.putNumber("kP", Constants.Hood.kP);
         SmartDashboard.putNumber("kD", Constants.Hood.kD);
         this.hoodMain = new CANSparkMax(Constants.Hood.MOTOR_ID, Constants.Hood.MOTOR_TYPE);
@@ -45,8 +44,6 @@ public class Hood extends SubsystemBase {
         this.hoodController.setI(Constants.Hood.kI);
         this.hoodController.setD(Constants.Hood.kD);
         this.camera = new PhotonCamera("myCamera");
-        //this.setSetpoint(50);
-        
     }
     @Override
     public void periodic() {
