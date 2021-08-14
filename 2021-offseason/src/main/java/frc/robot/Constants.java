@@ -17,7 +17,7 @@ import com.team254.lib.util.InterpolatingTreeMap;
  */
 public final class Constants {
   
-    public static final class Hood {
+    public static final class kHood {
         public static final int MOTOR_ID = 12;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final double INITIAL_SETPOINT = 80.0;

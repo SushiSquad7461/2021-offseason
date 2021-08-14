@@ -29,37 +29,37 @@ public class Hood extends SubsystemBase {
     private InterpolatingTreeMap farTreeMap;
     private PhotonCamera camera;
     private double curdeg = 0;
-    private DigitalInput limitswitch = new DigitalInput(Constants.Hood.LIMIT_PORT);
-    private boolean isZeroOn = false;
+    private DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
+    private boolean isTaring = false;
     
     public Hood() {
-        SmartDashboard.putNumber("kP", Constants.Hood.kP);
-        SmartDashboard.putNumber("kD", Constants.Hood.kD);
-        this.hoodMain = new CANSparkMax(Constants.Hood.MOTOR_ID, Constants.Hood.MOTOR_TYPE);
+        SmartDashboard.putNumber("kP", Constants.kHood.kP);
+        SmartDashboard.putNumber("kD", Constants.kHood.kD);
+        this.hoodMain = new CANSparkMax(Constants.kHood.MOTOR_ID, Constants.kHood.MOTOR_TYPE);
         hoodMain.setIdleMode(CANSparkMax.IdleMode.kCoast);
         this.hoodEncoder = this.hoodMain.getEncoder();
         this.hoodController = this.hoodMain.getPIDController();
-        this.hoodController.setOutputRange(-Constants.Hood.MAX_SPEED, Constants.Hood.MAX_SPEED);
-        this.hoodController.setP(Constants.Hood.kP);
-        this.hoodController.setI(Constants.Hood.kI);
-        this.hoodController.setD(Constants.Hood.kD);
+        this.hoodController.setOutputRange(-Constants.kHood.MAX_SPEED, Constants.kHood.MAX_SPEED);
+        this.hoodController.setP(Constants.kHood.kP);
+        this.hoodController.setI(Constants.kHood.kI);
+        this.hoodController.setD(Constants.kHood.kD);
         this.camera = new PhotonCamera("myCamera");
     }
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("real output", hoodMain.getAppliedOutput());
-        SmartDashboard.putNumber("bruh position", hoodEncoder.getPosition());
-        if (isZeroOn) tareHood();
+        SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
+        SmartDashboard.putNumber("hood encoder position", hoodEncoder.getPosition());
+        if (isTaring) tarekHood();
     }
 
     public void setZero() {
-        isZeroOn = true;
+        isTaring = true;
     }
 
-    private void tareHood() {
+    private void tarekHood() {
         if (limitswitch.get()) {
             hoodMain.set(0);
-            isZeroOn = false;
+            isTaring = false;
         }
         else hoodMain.set(0.7);
     }
@@ -71,7 +71,7 @@ public class Hood extends SubsystemBase {
     public void increaseSetpoint(double amount) {
         curdeg+=amount;
         curdeg=Math.max(0, curdeg);
-        setSetpoint(curdeg+Constants.Hood.INITIAL_SETPOINT);
+        setSetpoint(curdeg+Constants.kHood.INITIAL_SETPOINT);
     }
     
 }
