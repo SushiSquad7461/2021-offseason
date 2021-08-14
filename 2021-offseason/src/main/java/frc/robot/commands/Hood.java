@@ -31,6 +31,7 @@ public class Hood extends SubsystemBase {
     private double curdeg = 0;
     private DigitalInput limitswitch = new DigitalInput(Constants.Hood.LIMIT_PORT);
     private boolean isZeroOn = false;
+    
     public Hood() {
     
         SmartDashboard.putNumber("kP", Constants.Hood.kP);
