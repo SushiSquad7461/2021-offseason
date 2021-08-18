@@ -23,8 +23,7 @@ public class RobotContainer {
 
   private final Hopper s_hopper = new Hopper();
 
-  //Intake 
-  private final Intake s_intake;
+  private final Intake s_intake = new Intake();
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
 

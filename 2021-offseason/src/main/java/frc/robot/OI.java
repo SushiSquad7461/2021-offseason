@@ -1,16 +1,15 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public class OI {
-    public static double getTriggerOutput(XboxController controller) {
-        double leftTrigger = controller.getTriggerAxis(GenericHID.Hand.kLeft);
-        double rightTrigger = controller.getTriggerAxis(GenericHID.Hand.kRight);
-        double difference = rightTrigger - leftTrigger;
-        return Math.pow(difference, 3);
+    // returns difference between Right trigger value and Left trigger value
+    public static double getTriggers(XboxController controller) {
+        double val = controller.getTriggerAxis(Hand.kRight) - controller.getTriggerAxis(Hand.kLeft);
+        return Math.pow(val, 3);
     }
 
-    public static double getLeftJoystick(XboxController controller) {
-        return Math.pow(controller.getX(GenericHID.Hand.kLeft), 3);
+    public static double getLeftStick(XboxController controller) {
+        return Math.pow(controller.getX(Hand.kLeft), 3);
     }
 }

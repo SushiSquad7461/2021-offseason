@@ -15,6 +15,21 @@ import com.revrobotics.CANSparkMaxLowLevel;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final class kDrivetrain {
+        public static final int FRONT_LEFT_ID = 18;
+        public static final int FRONT_RIGHT_ID = 15;
+        public static final int BACK_LEFT_ID = 1;
+        public static final int BACK_RIGHT_ID = 14;
+
+        public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
+
+        public static final int CURRENT_LIMIT = 35;
+        public static final int OPEN_LOOP_RAMP = 0;
+        public static final double SLOW_SPEED = 0.1;
+
+        public static final boolean DRIVE_INVERTED = false;
+    }
+  
     public static final class kIntake { 
         public static final int INTAKE_PORT = 0;
         public static final int INTAKE_SPEED = 1;
