@@ -24,6 +24,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final Hopper m_hopper = new Hopper();
+  private final Hood m_hood = new Hood();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -32,6 +33,7 @@ public class RobotContainer {
 
   //Operator Controller
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
+  private XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -66,6 +68,12 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new RunCommand(m_hopper::moveBackward, m_hopper))
       .whenReleased(new RunCommand(m_hopper::stop, m_hopper));
+    new JoystickButton(driveController, XboxController.Button.kY.value)
+      .whenPressed(new RunCommand(m_hood::setZero, m_hood));
+    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+      .whenPressed(new RunCommand(m_hood::increaseSetpointByTen, m_hood));
+    new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+      .whenPressed(new RunCommand(m_hood::decreaseSetpointByTen, m_hood));
   }
 
   /**

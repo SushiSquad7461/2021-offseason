@@ -50,14 +50,14 @@ public class Hood extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
         SmartDashboard.putNumber("hood encoder position", hoodEncoder.getPosition());
-        if (isTaring) tarekHood();
+        if (isTaring) tareHood();
     }
 
     public void setZero() {
         isTaring = true;
     }
 
-    private void tarekHood() {
+    private void tareHood() {
         if (limitswitch.get()) {
             hoodMain.set(0);
             curdeg = 0;
@@ -70,7 +70,12 @@ public class Hood extends SubsystemBase {
     public void set(double setpoint) {
         this.hoodController.setReference(setpoint, ControlType.kPosition);
     }
-
+    public void increaseSetpointByTen() {
+        increaseSetpoint(10);
+    }
+    public void decreaseSetpointByTen() {
+        increaseSetpoint(-10);
+    }
     public void increaseSetpoint(double amount) {
         curdeg+=amount;
         curdeg=Math.max(0, curdeg);
