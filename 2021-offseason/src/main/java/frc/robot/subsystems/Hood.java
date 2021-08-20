@@ -31,6 +31,7 @@ public class Hood extends SubsystemBase {
     private double curdeg = 0;
     private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
     private boolean isTaring = false;
+    private double INITIAL_SETPOINT;
     
     public Hood() {
         SmartDashboard.putNumber("kP", Constants.kHood.kP);
@@ -59,18 +60,23 @@ public class Hood extends SubsystemBase {
     private void tarekHood() {
         if (limitswitch.get()) {
             hoodMain.set(0);
+            curdeg = 0;
             isTaring = false;
+            INITIAL_SETPOINT = hoodEncoder.getPosition();
         }
         else hoodMain.set(0.7);
     }
 
-    private void setSetpoint(double setpoint) {
+    public void set(double setpoint) {
         this.hoodController.setReference(setpoint, ControlType.kPosition);
     }
 
     public void increaseSetpoint(double amount) {
         curdeg+=amount;
         curdeg=Math.max(0, curdeg);
-        setSetpoint(curdeg+Constants.kHood.INITIAL_SETPOINT);
-    }   
+        set(curdeg+INITIAL_SETPOINT);
+    }
+    public void setSetpoint(double setpoint) {
+        increaseSetpoint(setpoint-curdeg);
+    }
 }
