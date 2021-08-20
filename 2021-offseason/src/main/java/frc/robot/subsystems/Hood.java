@@ -33,7 +33,7 @@ public class Hood extends SubsystemBase {
     private double curdeg = 0;
     private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
     private boolean isTaring = false;
-    private double INITIAL_SETPOINT;
+    private double initialSetpoint;
     
     public Hood() {
         SmartDashboard.putNumber("kP", Constants.kHood.kP);
@@ -47,41 +47,42 @@ public class Hood extends SubsystemBase {
         this.hoodController.setI(Constants.kHood.kI);
         this.hoodController.setD(Constants.kHood.kD);
         this.camera = new PhotonCamera("myCamera");
+        initialSetpoint = hoodEncoder.getPosition();
     }
     @Override
     public void periodic() {
         SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
         SmartDashboard.putNumber("hood encoder position", hoodEncoder.getPosition());
-        if (isTaring) tareHood();
+        if (isTaring) tareHoodPeriodic();
     }
 
     public void setZero() {
         isTaring = true;
     }
 
-    private void tareHood() {
+    private void tareHoodPeriodic() {
         if (limitswitch.get()) {
             hoodMain.set(0);
             curdeg = 0;
             isTaring = false;
-            INITIAL_SETPOINT = hoodEncoder.getPosition();
+            initialSetpoint = hoodEncoder.getPosition();
         }
-        else hoodMain.set(0.7);
+        else hoodMain.set(Constants.kHood.MAX_SPEED);
     }
 
     public void set(double setpoint) {
         this.hoodController.setReference(setpoint, ControlType.kPosition);
     }
-    public void increaseSetpointByTen() {
-        increaseSetpoint(10);
+    public void incrementUp() {
+        increaseSetpoint(Constants.kHood.HOOD_INCREMENT);
     }
-    public void decreaseSetpointByTen() {
-        increaseSetpoint(-10);
+    public void incrementDown() {
+        increaseSetpoint(-Constants.kHood.HOOD_INCREMENT);
     }
     public void increaseSetpoint(double amount) {
         curdeg+=amount;
         curdeg=Math.max(0, curdeg);
-        set(curdeg+INITIAL_SETPOINT);
+        set(curdeg+initialSetpoint);
     }
     public void setSetpoint(double setpoint) {
         increaseSetpoint(setpoint-curdeg);

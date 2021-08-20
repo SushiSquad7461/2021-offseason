@@ -71,9 +71,9 @@ public class RobotContainer {
     new JoystickButton(driveController, XboxController.Button.kY.value)
       .whenPressed(new RunCommand(m_hood::setZero, m_hood));
     new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-      .whenPressed(new RunCommand(m_hood::increaseSetpointByTen, m_hood));
+      .whenPressed(new RunCommand(m_hood::incrementUp, m_hood));
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
-      .whenPressed(new RunCommand(m_hood::decreaseSetpointByTen, m_hood));
+      .whenPressed(new RunCommand(m_hood::incrementDown, m_hood));
   }
 
   /**
