@@ -34,8 +34,6 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    s_intake = new Intake();
-
     s_drivetrain = new Drivetrain();
     // Configure the button bindings
     s_drivetrain.setDefaultCommand(new RunCommand(
