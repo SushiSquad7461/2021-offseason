@@ -16,9 +16,9 @@ import com.revrobotics.CANSparkMaxLowLevel;
  */
 public final class Constants {
     public static final class kDrivetrain {
-        public static final int FRONT_LEFT_ID = 1;
+        public static final int FRONT_LEFT_ID = 14;
         public static final int FRONT_RIGHT_ID = 15;
-        public static final int BACK_LEFT_ID = 31;
+        public static final int BACK_LEFT_ID = 1;
         public static final int BACK_RIGHT_ID = 14;
 
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;

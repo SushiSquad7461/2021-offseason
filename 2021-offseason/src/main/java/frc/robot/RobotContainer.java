@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,9 +22,9 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
  */
 public class RobotContainer {
 
-  private final Hopper s_hopper = new Hopper();
+  // private final Hopper s_hopper = new Hopper();
 
-  private final Intake s_intake = new Intake();
+  // private final Intake s_intake = new Intake();
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
 
@@ -44,6 +45,10 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
+  public void displayControllerOuptut() {
+    SmartDashboard.putNumber("controller trigger output", OI.getTriggers(driveController));
+  }
+
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -53,6 +58,8 @@ public class RobotContainer {
 
   //Assign operator controller buttons A and Y to startIntake and startReverse respectively
   private void configureButtonBindings() {
+
+    /*
     // A button -> run intake forward
     new JoystickButton(operatorController, XboxController.Button.kA.value)
         .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
@@ -69,7 +76,7 @@ public class RobotContainer {
     
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new RunCommand(s_hopper::moveBackward, s_hopper))
-      .whenReleased(new RunCommand(s_hopper::stop, s_hopper));
+      .whenReleased(new RunCommand(s_hopper::stop, s_hopper)); */
   }
 
   /**
@@ -79,6 +86,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new RunCommand(() -> s_drivetrain.runMotors());
   }
 }
