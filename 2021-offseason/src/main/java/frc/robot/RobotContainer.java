@@ -59,6 +59,12 @@ public class RobotContainer {
       .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
       .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
 
+    new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+      .whenPressed(new RunCommand(s_intake::actuateIntake, s_intake));
+    
+    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+      .whenPressed(new RunCommand(s_intake::retractIntake, s_intake));
+
     new JoystickButton(operatorController, XboxController.Button.kX.value)
       .whenPressed(new RunCommand(m_hopper::moveForward, m_hopper))
       .whenReleased(new RunCommand(m_hopper::stop, m_hopper));

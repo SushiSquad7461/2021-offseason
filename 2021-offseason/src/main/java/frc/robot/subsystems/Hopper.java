@@ -6,18 +6,19 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Hopper extends SubsystemBase {
-  private final VictorSPX left, right, kicker;
+  private final TalonSRX left, right, kicker;
   
   public Hopper() {
-    left = new VictorSPX(Constants.kHopper.LEFT_ID);
-    right = new VictorSPX(Constants.kHopper.RIGHT_ID);
-    kicker = new VictorSPX(Constants.kHopper.KICKER_ID);
+    left = new TalonSRX(Constants.kHopper.LEFT_ID);
+    right = new TalonSRX(Constants.kHopper.RIGHT_ID);
+    kicker = new TalonSRX(Constants.kHopper.KICKER_ID);
 
     right.follow(left);
     kicker.follow(left);

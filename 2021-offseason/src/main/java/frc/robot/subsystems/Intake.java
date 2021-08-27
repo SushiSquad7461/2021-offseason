@@ -8,18 +8,32 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-  private TalonSRX intakeTalon;
+  private VictorSPX intakeTalon;
   private DoubleSolenoid solenoid;
 
+  // sparks for testing
+  private CANSparkMax test_spark_one;
+  private CANSparkMax test_spark_two;
+
   public Intake() {
-    intakeTalon = new TalonSRX(Constants.kIntake.INTAKE_PORT);
+    intakeTalon = new VictorSPX(Constants.kIntake.INTAKE_PORT);
     intakeTalon.setInverted(Constants.kIntake.INVERTED);
-    solenoid = new DoubleSolenoid(Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
+    solenoid = new DoubleSolenoid(Constants.kIntake.PCM_ID, Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
+
+    test_spark_one = new CANSparkMax(Constants.kIntake.TEST_SPARK_PORT, MotorType.kBrushless);
+    test_spark_two = new CANSparkMax(Constants.kIntake.TEST_SPARK_PORT_SECOND, MotorType.kBrushless);
+    test_spark_one.setInverted(false);
+    test_spark_two.setInverted(false);
 
     solenoid.set(DoubleSolenoid.Value.kOff);
     solenoid.set(DoubleSolenoid.Value.kForward);
@@ -49,5 +63,13 @@ public class Intake extends SubsystemBase {
 
   public void moveIntake(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
+  }
+
+  public void actuateIntake() {
+    solenoid.set(Value.kForward);
+  }
+
+  public void retractIntake() {
+    solenoid.set(Value.kReverse);
   }
 }
