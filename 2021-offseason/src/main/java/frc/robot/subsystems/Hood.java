@@ -48,6 +48,7 @@ public class Hood extends SubsystemBase {
         this.hoodController.setD(Constants.kHood.kD);
         this.camera = new PhotonCamera("myCamera");
         initialSetpoint = hoodEncoder.getPosition();
+        setZero();
     }
     @Override
     public void periodic() {
