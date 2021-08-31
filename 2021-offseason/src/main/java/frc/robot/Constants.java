@@ -7,6 +7,8 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.team254.lib.util.InterpolatingDouble;
 import com.team254.lib.util.InterpolatingTreeMap;
 
+import com.revrobotics.CANSparkMaxLowLevel;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -16,7 +18,7 @@ import com.team254.lib.util.InterpolatingTreeMap;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  
+
     public static final class kHood {
         public static final int MOTOR_ID = 12;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
@@ -52,8 +54,24 @@ public final class Constants {
             hoodAngleTreeMap.put(new InterpolatingDouble(230.0), new InterpolatingDouble(67.0));
         }
     }
+
+    public static final class kDrivetrain {
+        public static final int FRONT_LEFT_ID = 1;
+        public static final int FRONT_RIGHT_ID = 15;
+        public static final int BACK_LEFT_ID = 31;
+        public static final int BACK_RIGHT_ID = 14;
+
+        public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
+
+        public static final int CURRENT_LIMIT = 35;
+        public static final int OPEN_LOOP_RAMP = 0;
+        public static final double SLOW_SPEED = 0.1;
+
+        public static final boolean DRIVE_INVERTED = false;
+    }
+  
     public static final class kIntake { 
-        public static final int INTAKE_PORT = 0;
+        public static final int INTAKE_PORT = 10;
         public static final int INTAKE_SPEED = 1;
         public static final int SOLENOID_FRONT = 0;
         public static final int SOLENOID_BACK = 1;
@@ -61,9 +79,9 @@ public final class Constants {
     }
 
     public static final class kHopper {
-        public static final int LEFT_ID = 0;
-        public static final int RIGHT_ID = 0;
-        public static final int KICKER_ID = 0;
+        public static final int LEFT_ID = 50;
+        public static final int RIGHT_ID = 51;
+        public static final int KICKER_ID = 52;
         public static final double FORWARD_SPEED = 0.2;
         public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
         public static final boolean INVERTED = false;
@@ -73,4 +91,5 @@ public final class Constants {
         public static final int DRIVE_CONTROLLER = 0;
         public static final int OPERATOR_CONTROLLER = 1;
     }
+    
 }

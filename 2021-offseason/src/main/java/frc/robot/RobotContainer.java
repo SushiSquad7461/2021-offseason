@@ -20,25 +20,29 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final Hopper m_hopper = new Hopper();
   private final Hood m_hood = new Hood();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final Intake s_intake = new Intake();
 
-  //Intake 
-  private final Intake s_intake;
+  private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
 
   //Operator Controller
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
   private XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
 
+  private final Drivetrain s_drivetrain;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    s_intake = new Intake();
+    s_drivetrain = new Drivetrain();
     // Configure the button bindings
+    s_drivetrain.setDefaultCommand(new RunCommand(
+      () -> s_drivetrain.curveDrive(OI.getTriggers(driveController), 
+        OI.getLeftStick(driveController),
+        driveController.getXButton()),
+      s_drivetrain));
     configureButtonBindings();
   }
 
@@ -60,11 +64,6 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kB.value)
       .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
       .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
-
-    new JoystickButton(operatorController, XboxController.Button.kX.value)
-      .whenPressed(new RunCommand(m_hopper::moveForward, m_hopper))
-      .whenReleased(new RunCommand(m_hopper::stop, m_hopper));
-    
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new RunCommand(m_hopper::moveBackward, m_hopper))
       .whenReleased(new RunCommand(m_hopper::stop, m_hopper));
@@ -83,6 +82,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
