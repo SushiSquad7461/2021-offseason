@@ -27,10 +27,7 @@ public class RobotContainer {
   private final Intake s_intake = new Intake();
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
-
-  //Operator Controller
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
-  private XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
 
   private final Drivetrain s_drivetrain;
 
