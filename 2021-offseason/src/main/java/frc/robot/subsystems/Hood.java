@@ -30,7 +30,7 @@ public class Hood extends SubsystemBase {
     private InterpolatingTreeMap closeTreeMap;
     private InterpolatingTreeMap farTreeMap;
     private PhotonCamera camera;
-    private double curdeg = 0;
+    private double currentDegree = 0;
     private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
     private boolean isTaring = false;
     private double initialSetpoint;
@@ -64,7 +64,7 @@ public class Hood extends SubsystemBase {
     private void tareHoodPeriodic() {
         if (limitswitch.get()) {
             hoodMain.set(0);
-            curdeg = 0;
+            currentDegree = 0;
             isTaring = false;
             initialSetpoint = hoodEncoder.getPosition();
         }
@@ -81,11 +81,11 @@ public class Hood extends SubsystemBase {
         increaseSetpoint(-Constants.kHood.HOOD_INCREMENT);
     }
     public void increaseSetpoint(double amount) {
-        curdeg+=amount;
-        curdeg=Math.max(0, curdeg);
-        set(curdeg+initialSetpoint);
+        currentDegree+=amount;
+        currentDegree=Math.max(0, currentDegree);
+        set(currentDegree+initialSetpoint);
     }
     public void setSetpoint(double setpoint) {
-        increaseSetpoint(setpoint-curdeg);
+        increaseSetpoint(setpoint-currentDegree);
     }
 }
