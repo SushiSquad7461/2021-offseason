@@ -17,9 +17,9 @@ import com.revrobotics.CANSparkMaxLowLevel;
 public final class Constants {
     public static final class kDrivetrain {
         public static final int FRONT_LEFT_ID = 1;
-        public static final int FRONT_RIGHT_ID = 15;
-        public static final int BACK_LEFT_ID = 31;
-        public static final int BACK_RIGHT_ID = 14;
+        public static final int FRONT_RIGHT_ID = 14;
+        public static final int BACK_LEFT_ID = 45;
+        public static final int BACK_RIGHT_ID = 15;
 
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
 
@@ -31,18 +31,18 @@ public final class Constants {
     }
   
     public static final class kIntake { 
-        public static final int INTAKE_PORT = 10;
-        public static final int INTAKE_SPEED = 1;
+        public static final int INTAKE_PORT = 7;
+        public static final double INTAKE_SPEED = 1.0;
         public static final int SOLENOID_FRONT = 0;
         public static final int SOLENOID_BACK = 1;
         public static final boolean INVERTED = false;
     }
 
     public static final class kHopper {
-        public static final int LEFT_ID = 50;
-        public static final int RIGHT_ID = 51;
-        public static final int CENTER_ID = 53;
-        public static final int KICKER_ID = 52;
+        public static final int LEFT_ID = 6;
+        public static final int RIGHT_ID = 11;
+        public static final int CENTER_ID = 8;
+        public static final int KICKER_ID = 5;
         public static final double FORWARD_SPEED = 0.2;
         public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
         public static final boolean INVERTED = false;

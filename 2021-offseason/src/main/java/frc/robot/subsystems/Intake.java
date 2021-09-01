@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
@@ -36,6 +37,7 @@ public class Intake extends SubsystemBase {
   }  
 
   public void startIntake() {
+    SmartDashboard.putNumber("key2", Constants.kIntake.INTAKE_SPEED);
     moveIntake(Constants.kIntake.INTAKE_SPEED);
   }
 
@@ -49,5 +51,6 @@ public class Intake extends SubsystemBase {
 
   public void moveIntake(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
+    SmartDashboard.putNumber("key", velocity);
   }
 }
