@@ -52,12 +52,12 @@ public class RobotContainer {
   //Assign operator controller buttons A and Y to startIntake and startReverse respectively
   private void configureButtonBindings() {
     // A button -> run intake forward
-    new JoystickButton(operatorController, XboxController.Button.kA.value)
+    new JoystickButton(driveController, XboxController.Button.kA.value)
         .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
         .whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
 
     // B button -> run intake reverse
-    new JoystickButton(operatorController, XboxController.Button.kB.value)
+    new JoystickButton(driveController, XboxController.Button.kB.value)
       .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
       .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
 
@@ -68,9 +68,11 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new RunCommand(m_hopper::moveBackward, m_hopper))
       .whenReleased(new RunCommand(m_hopper::stop, m_hopper));
-    new JoystickButton(driveController, XboxController.Button.kY.value)
+
+    new JoystickButton(driveController, XboxController.Button.kA.value)
       .whenPressed(new RunCommand(m_hood::setZero, m_hood));
-    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+
+      new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
       .whenPressed(new RunCommand(m_hood::incrementUp, m_hood));
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
       .whenPressed(new RunCommand(m_hood::incrementDown, m_hood));

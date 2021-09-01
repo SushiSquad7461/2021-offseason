@@ -30,6 +30,9 @@ public final class Constants {
         public static final double[] ZONE_SETPOINTS = {37.0, 56.0, 80.0, 80.0};
         public static final int LIMIT_PORT = -1;
 
+        public static final double CAMERA_HEIGHT = 0;
+        public static final double TARGET_HEIGHT = 0;
+        public static final double PITCH_RADIANS = 0;
         static {
             hoodAngleTreeMap.put(new InterpolatingDouble(50.0), new InterpolatingDouble(39.0));
             hoodAngleTreeMap.put(new InterpolatingDouble(60.0), new InterpolatingDouble(41.0));

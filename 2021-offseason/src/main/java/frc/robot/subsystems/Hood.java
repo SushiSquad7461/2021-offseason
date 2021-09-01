@@ -20,8 +20,10 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants;
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 
 public class Hood extends SubsystemBase {
     private final CANSparkMax hoodMain;
@@ -34,6 +36,7 @@ public class Hood extends SubsystemBase {
     private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
     private boolean isTaring = false;
     private double initialSetpoint;
+    public boolean isAiming = true;
     
     public Hood() {
         SmartDashboard.putNumber("kP", Constants.kHood.kP);
@@ -49,16 +52,26 @@ public class Hood extends SubsystemBase {
         this.camera = new PhotonCamera("myCamera");
         initialSetpoint = hoodEncoder.getPosition();
         setZero();
+        startAligning();
     }
     @Override
     public void periodic() {
         SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
         SmartDashboard.putNumber("hood encoder position", hoodEncoder.getPosition());
         if (isTaring) tareHoodPeriodic();
+        if (isAiming) alignToTarget();
     }
 
     public void setZero() {
         isTaring = true;
+    }
+
+    public void startAligning() {
+        isAiming = true;
+    }
+
+    public void stopAligning() {
+        isAiming = false;
     }
 
     private void tareHoodPeriodic() {
@@ -87,5 +100,16 @@ public class Hood extends SubsystemBase {
     }
     public void setSetpoint(double setpoint) {
         increaseSetpoint(setpoint-currentDegree);
+    }
+    public void alignToTarget() {
+        var result = camera.getLatestResult();
+        if (result.hasTargets()) {
+            double range = PhotonUtils.calculateDistanceToTargetMeters(
+                Constants.kHood.CAMERA_HEIGHT, 
+                Constants.kHood.TARGET_HEIGHT,
+                Constants.kHood.PITCH_RADIANS,
+                Units.degreesToRadians(result.getBestTarget().getPitch()));
+            set(Constants.kHood.hoodAngleTreeMap.get(new InterpolatingDouble(range)).value);
+        }
     }
 }
