@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import frc.robot.Constants;
 
@@ -51,7 +52,9 @@ public class Flywheel extends SubsystemBase {
 
     flywheelMain.setInverted(Constants.kFlywheel.MAIN_INVERTED);
     flywheelFollower.setInverted(Constants.kFlywheel.FOLLOWER_INVERTED);
-    flywheelFollower.follow(flywheelMain, true);
+    //flywheelFollower.follow(flywheelMain, true);
+    SmartDashboard.putNumber(new Boolean(flywheelFollower.getInverted()).toString(), 69);
+
 
     pidController.setTolerance(0,Constants.kFlywheel.ERR_TOLERANCE);
 
@@ -60,6 +63,12 @@ public class Flywheel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Main motor inverted", flywheelMain.getInverted());
+    SmartDashboard.putBoolean("Second motor inverted", flywheelFollower.getInverted());
+    SmartDashboard.putNumber("main motor output", flywheelMain.getAppliedOutput());
+    SmartDashboard.putNumber("second motor output", flywheelFollower.getAppliedOutput());
+    SmartDashboard.putNumber("Main motor current", flywheelMain.getOutputCurrent());
+    SmartDashboard.putNumber("Second motor current", flywheelFollower.getOutputCurrent());
   }
 
   @Override
@@ -67,19 +76,31 @@ public class Flywheel extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
+  /*
+
   //will automatically be called periodically
-  protected void useOutput(double output, TrapezoidProfile.State setpoint){
+  protected void useOutput(double output, TrapezoidProfile.State setpoint) {
     double fForward = feedForward.calculate(setpoint.position, setpoint.velocity)/12;
     flywheelMain.set(output+fForward);
-
   }
 
-  protected double getMeasurement(){
+  protected double getMeasurement() {
     return flywheelMain.getEncoder().getVelocity();
   }
 
-  public void setGoal(double goal){
+  public void setGoal(double goal) {
+    SmartDashboard.putNumber("Goal", goal);
     pidController.setGoal(goal);
+  } */
+
+  public void runShooter() {
+    flywheelMain.set(1);
+    flywheelFollower.set(1);
+  }
+
+  public void stopShooter() {
+    flywheelMain.set(0);
+    flywheelFollower.set(0);
   }
 
 }

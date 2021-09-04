@@ -58,12 +58,12 @@ public final class Constants {
     public static final class kFlywheel {
        
         // motors
-        public static final int MAIN_ID = 0;
-        public static final int FOLLOWER_ID = 0;
+        public static final int MAIN_ID = 10;
+        public static final int FOLLOWER_ID = 12;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final boolean MAIN_INVERTED = false;
-        public static final boolean FOLLOWER_INVERTED = false;  
-        public static final int CURRENT_LIMIT = 0;
+        public static final boolean FOLLOWER_INVERTED = true;  
+        public static final int CURRENT_LIMIT = 35;
 
         // pid constants
         public static final double kP = 0;

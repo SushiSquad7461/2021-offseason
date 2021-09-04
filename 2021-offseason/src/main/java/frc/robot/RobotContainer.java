@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Flywheel m_flywheel = new Flywheel();
+  private final Flywheel s_flywheel = new Flywheel();
 
   private final Hopper s_hopper = new Hopper();
 
@@ -48,6 +48,10 @@ public class RobotContainer {
         driveController.getXButton()),
       s_drivetrain));
     configureButtonBindings();
+
+    s_flywheel.setDefaultCommand(new RunCommand(
+      () -> s_flywheel.stopShooter(),
+      s_flywheel));
   }
 
   /**
@@ -76,6 +80,12 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new RunCommand(s_hopper::moveBackward, s_hopper))
       .whenReleased(new RunCommand(s_hopper::stop, s_hopper));
+
+      new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+      //.whenPressed(new RunCommand(() -> s_flywheel.setGoal(500), s_flywheel));
+      .whenPressed(new RunCommand(() -> s_flywheel.runShooter(), s_flywheel))
+      .whenReleased(new RunCommand(() -> s_flywheel.stopShooter(), s_flywheel));
+    
   }
 
   /**
