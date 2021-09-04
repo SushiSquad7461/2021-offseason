@@ -31,7 +31,7 @@ public class Hood extends SubsystemBase {
     private InterpolatingTreeMap farTreeMap;
     private PhotonCamera camera;
     private double currentDegree = 0;
-    private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
+    //private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
     private boolean isTaring = false;
     private double initialSetpoint;
     
@@ -39,6 +39,7 @@ public class Hood extends SubsystemBase {
         SmartDashboard.putNumber("kP", Constants.kHood.kP);
         SmartDashboard.putNumber("kD", Constants.kHood.kD);
         this.hoodMain = new CANSparkMax(Constants.kHood.MOTOR_ID, Constants.kHood.MOTOR_TYPE);
+        hoodMain.setInverted(true);
         hoodMain.setIdleMode(CANSparkMax.IdleMode.kCoast);
         this.hoodEncoder = this.hoodMain.getEncoder();
         this.hoodController = this.hoodMain.getPIDController();
@@ -48,19 +49,24 @@ public class Hood extends SubsystemBase {
         this.hoodController.setD(Constants.kHood.kD);
         this.camera = new PhotonCamera("myCamera");
         initialSetpoint = hoodEncoder.getPosition();
-        setZero();
+        //setZero();
     }
     @Override
     public void periodic() {
         SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
+        SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
         SmartDashboard.putNumber("hood encoder position", hoodEncoder.getPosition());
-        if (isTaring) tareHoodPeriodic();
+        //if (isTaring) tareHoodPeriodic();
     }
+
+    
 
     public void setZero() {
-        isTaring = true;
+        // isTaring = true;
+        currentDegree = 0;
+        initialSetpoint = hoodEncoder.getPosition();
     }
-
+    /*
     private void tareHoodPeriodic() {
         if (limitswitch.get()) {
             hoodMain.set(0);
@@ -69,10 +75,11 @@ public class Hood extends SubsystemBase {
             initialSetpoint = hoodEncoder.getPosition();
         }
         else hoodMain.set(Constants.kHood.MAX_SPEED);
-    }
+    } */
 
     public void set(double setpoint) {
-        this.hoodController.setReference(setpoint, ControlType.kPosition);
+        this.hoodController.setReference(setpoint + Constants.kHood.kFF, ControlType.kPosition);
+        SmartDashboard.putNumber("hood setpoint", setpoint);
     }
     public void incrementUp() {
         increaseSetpoint(Constants.kHood.HOOD_INCREMENT);
@@ -87,5 +94,15 @@ public class Hood extends SubsystemBase {
     }
     public void setSetpoint(double setpoint) {
         increaseSetpoint(setpoint-currentDegree);
+    } 
+
+    public void runHood() {
+        hoodMain.set(0.2);
+        SmartDashboard.putString("hood", "runninghood");
+    }
+
+    public void stopHood() {
+        hoodMain.set(0);
+        SmartDashboard.putString("hood", "notrunninhood");
     }
 }

@@ -20,13 +20,14 @@ import com.revrobotics.CANSparkMaxLowLevel;
 public final class Constants {
 
     public static final class kHood {
-        public static final int MOTOR_ID = 12;
+        public static final int MOTOR_ID = 13;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final double MAX_SPEED = 0.3;
-        public static final double HOOD_INCREMENT = 10;
+        public static final double HOOD_INCREMENT = 5;
         public static final double kP = 0.1;
         public static final double kI = 0;
         public static final double kD = 0;
+        public static final double kFF = 0.0;
         public static final double SETPOINT = (45.0/360.0) * (332.0/14.0) * 15;
         public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> hoodAngleTreeMap = new InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble>();
         public static final double[] ZONE_SETPOINTS = {37.0, 56.0, 80.0, 80.0};
