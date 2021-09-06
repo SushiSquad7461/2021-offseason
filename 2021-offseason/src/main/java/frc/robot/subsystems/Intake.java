@@ -18,7 +18,7 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-  private VictorSPX intakeTalon;
+  private TalonSRX intakeTalon;
   private DoubleSolenoid solenoid;
 
   // sparks for testing
@@ -26,14 +26,15 @@ public class Intake extends SubsystemBase {
   private CANSparkMax test_spark_two;
 
   public Intake() {
-    intakeTalon = new VictorSPX(Constants.kIntake.INTAKE_PORT);
+    intakeTalon = new TalonSRX(Constants.kIntake.INTAKE_PORT);
     intakeTalon.setInverted(Constants.kIntake.INVERTED);
     solenoid = new DoubleSolenoid(Constants.kIntake.PCM_ID, Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
-
+    
+    
     test_spark_one = new CANSparkMax(Constants.kIntake.TEST_SPARK_PORT, MotorType.kBrushless);
     test_spark_two = new CANSparkMax(Constants.kIntake.TEST_SPARK_PORT_SECOND, MotorType.kBrushless);
     test_spark_one.setInverted(false);
-    test_spark_two.setInverted(false);
+    test_spark_two.setInverted(false); 
 
     solenoid.set(DoubleSolenoid.Value.kOff);
     solenoid.set(DoubleSolenoid.Value.kForward);
