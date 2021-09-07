@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
@@ -62,8 +63,9 @@ public class Intake extends SubsystemBase {
     moveIntake(-Constants.kIntake.INTAKE_SPEED);
   }
 
-  public void moveIntake(double velocity) {
+  private void moveIntake(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
+    SmartDashboard.putNumber("output", intakeTalon.getMotorOutputPercent());
   }
 
   public void actuateIntake() {

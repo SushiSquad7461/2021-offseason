@@ -14,7 +14,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class kIntake { 
-        public static final int INTAKE_PORT = 10;
+        public static final int INTAKE_PORT = 7;
         public static final int INTAKE_SPEED = 1;
         public static final int PCM_ID = 17;
         public static final int SOLENOID_FRONT = 0;
