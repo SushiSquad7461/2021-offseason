@@ -6,7 +6,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -19,6 +21,7 @@ public class Flywheel extends SubsystemBase {
   //fields
   private final CANSparkMax flywheelMain;
   private final CANSparkMax flywheelFollower;
+  private final CANEncoder flywheelEncoder;
   private final ProfiledPIDController pidController;
   private final SimpleMotorFeedforward feedForward;
 
@@ -26,6 +29,7 @@ public class Flywheel extends SubsystemBase {
 
     flywheelMain = new CANSparkMax(Constants.kFlywheel.MAIN_ID, Constants.kFlywheel.MOTOR_TYPE);
     flywheelFollower = new CANSparkMax(Constants.kFlywheel.FOLLOWER_ID, Constants.kFlywheel.MOTOR_TYPE);
+    flywheelEncoder = flywheelMain.getEncoder();
 
     pidController = new ProfiledPIDController(
     Constants.kFlywheel.kP,
@@ -52,7 +56,13 @@ public class Flywheel extends SubsystemBase {
 
     flywheelMain.setInverted(Constants.kFlywheel.MAIN_INVERTED);
     flywheelFollower.setInverted(Constants.kFlywheel.FOLLOWER_INVERTED);
-    //flywheelFollower.follow(flywheelMain, true);
+
+    flywheelFollower.burnFlash();
+    flywheelMain.burnFlash();
+
+    flywheelMain.setIdleMode(IdleMode.kCoast);
+    flywheelFollower.setIdleMode(IdleMode.kCoast);
+    flywheelFollower.follow(flywheelMain);
     SmartDashboard.putNumber(new Boolean(flywheelFollower.getInverted()).toString(), 69);
 
 
@@ -62,6 +72,8 @@ public class Flywheel extends SubsystemBase {
 
   @Override
   public void periodic() {
+    double output = pidController.calculate(flywheelEncoder.getVelocity());
+    useOutput(output, pidController.getSetpoint());
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Main motor inverted", flywheelMain.getInverted());
     SmartDashboard.putBoolean("Second motor inverted", flywheelFollower.getInverted());
@@ -69,6 +81,9 @@ public class Flywheel extends SubsystemBase {
     SmartDashboard.putNumber("second motor output", flywheelFollower.getAppliedOutput());
     SmartDashboard.putNumber("Main motor current", flywheelMain.getOutputCurrent());
     SmartDashboard.putNumber("Second motor current", flywheelFollower.getOutputCurrent());
+    SmartDashboard.putNumber("rpm", flywheelEncoder.getVelocity());
+    // SmartDashboard.putNumber("main sticky faults", flywheelMain.getStickyFaults());
+    // SmartDashboard.putNumber("secondary sticky faults", flywheelFollower.getStickyFaults());
   }
 
   @Override
@@ -76,12 +91,18 @@ public class Flywheel extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  /*
-
   //will automatically be called periodically
   protected void useOutput(double output, TrapezoidProfile.State setpoint) {
     double fForward = feedForward.calculate(setpoint.position, setpoint.velocity)/12;
-    flywheelMain.set(output+fForward);
+    SmartDashboard.putNumber("feedforward", fForward);
+    if (pidController.getGoal().position == 0) {
+      flywheelMain.set(0);
+    } else {
+      flywheelMain.set(output+fForward);
+    }
+    
+    //flywheelMain.set(output+fForward);
+
   }
 
   protected double getMeasurement() {
@@ -91,16 +112,15 @@ public class Flywheel extends SubsystemBase {
   public void setGoal(double goal) {
     SmartDashboard.putNumber("Goal", goal);
     pidController.setGoal(goal);
-  } */
-
-  public void runShooter() {
-    flywheelMain.set(1);
-    flywheelFollower.set(1);
   }
-
+  /*
+  public void runShooter() {
+    flywheelMain.set(0.3);
+    flywheelFollower.set(0.3);
+  }
+  */
   public void stopShooter() {
     flywheelMain.set(0);
     flywheelFollower.set(0);
   }
-
 }

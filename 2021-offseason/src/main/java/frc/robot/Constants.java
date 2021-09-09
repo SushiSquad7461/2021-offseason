@@ -34,6 +34,7 @@ public final class Constants {
   
     public static final class kIntake { 
         public static final int INTAKE_PORT = 7;
+        public static final int PCM_PORT = 17;
         public static final double INTAKE_SPEED = 1.0;
         public static final int SOLENOID_FRONT = 0;
         public static final int SOLENOID_BACK = 1;
@@ -63,7 +64,7 @@ public final class Constants {
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final boolean MAIN_INVERTED = false;
         public static final boolean FOLLOWER_INVERTED = true;  
-        public static final int CURRENT_LIMIT = 35;
+        public static final int CURRENT_LIMIT = 80;
 
         // pid constants
         public static final double kP = 0;
@@ -73,9 +74,11 @@ public final class Constants {
         public static final double MAX_ACCELERATION = 0;
         public static final int ERR_TOLERANCE = 0;
 
+        public static final int GOAL = 500;
+
         // feedforward constants
-        public static final double kS = 0;
-        public static final double kV = 0;
+        public static final double kS = 0.47461;
+        public static final double kV = 0.07461;
         public static final double kA = 0;
         
     }

@@ -12,6 +12,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -48,10 +49,6 @@ public class RobotContainer {
         driveController.getXButton()),
       s_drivetrain));
     configureButtonBindings();
-
-    s_flywheel.setDefaultCommand(new RunCommand(
-      () -> s_flywheel.stopShooter(),
-      s_flywheel));
   }
 
   /**
@@ -82,10 +79,15 @@ public class RobotContainer {
       .whenReleased(new RunCommand(s_hopper::stop, s_hopper));
 
       new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
-      //.whenPressed(new RunCommand(() -> s_flywheel.setGoal(500), s_flywheel));
-      .whenPressed(new RunCommand(() -> s_flywheel.runShooter(), s_flywheel))
-      .whenReleased(new RunCommand(() -> s_flywheel.stopShooter(), s_flywheel));
+      .whenPressed(new RunCommand(() -> s_flywheel.setGoal(Constants.kFlywheel.GOAL), s_flywheel))
+      //.whenPressed(new RunCommand(() -> s_flywheel.runShooter(), s_flywheel))
+      .whenReleased(new RunCommand(() -> s_flywheel.setGoal(0), s_flywheel));
     
+      new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
+        .whenPressed(new RunCommand(() -> s_intake.actuateIntake(), s_intake));
+
+      new JoystickButton(driveController, XboxController.Button.kBumperLeft.value)
+        .whenPressed(new RunCommand(() -> s_intake.retractIntake(), s_intake));
   }
 
   /**
@@ -98,3 +100,4 @@ public class RobotContainer {
     return null;
   }
 }
+ 
