@@ -29,8 +29,8 @@ public final class Constants {
 
         public static final boolean DRIVE_INVERTED = false;
     }
-  
-    public static final class kIntake { 
+
+    public static final class kIntake {
         public static final int INTAKE_PORT = 10;
         public static final int INTAKE_SPEED = 1;
         public static final int SOLENOID_FRONT = 0;
@@ -41,6 +41,7 @@ public final class Constants {
     public static final class kHopper {
         public static final int LEFT_ID = 50;
         public static final int RIGHT_ID = 51;
+        public static final int CENTER_ID = 53;
         public static final int KICKER_ID = 52;
         public static final double FORWARD_SPEED = 0.2;
         public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
@@ -51,5 +52,22 @@ public final class Constants {
         public static final int DRIVE_CONTROLLER = 0;
         public static final int OPERATOR_CONTROLLER = 1;
     }
-    
+
+    public static final class kCLimb {
+        public static final
+                CANSparkMaxLowLevel.MotorType MOTOR_TYPE =
+                CANSparkMaxLowLevel.MotorType.kBrushless;
+
+        public static final int WINCH_LEFT = -1;
+        public static final int WINCH_RIGHT = -1;
+
+        public static final boolean WINCH_INVERTED = true;
+
+        public static final int CURRENT_LIMIT = 35;
+
+        public static final double MAX_SPEED = 0.3;
+
+        public static final int OPEN_LOOP_RAMP = 0;
+
+    }
 }
