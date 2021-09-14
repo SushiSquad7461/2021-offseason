@@ -20,7 +20,7 @@ public final class Constants {
     public static final class kDrivetrain {
         public static final int FRONT_LEFT_ID = 1;
         public static final int FRONT_RIGHT_ID = 14;
-        public static final int BACK_LEFT_ID = 45;
+        public static final int BACK_LEFT_ID = 42;
         public static final int BACK_RIGHT_ID = 15;
 
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
@@ -59,8 +59,8 @@ public final class Constants {
     public static final class kFlywheel {
        
         // motors
-        public static final int MAIN_ID = 10;
-        public static final int FOLLOWER_ID = 12;
+        public static final int MAIN_ID = 3;
+        public static final int FOLLOWER_ID = 13;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final boolean MAIN_INVERTED = false;
         public static final boolean FOLLOWER_INVERTED = true;  
