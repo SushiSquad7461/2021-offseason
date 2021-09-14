@@ -41,6 +41,7 @@ public final class Constants {
     public static final class kHopper {
         public static final int LEFT_ID = 50;
         public static final int RIGHT_ID = 51;
+        public static final int CENTER_ID = 53;
         public static final int KICKER_ID = 52;
         public static final double FORWARD_SPEED = 0.2;
         public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
