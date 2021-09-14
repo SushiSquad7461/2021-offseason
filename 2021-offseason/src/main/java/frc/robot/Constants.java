@@ -66,5 +66,8 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 35;
 
         public static final double MAX_SPEED = 0.3;
+
+        public static final int OPEN_LOOP_RAMP = 0;
+
     }
 }
