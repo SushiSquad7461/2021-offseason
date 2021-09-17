@@ -24,9 +24,9 @@ public class Drivetrain extends SubsystemBase {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
-    frontLeft.setInverted(!Constants.kDrivetrain.DRIVE_INVERTED);
+    frontLeft.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
     frontRight.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
-    backLeft.setInverted(!Constants.kDrivetrain.DRIVE_INVERTED);
+    backLeft.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
     backRight.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
 
     frontLeft.setOpenLoopRampRate(Constants.kDrivetrain.OPEN_LOOP_RAMP);
