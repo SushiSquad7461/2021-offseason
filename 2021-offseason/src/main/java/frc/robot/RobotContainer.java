@@ -28,26 +28,26 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Flywheel s_flywheel = new Flywheel();
 
-  private final Hopper s_hopper = new Hopper();
+  //private final Hopper m_hopper = new Hopper();
+  private final Hood m_hood = new Hood();
 
-  private final Intake s_intake = new Intake();
+  //private final Intake s_intake = new Intake();
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
-
-  //Operator Controller
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
-  private final Drivetrain s_drivetrain;
+  //private final Drivetrain s_drivetrain;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    /*
     s_drivetrain = new Drivetrain();
     // Configure the button bindings
     s_drivetrain.setDefaultCommand(new RunCommand(
       () -> s_drivetrain.curveDrive(OI.getTriggers(driveController), 
         OI.getLeftStick(driveController),
         driveController.getXButton()),
-      s_drivetrain));
+      s_drivetrain)); */
     configureButtonBindings();
   }
 
@@ -61,6 +61,7 @@ public class RobotContainer {
   //Assign operator controller buttons A and Y to startIntake and startReverse respectively
   private void configureButtonBindings() {
     // A button -> run intake forward
+    /*
     new JoystickButton(operatorController, XboxController.Button.kA.value)
         .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
         .whenReleased(new RunCommand(s_intake::stopIntake, s_intake));   
@@ -68,8 +69,17 @@ public class RobotContainer {
     // B button -> run intake reverse
     new JoystickButton(operatorController, XboxController.Button.kB.value)
       .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
-      .whenReleased(new RunCommand(s_intake::stopIntake, s_intake)); 
-
+      .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
+    new JoystickButton(operatorController, XboxController.Button.kY.value)
+      .whenPressed(new RunCommand(m_hopper::moveBackward, m_hopper))
+      .whenReleased(new RunCommand(m_hopper::stop, m_hopper)); */
+    //new JoystickButton(driveController, XboxController.Button.kY.value)
+    //  .whenPressed(new RunCommand(m_hood::setZero, m_hood));
+    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+      .whenPressed(new InstantCommand(m_hood::incrementUp, m_hood));
+    //  .whenReleased(new RunCommand(m_hood::stopHood,m_hood));
+    new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+      .whenPressed(new InstantCommand(m_hood::incrementDown, m_hood));
     new JoystickButton(operatorController, XboxController.Button.kX.value)
       .whenPressed(new RunCommand(s_hopper::moveForward, s_hopper))
       .whenReleased(new RunCommand(s_hopper::stop, s_hopper));
