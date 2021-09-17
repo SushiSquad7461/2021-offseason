@@ -8,7 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -20,6 +24,9 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  // The robot's subsystems and commands are defined here...
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Flywheel s_flywheel = new Flywheel();
 
   private final Hopper s_hopper = new Hopper();
 
@@ -56,12 +63,12 @@ public class RobotContainer {
     // A button -> run intake forward
     new JoystickButton(operatorController, XboxController.Button.kA.value)
         .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
-        .whenPressed(new RunCommand(s_intake::stopIntake, s_intake));   
+        .whenReleased(new RunCommand(s_intake::stopIntake, s_intake));   
 
     // B button -> run intake reverse
     new JoystickButton(operatorController, XboxController.Button.kB.value)
       .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
-      .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
+      .whenReleased(new RunCommand(s_intake::stopIntake, s_intake)); 
 
     new JoystickButton(operatorController, XboxController.Button.kX.value)
       .whenPressed(new RunCommand(s_hopper::moveForward, s_hopper))
@@ -70,6 +77,17 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new RunCommand(s_hopper::moveBackward, s_hopper))
       .whenReleased(new RunCommand(s_hopper::stop, s_hopper));
+
+      new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+      .whenPressed(new RunCommand(() -> s_flywheel.setGoal(Constants.kFlywheel.GOAL), s_flywheel))
+      //.whenPressed(new RunCommand(() -> s_flywheel.runShooter(), s_flywheel))
+      .whenReleased(new RunCommand(() -> s_flywheel.setGoal(0), s_flywheel));
+    
+      new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
+        .whenPressed(new RunCommand(() -> s_intake.actuateIntake(), s_intake));
+
+      new JoystickButton(driveController, XboxController.Button.kBumperLeft.value)
+        .whenPressed(new RunCommand(() -> s_intake.retractIntake(), s_intake));
   }
 
   /**
@@ -82,3 +100,4 @@ public class RobotContainer {
     return null;
   }
 }
+ 
