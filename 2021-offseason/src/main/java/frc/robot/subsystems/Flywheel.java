@@ -30,6 +30,8 @@ public class Flywheel extends SubsystemBase {
     flywheelMain = new CANSparkMax(Constants.kFlywheel.MAIN_ID, Constants.kFlywheel.MOTOR_TYPE);
     flywheelFollower = new CANSparkMax(Constants.kFlywheel.FOLLOWER_ID, Constants.kFlywheel.MOTOR_TYPE);
     flywheelEncoder = flywheelMain.getEncoder();
+    flywheelMain.setOpenLoopRampRate(Constants.kFlywheel.OPEN_LOOP_RAMP);
+    flywheelFollower.setOpenLoopRampRate(Constants.kFlywheel.OPEN_LOOP_RAMP);
 
     pidController = new ProfiledPIDController(
     Constants.kFlywheel.kP,
@@ -57,12 +59,17 @@ public class Flywheel extends SubsystemBase {
     flywheelMain.setInverted(Constants.kFlywheel.MAIN_INVERTED);
     flywheelFollower.setInverted(Constants.kFlywheel.FOLLOWER_INVERTED);
 
+    flywheelMain.setOpenLoopRampRate(Constants.kFlywheel.OPEN_LOOP_RAMP);
+    flywheelFollower.setOpenLoopRampRate(Constants.kFlywheel.OPEN_LOOP_RAMP);
+
+    //flywheelFollower.follow(flywheelMain);
+
     flywheelFollower.burnFlash();
     flywheelMain.burnFlash();
 
     flywheelMain.setIdleMode(IdleMode.kCoast);
     flywheelFollower.setIdleMode(IdleMode.kCoast);
-    flywheelFollower.follow(flywheelMain);
+    
     SmartDashboard.putNumber(new Boolean(flywheelFollower.getInverted()).toString(), 69);
 
 
@@ -93,12 +100,16 @@ public class Flywheel extends SubsystemBase {
 
   //will automatically be called periodically
   protected void useOutput(double output, TrapezoidProfile.State setpoint) {
-    double fForward = feedForward.calculate(setpoint.position, setpoint.velocity)/12;
+    SmartDashboard.putNumber("velocity ff setpoint", setpoint.position);
+    SmartDashboard.putNumber("acceleration ff setpoint", setpoint.velocity);
+    double fForward = feedForward.calculate(setpoint.position, setpoint.velocity)/(12*8);
     SmartDashboard.putNumber("feedforward", fForward);
     if (pidController.getGoal().position == 0) {
       flywheelMain.set(0);
+      flywheelFollower.set(0);
     } else {
       flywheelMain.set(output+fForward);
+      flywheelFollower.set(output+fForward);
     }
     
     //flywheelMain.set(output+fForward);
@@ -113,12 +124,13 @@ public class Flywheel extends SubsystemBase {
     SmartDashboard.putNumber("Goal", goal);
     pidController.setGoal(goal);
   }
-  /*
+  
   public void runShooter() {
-    flywheelMain.set(0.3);
-    flywheelFollower.set(0.3);
+    double speed = 1;
+    flywheelMain.set(speed);
+    flywheelFollower.set(speed);
   }
-  */
+  
   public void stopShooter() {
     flywheelMain.set(0);
     flywheelFollower.set(0);

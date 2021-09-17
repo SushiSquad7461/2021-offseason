@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
     intakeTalon = new TalonSRX(Constants.kIntake.INTAKE_PORT);
     intakeTalon.setInverted(Constants.kIntake.INVERTED);
-    solenoid = new DoubleSolenoid(Constants.kIntake.PCM_PORT, Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
+    solenoid = new DoubleSolenoid(Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
 
     solenoid.set(DoubleSolenoid.Value.kOff);
     solenoid.set(DoubleSolenoid.Value.kForward);
