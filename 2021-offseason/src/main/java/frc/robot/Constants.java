@@ -70,7 +70,7 @@ public final class Constants {
 
         public static final int CURRENT_LIMIT = 35;
         public static final int OPEN_LOOP_RAMP = 0;
-        public static final double SLOW_SPEED = 0.1;
+        public static final double SLOW_SPEED = 0.2;
 
         public static final boolean DRIVE_INVERTED = false;
     }

@@ -63,6 +63,11 @@ public class RobotContainer {
     new JoystickButton(driveController, XboxController.Button.kY.value)
       .whenPressed(new InstantCommand(s_drivetrain::invertDirection, s_drivetrain));
 
+    // drive B --> slow mode
+    new JoystickButton(driveController, XboxController.Button.kB.value)
+      .whenPressed(new InstantCommand(s_drivetrain::startSlow, s_drivetrain))
+      .whenReleased(new InstantCommand(s_drivetrain::endSlow, s_drivetrain));
+
     // drive left bumper --> run intake + hopper (intake)
     new JoystickButton(driveController, XboxController.Button.kBumperLeft.value)
       .whenPressed(new ParallelCommandGroup(
@@ -77,10 +82,6 @@ public class RobotContainer {
     // drive right bumper --> extend intake
     new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
       .whenPressed(new InstantCommand(s_intake::actuateIntake, s_intake));
-
-    // drive B --> retract intake
-    new JoystickButton(driveController, XboxController.Button.kB.value)
-      .whenPressed(new InstantCommand(s_intake::retractIntake, s_intake));
 
     // drive A --> run hopper + kicker (shoot)
     new JoystickButton(driveController, XboxController.Button.kA.value)
@@ -122,6 +123,10 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new InstantCommand(s_hopper::shootBackward, s_hopper))
       .whenReleased(new InstantCommand(s_hopper::stopHopper, s_hopper));
+
+    // operator click right joystick --> retract intake
+    new JoystickButton(driveController, XboxController.Button.kStickRight.value)
+      .whenPressed(new InstantCommand(s_intake::retractIntake, s_intake));
     
     // operator start button --> increment hood angle up
     new JoystickButton(operatorController, XboxController.Button.kStart.value)

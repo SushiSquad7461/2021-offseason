@@ -13,6 +13,7 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
   private final DifferentialDrive diffDrive;
   private int angleInvert;
+  private boolean slow;
 
   public Drivetrain() {
     frontLeft = new CANSparkMax(Constants.kDrivetrain.FRONT_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
@@ -31,6 +32,7 @@ public class Drivetrain extends SubsystemBase {
     backRight.follow(frontRight);
 
     angleInvert = 1;
+    slow = false;
 
     frontLeft.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
     frontRight.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
@@ -49,7 +51,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn) {
-    diffDrive.curvatureDrive(linearVelocity, angularVelocity * angleInvert, isQuickturn);
+    if (slow) {
+      diffDrive.curvatureDrive(linearVelocity, angularVelocity * angleInvert * Constants.kDrivetrain.SLOW_SPEED, isQuickturn);
+    } else {
+      diffDrive.curvatureDrive(linearVelocity, angularVelocity * angleInvert, isQuickturn);
+    }
   }
 
   public void invertDirection() {
@@ -58,6 +64,14 @@ public class Drivetrain extends SubsystemBase {
     backLeft.setInverted(!backLeft.getInverted());
     backRight.setInverted(!backRight.getInverted());
     angleInvert = angleInvert * -1;
+  }
+
+  public void startSlow() {
+    slow = true;
+  }
+
+  public void endSlow() {
+    slow = false;
   }
 
   @Override
