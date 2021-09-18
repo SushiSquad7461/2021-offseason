@@ -33,7 +33,7 @@ public class RobotContainer {
   private final Drivetrain s_drivetrain;
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
-  private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
+  private final XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
   private final AutoShoot c_autoShoot;
 
@@ -47,7 +47,7 @@ public class RobotContainer {
         driveController.getXButton()),
       s_drivetrain));
 
-    // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT
+    // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT AND USE BUMPERS
     s_climb.setDefaultCommand(new RunCommand(
       () -> s_climb.climbAnalog(Math.pow(OI.getTriggers(operatorController), 3)), s_climb)
     );
@@ -154,6 +154,20 @@ public class RobotContainer {
         new InstantCommand(s_hood::setZero, s_hood),
         new InstantCommand(s_hood::initLineSetpoint, s_hood)
       ));
+  }
+
+  // rumbles operator controller to flywheel speed lol
+  public void setOperatorRumble() {
+    operatorController.setRumble(GenericHID.RumbleType.kRightRumble, s_flywheel.goalPercentage());
+  }
+
+  // rumbles drive controller when flywheel is at speed
+  public void setDriveRumble() {
+    if (s_flywheel.atSpeed()) {
+      driveController.setRumble(GenericHID.RumbleType.kRightRumble, 1);
+    } else {
+      driveController.setRumble(GenericHID.RumbleType.kRightRumble, 0);
+    }
   }
 
   /**

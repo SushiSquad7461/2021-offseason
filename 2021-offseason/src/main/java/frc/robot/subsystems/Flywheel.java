@@ -127,6 +127,10 @@ public class Flywheel extends SubsystemBase {
     return flywheelEncoder.getVelocity() >= Constants.kFlywheel.GOAL * Constants.kFlywheel.GOAL_TOLERANCE;
   }
 
+  public double goalPercentage() {
+    return flywheelEncoder.getVelocity() / Constants.kFlywheel.GOAL;
+  }
+
   public void setGoal(double goal) {
     //SmartDashboard.putNumber("Goal", goal);
     pidController.setGoal(goal);
