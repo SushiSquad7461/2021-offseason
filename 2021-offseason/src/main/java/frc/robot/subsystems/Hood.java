@@ -36,8 +36,8 @@ public class Hood extends SubsystemBase {
     private double initialSetpoint;
     
     public Hood() {
-        SmartDashboard.putNumber("kP", Constants.kHood.kP);
-        SmartDashboard.putNumber("kD", Constants.kHood.kD);
+        //SmartDashboard.putNumber("kP", Constants.kHood.kP);
+        //SmartDashboard.putNumber("kD", Constants.kHood.kD);
         this.hoodMain = new CANSparkMax(Constants.kHood.MOTOR_ID, Constants.kHood.MOTOR_TYPE);
         hoodMain.setInverted(true);
         hoodMain.setIdleMode(CANSparkMax.IdleMode.kCoast);
@@ -48,14 +48,17 @@ public class Hood extends SubsystemBase {
         this.hoodController.setI(Constants.kHood.kI);
         this.hoodController.setD(Constants.kHood.kD);
         this.camera = new PhotonCamera("myCamera");
-        initialSetpoint = hoodEncoder.getPosition();
+        //initialSetpoint = hoodEncoder.getPosition();
+        initialSetpoint = 7.8;
+        set(initialSetpoint);
+        
         //setZero();
     }
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
-        SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
-        SmartDashboard.putNumber("hood encoder position", hoodEncoder.getPosition());
+        //SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
+        //SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
+        SmartDashboard.putNumber("hood angle", hoodEncoder.getPosition());
         //if (isTaring) tareHoodPeriodic();
     }
 
@@ -79,7 +82,7 @@ public class Hood extends SubsystemBase {
 
     public void set(double setpoint) {
         this.hoodController.setReference(setpoint + Constants.kHood.kFF, ControlType.kPosition);
-        SmartDashboard.putNumber("hood setpoint", setpoint);
+        //SmartDashboard.putNumber("hood setpoint", setpoint);
     }
     public void incrementUp() {
         increaseSetpoint(Constants.kHood.HOOD_INCREMENT);
@@ -98,11 +101,11 @@ public class Hood extends SubsystemBase {
 
     public void runHood() {
         hoodMain.set(0.2);
-        SmartDashboard.putString("hood", "runninghood");
+        //SmartDashboard.putString("hood", "runninghood");
     }
 
     public void stopHood() {
         hoodMain.set(0);
-        SmartDashboard.putString("hood", "notrunninhood");
+        //SmartDashboard.putString("hood", "notrunninhood");
     }
 }

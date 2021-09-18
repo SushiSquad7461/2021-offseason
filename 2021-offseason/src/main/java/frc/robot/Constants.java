@@ -25,7 +25,7 @@ public final class Constants {
         public static final int MOTOR_ID = 4;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final double MAX_SPEED = 0.3;
-        public static final double HOOD_INCREMENT = 1;
+        public static final double HOOD_INCREMENT = 0.5;
         public static final double kP = 0.1;
         public static final double kI = 0;
         public static final double kD = 0;
@@ -79,7 +79,7 @@ public final class Constants {
         public static final double INTAKE_SPEED = 1.0;
         public static final int SOLENOID_FRONT = 1;
         public static final int SOLENOID_BACK = 0;
-        public static final boolean INVERTED = false;
+        public static final boolean INVERTED = true;
     }
 
     public static final class kHopper {
@@ -87,10 +87,14 @@ public final class Constants {
         public static final int RIGHT_ID = 11;
         public static final int CENTER_ID = 8;
         public static final int KICKER_ID = 5;
-        public static final double FORWARD_SPEED = 0.7;
+        public static final double LEFT_SPEED = 0.5;
+        public static final double RIGHT_SPEED = 0.7;
+        public static final double FLOOR_SPEED = 0.3;
+        public static final double KICKER_FORWARD = 1;
+        public static final double KICKER_REVERSE = -1;
         public static final int CURRENT_LIMIT = 40;
-        public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
-        public static final boolean INVERTED = true;
+        public static final double REVERSE_SPEED = -1;
+        public static final boolean INVERTED = false;
     }
 
     public static final class kOI {
@@ -110,14 +114,14 @@ public final class Constants {
         public static final double OPEN_LOOP_RAMP = 1;
 
         // pid constants
-        public static final double kP = 0.0007;
+        public static final double kP = 0.001;
         public static final double kI = 0;
-        public static final double kD = 0.001;  
+        public static final double kD = 0.0005;  
         public static final double MAX_VELOCITY = 0;
         public static final double MAX_ACCELERATION = 0;
         public static final int ERR_TOLERANCE = 0;
 
-        public static final int GOAL = 2000;
+        public static final int GOAL = 3000;
 
         // feedforward constants
         public static final double kS = 0.71212;
@@ -133,13 +137,12 @@ public final class Constants {
         public static final int WINCH_LEFT = 12;
         public static final int WINCH_RIGHT = 2;
 
-        public static final double OPEN_LOOP_RAMP = 1;
-
         public static final boolean WINCH_INVERTED = true;
 
-        public static final int CURRENT_LIMIT = 35;
+        public static final int CURRENT_LIMIT = 40;
+        public static final double OPEN_LOOP_RAMP = 1;
 
-        public static final double MAX_SPEED = 0.2;
+        public static final double MAX_SPEED = 0.7461;
 
 
 }}

@@ -12,6 +12,7 @@ import frc.robot.Constants;
 public class Drivetrain extends SubsystemBase {
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
   private final DifferentialDrive diffDrive;
+  private int angleInvert;
 
   public Drivetrain() {
     frontLeft = new CANSparkMax(Constants.kDrivetrain.FRONT_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
@@ -28,6 +29,8 @@ public class Drivetrain extends SubsystemBase {
     //front motors are controlled, others follow corresponding
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
+
+    angleInvert = 1;
 
     frontLeft.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
     frontRight.setInverted(Constants.kDrivetrain.DRIVE_INVERTED);
@@ -46,7 +49,15 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn) {
-    diffDrive.curvatureDrive(linearVelocity, angularVelocity, isQuickturn);
+    diffDrive.curvatureDrive(linearVelocity, angularVelocity * angleInvert, isQuickturn);
+  }
+
+  public void invertDirection() {
+    frontLeft.setInverted(!frontLeft.getInverted());
+    frontRight.setInverted(!frontRight.getInverted());
+    backLeft.setInverted(!backLeft.getInverted());
+    backRight.setInverted(!backRight.getInverted());
+    angleInvert = angleInvert * -1;
   }
 
   @Override

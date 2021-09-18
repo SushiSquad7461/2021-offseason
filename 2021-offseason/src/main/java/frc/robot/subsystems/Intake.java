@@ -25,6 +25,7 @@ public class Intake extends SubsystemBase {
 
     solenoid.set(DoubleSolenoid.Value.kOff);
     solenoid.set(DoubleSolenoid.Value.kForward);
+    SmartDashboard.putBoolean("intake extended", false);
   }
 
   @Override
@@ -38,7 +39,7 @@ public class Intake extends SubsystemBase {
   }  
 
   public void startIntake() {
-    SmartDashboard.putNumber("key2", Constants.kIntake.INTAKE_SPEED);
+    //SmartDashboard.putNumber("key2", Constants.kIntake.INTAKE_SPEED);
     moveIntake(Constants.kIntake.INTAKE_SPEED);
   }
 
@@ -52,14 +53,16 @@ public class Intake extends SubsystemBase {
 
   public void moveIntake(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
-    SmartDashboard.putNumber("key", velocity);
+    //SmartDashboard.putNumber("key", velocity);
   }
 
   public void actuateIntake() {
-    solenoid.set(Value.kForward);
+    solenoid.set(Value.kReverse);
+    SmartDashboard.putBoolean("intake extended", true);
   }
 
   public void retractIntake() {
-    solenoid.set(Value.kReverse);
+    solenoid.set(Value.kForward);
+    SmartDashboard.putBoolean("intake extended", false);
   }
 }

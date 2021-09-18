@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -28,14 +29,13 @@ public class Hopper extends SubsystemBase {
     center.configFactoryDefault();
     kicker.configFactoryDefault();
 
+    left.setNeutralMode(NeutralMode.Coast);
+    right.setNeutralMode(NeutralMode.Coast);
+
     left.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
     right.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
     center.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
     //kicker.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
-
-    right.follow(left);
-    kicker.follow(left);
-    center.follow(left);
 
     left.setInverted(Constants.kHopper.INVERTED);
     right.setInverted(Constants.kHopper.INVERTED);
@@ -43,19 +43,32 @@ public class Hopper extends SubsystemBase {
     kicker.setInverted(Constants.kHopper.INVERTED);
   }
 
+  public void shootForward() {
+    //moveForward();
+    kicker.set(ControlMode.PercentOutput, Constants.kHopper.KICKER_FORWARD);
+  }
+
+  public void shootBackward() {
+    moveBackward();
+    kicker.set(ControlMode.PercentOutput, Constants.kHopper.KICKER_REVERSE);
+  }
+
   public void moveForward() {
-    moveMotor(Constants.kHopper.FORWARD_SPEED);
+    left.set(ControlMode.PercentOutput, Constants.kHopper.LEFT_SPEED);
+    right.set(ControlMode.PercentOutput, Constants.kHopper.RIGHT_SPEED);
+    center.set(ControlMode.PercentOutput, Constants.kHopper.FLOOR_SPEED);
   }
 
   public void moveBackward() {
-    moveMotor(Constants.kHopper.REVERSE_SPEED);
+    left.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
+    right.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
+    center.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
   }
 
-  public void stop() {
-    moveMotor(0);
-  }
-
-  public void moveMotor(double velocity) {
-    left.set(ControlMode.PercentOutput, velocity);
+  public void stopHopper() {
+    left.set(ControlMode.PercentOutput, 0);
+    right.set(ControlMode.PercentOutput, 0);
+    center.set(ControlMode.PercentOutput, 0);
+    kicker.set(ControlMode.PercentOutput, 0);
   }
 }

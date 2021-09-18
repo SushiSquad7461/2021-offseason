@@ -19,31 +19,34 @@ public class Climb extends SubsystemBase {
     winch_left.restoreFactoryDefaults();
     winch_right.restoreFactoryDefaults();
 
-    winch_left.follow(winch_right);
-
-    winch_left.setInverted(Constants.kClimb.WINCH_INVERTED);
-    winch_right.setInverted(!Constants.kClimb.WINCH_INVERTED);
+    winch_left.setInverted(true);
+    winch_right.setInverted(false);
 
     winch_left.setOpenLoopRampRate(Constants.kClimb.OPEN_LOOP_RAMP);
     winch_right.setOpenLoopRampRate(Constants.kClimb.OPEN_LOOP_RAMP);
 
     winch_left.setSmartCurrentLimit(Constants.kClimb.CURRENT_LIMIT);
     winch_right.setSmartCurrentLimit(Constants.kClimb.CURRENT_LIMIT);
-
+  
+    winch_left.burnFlash();
+    winch_right.burnFlash();
   }
 
   public void start() {
-    SmartDashboard.putBoolean("running climb", true);
-    winch_left.set(Constants.kClimb.MAX_SPEED);
+    //SmartDashboard.putBoolean("running climb", true);
+    winch_left.set(-Constants.kClimb.MAX_SPEED);
+    winch_right.set(-Constants.kClimb.MAX_SPEED);
   }
 
   public void stop() {
-    SmartDashboard.putBoolean("running climb", false);
+    //SmartDashboard.putBoolean("running climb", false);
     winch_left.set(0);
+    winch_right.set(0);
   }
 
   public void reverse() {
-    winch_left.set(-Constants.kClimb.MAX_SPEED);
+    winch_left.set(Constants.kClimb.MAX_SPEED);
+    winch_right.set(Constants.kClimb.MAX_SPEED);
   }
 
   @Override
