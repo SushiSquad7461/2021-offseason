@@ -68,7 +68,7 @@ public class RobotContainer {
     // B button -> run intake reverse
     new JoystickButton(operatorController, XboxController.Button.kB.value)
       .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
-      .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
+      .whenReleased(new RunCommand(s_intake::stopIntake, s_intake)); 
     
     //new JoystickButton(driveController, XboxController.Button.kY.value)
     //  .whenPressed(new RunCommand(m_hood::setZero, m_hood));

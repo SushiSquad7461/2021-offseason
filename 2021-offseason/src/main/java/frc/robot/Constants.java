@@ -60,9 +60,9 @@ public final class Constants {
 
     public static final class kDrivetrain {
         public static final int FRONT_LEFT_ID = 1;
-        public static final int FRONT_RIGHT_ID = 14;
+        public static final int FRONT_RIGHT_ID = 15;
         public static final int BACK_LEFT_ID = 42;
-        public static final int BACK_RIGHT_ID = 15;
+        public static final int BACK_RIGHT_ID = 14;
 
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
 
@@ -130,8 +130,8 @@ public final class Constants {
                 CANSparkMaxLowLevel.MotorType MOTOR_TYPE =
                 CANSparkMaxLowLevel.MotorType.kBrushless;
 
-        public static final int WINCH_LEFT = 2;
-        public static final int WINCH_RIGHT = 12;
+        public static final int WINCH_LEFT = 12;
+        public static final int WINCH_RIGHT = 2;
 
         public static final double OPEN_LOOP_RAMP = 1;
 

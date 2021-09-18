@@ -19,6 +19,11 @@ public class Drivetrain extends SubsystemBase {
     backLeft = new CANSparkMax(Constants.kDrivetrain.BACK_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
     backRight = new CANSparkMax(Constants.kDrivetrain.BACK_RIGHT_ID, Constants.kDrivetrain.MOTOR_TYPE);
 
+    frontLeft.restoreFactoryDefaults();
+    frontRight.restoreFactoryDefaults();
+    backLeft.restoreFactoryDefaults();
+    backRight.restoreFactoryDefaults();
+
     diffDrive = new DifferentialDrive(frontLeft, frontRight);
     //front motors are controlled, others follow corresponding
     backLeft.follow(frontLeft);
