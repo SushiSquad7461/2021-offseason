@@ -30,6 +30,8 @@ public class RobotContainer {
 
   private final Intake s_intake = new Intake();
 
+  private final Climb s_climb = new Climb();
+
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
@@ -93,6 +95,13 @@ public class RobotContainer {
 
       new JoystickButton(driveController, XboxController.Button.kBumperLeft.value)
         .whenPressed(new RunCommand(() -> s_intake.retractIntake(), s_intake));
+    new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+      .whenPressed(new RunCommand(s_climb::start, s_climb))
+      .whenReleased(new RunCommand(s_climb::stop, s_climb));
+    
+    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+      .whenPressed(new RunCommand(s_climb::reverse, s_climb))
+      .whenReleased(new RunCommand(s_climb::stop, s_climb));
   }
 
   /**

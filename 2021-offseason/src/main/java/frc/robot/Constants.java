@@ -125,6 +125,21 @@ public final class Constants {
         public static final double kA = 0.016388;
         
     }
+    public static final class kClimb {
+        public static final
+                CANSparkMaxLowLevel.MotorType MOTOR_TYPE =
+                CANSparkMaxLowLevel.MotorType.kBrushless;
+
+        public static final int WINCH_LEFT = 2;
+        public static final int WINCH_RIGHT = 12;
+
+        public static final double OPEN_LOOP_RAMP = 1;
+
+        public static final boolean WINCH_INVERTED = true;
+
+        public static final int CURRENT_LIMIT = 35;
+
+        public static final double MAX_SPEED = 0.2;
 
 
-}
+}}
