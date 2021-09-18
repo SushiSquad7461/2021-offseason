@@ -94,13 +94,13 @@ public class RobotContainer {
         new InstantCommand(s_hopper::stopHopper, s_hopper)
       ));
 
-    // drive click left joystick --> slow climb reverse
-    new JoystickButton(driveController, XboxController.Button.kStickLeft.value)
+    // drive back button --> slow climb reverse
+    new JoystickButton(driveController, XboxController.Button.kBack.value)
       .whenPressed(new InstantCommand(s_climb::slowClimbReverse, s_climb))
       .whenReleased(new InstantCommand(s_climb::stop, s_climb));
 
-    // drive click right joystick --> slow climb forward
-    new JoystickButton(driveController, XboxController.Button.kStickRight.value)
+    // drive start button --> slow climb forward
+    new JoystickButton(driveController, XboxController.Button.kStart.value)
       .whenPressed(new InstantCommand(s_climb::fastClimbForward, s_climb))
       .whenReleased(new InstantCommand(s_climb::stop, s_climb));
 

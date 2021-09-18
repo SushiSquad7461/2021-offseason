@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase {
     solenoid = new DoubleSolenoid(Constants.kIntake.PCM_PORT, Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
 
     solenoid.set(DoubleSolenoid.Value.kOff);
-    solenoid.set(DoubleSolenoid.Value.kForward);
+    solenoid.set(DoubleSolenoid.Value.kReverse);
     SmartDashboard.putBoolean("intake extended", false);
   }
 
