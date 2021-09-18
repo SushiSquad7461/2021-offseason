@@ -83,7 +83,7 @@ public class Flywheel extends SubsystemBase {
     useOutput(output, pidController.getSetpoint());
 
     SmartDashboard.putNumber("flywheel rpm", flywheelEncoder.getVelocity());
-    SmartDashboard.putBoolean("at speed", flywheelEncoder.getVelocity() >= Constants.kFlywheel.GOAL* 0.95);
+    SmartDashboard.putBoolean("at speed", atSpeed());
     // This method will be called once per scheduler run
     //SmartDashboard.putBoolean("Main motor inverted", flywheelMain.getInverted());
     //SmartDashboard.putBoolean("Second motor inverted", flywheelFollower.getInverted());
@@ -121,6 +121,10 @@ public class Flywheel extends SubsystemBase {
 
   protected double getMeasurement() {
     return flywheelMain.getEncoder().getVelocity();
+  }
+
+  public boolean atSpeed() {
+    return flywheelEncoder.getVelocity() >= Constants.kFlywheel.GOAL * Constants.kFlywheel.GOAL_TOLERANCE;
   }
 
   public void setGoal(double goal) {

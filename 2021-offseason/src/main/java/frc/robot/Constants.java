@@ -56,6 +56,8 @@ public final class Constants {
             hoodAngleTreeMap.put(new InterpolatingDouble(220.0), new InterpolatingDouble(66.0));
             hoodAngleTreeMap.put(new InterpolatingDouble(230.0), new InterpolatingDouble(67.0));
         }
+
+        public static final double INIT_LINE_ANGLE = 7.8;
     }
 
     public static final class kDrivetrain {
@@ -122,6 +124,7 @@ public final class Constants {
         public static final int ERR_TOLERANCE = 0;
 
         public static final int GOAL = 3000;
+        public static final double GOAL_TOLERANCE = 0.95; // percentage of goal that counts
 
         // feedforward constants
         public static final double kS = 0.71212;
@@ -142,7 +145,8 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 40;
         public static final double OPEN_LOOP_RAMP = 1;
 
-        public static final double MAX_SPEED = 0.7461;
+        public static final double MAX_SPEED = 0.7461; // maybe max out ?
+        public static final double SLOW_SPEED = 0.3; // should tune, test in pit
 
 
 }}

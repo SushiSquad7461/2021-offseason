@@ -32,10 +32,25 @@ public class Climb extends SubsystemBase {
     winch_right.burnFlash();
   }
 
-  public void start() {
+  public void fastClimbForward() {
     //SmartDashboard.putBoolean("running climb", true);
     winch_left.set(-Constants.kClimb.MAX_SPEED);
     winch_right.set(-Constants.kClimb.MAX_SPEED);
+  }
+
+  public void fastClimbReverse() {
+    winch_left.set(Constants.kClimb.MAX_SPEED);
+    winch_right.set(Constants.kClimb.MAX_SPEED);
+  }
+
+  public void slowClimbForward() {
+    winch_left.set(-Constants.kClimb.SLOW_SPEED);
+    winch_right.set(-Constants.kClimb.SLOW_SPEED);
+  }
+
+  public void slowClimbReverse() {
+    winch_left.set(Constants.kClimb.SLOW_SPEED);
+    winch_right.set(Constants.kClimb.SLOW_SPEED);
   }
 
   public void stop() {
@@ -44,9 +59,9 @@ public class Climb extends SubsystemBase {
     winch_right.set(0);
   }
 
-  public void reverse() {
-    winch_left.set(Constants.kClimb.MAX_SPEED);
-    winch_right.set(Constants.kClimb.MAX_SPEED);
+  public void climbAnalog(double power) {
+    winch_left.set(-power);
+    winch_right.set(-power);
   }
 
   @Override

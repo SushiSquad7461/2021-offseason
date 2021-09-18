@@ -49,7 +49,7 @@ public class Hood extends SubsystemBase {
         this.hoodController.setD(Constants.kHood.kD);
         this.camera = new PhotonCamera("myCamera");
         //initialSetpoint = hoodEncoder.getPosition();
-        initialSetpoint = 7.8;
+        initialSetpoint = Constants.kHood.INIT_LINE_ANGLE;
         set(initialSetpoint);
         
         //setZero();
@@ -98,6 +98,10 @@ public class Hood extends SubsystemBase {
     public void setSetpoint(double setpoint) {
         increaseSetpoint(setpoint-currentDegree);
     } 
+
+    public void initLineSetpoint() {
+        set(Constants.kHood.INIT_LINE_ANGLE);
+    }
 
     public void runHood() {
         hoodMain.set(0.2);

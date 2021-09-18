@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
@@ -25,40 +26,37 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
  */
 public class RobotContainer {
   private final Flywheel s_flywheel = new Flywheel();
-
   private final Hopper s_hopper = new Hopper();
   private final Hood s_hood = new Hood();
-
   private final Intake s_intake = new Intake();
-
   private final Climb s_climb = new Climb();
+  private final Drivetrain s_drivetrain;
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
-  private final Drivetrain s_drivetrain;
+  private final AutoShoot c_autoShoot;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
     s_drivetrain = new Drivetrain();
-    // Configure the button bindings
     s_drivetrain.setDefaultCommand(new RunCommand(
       () -> s_drivetrain.curveDrive(OI.getTriggers(driveController), 
         OI.getLeftStick(driveController),
         driveController.getXButton()),
-      s_drivetrain)); 
+      s_drivetrain));
+
+    // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT
+    s_climb.setDefaultCommand(new RunCommand(
+      () -> s_climb.climbAnalog(Math.pow(OI.getTriggers(operatorController), 3)), s_climb)
+    );
+
+    c_autoShoot = new AutoShoot(s_flywheel, s_hopper, s_intake, s_hood);
+
     configureButtonBindings();
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-
-  //Assign operator controller buttons A and Y to startIntake and startReverse respectively
   private void configureButtonBindings() {
 
     // drive Y --> invert direction
@@ -80,10 +78,14 @@ public class RobotContainer {
     new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
       .whenPressed(new InstantCommand(s_intake::actuateIntake, s_intake));
 
+    // drive B --> retract intake
+    new JoystickButton(driveController, XboxController.Button.kB.value)
+      .whenPressed(new InstantCommand(s_intake::retractIntake, s_intake));
+
     // drive A --> run hopper + kicker (shoot)
     new JoystickButton(driveController, XboxController.Button.kA.value)
       .whenPressed(new ParallelCommandGroup(
-        //new InstantCommand(s_intake::startIntake, s_intake),
+        new InstantCommand(s_intake::startIntake, s_intake),
         new InstantCommand(s_hopper::shootForward, s_hopper)
       ))
       .whenReleased(new ParallelCommandGroup(
@@ -91,7 +93,17 @@ public class RobotContainer {
         new InstantCommand(s_hopper::stopHopper, s_hopper)
       ));
 
-    // operator A --> rev flywheel (change to trig maybe)
+    // drive click left joystick --> slow climb reverse
+    new JoystickButton(driveController, XboxController.Button.kStickLeft.value)
+      .whenPressed(new InstantCommand(s_climb::slowClimbReverse, s_climb))
+      .whenReleased(new InstantCommand(s_climb::stop, s_climb));
+
+    // drive click right joystick --> slow climb forward
+    new JoystickButton(driveController, XboxController.Button.kStickRight.value)
+      .whenPressed(new InstantCommand(s_climb::fastClimbForward, s_climb))
+      .whenReleased(new InstantCommand(s_climb::stop, s_climb));
+
+    // operator A --> rev flywheel
     new JoystickButton(operatorController, XboxController.Button.kA.value)
       .whenPressed(new RunCommand(() -> s_flywheel.setGoal(Constants.kFlywheel.GOAL), s_flywheel))
       .whenReleased(new RunCommand(() -> s_flywheel.setGoal(0), s_flywheel));
@@ -110,34 +122,33 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new InstantCommand(s_hopper::shootBackward, s_hopper))
       .whenReleased(new InstantCommand(s_hopper::stopHopper, s_hopper));
-  
-    // operator left bumper --> retract intake
-    /*new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-      .whenPressed(new InstantCommand(() -> s_intake.retractIntake(), s_intake));*/
     
-    // operator pad up --> increment hood angle up
-    new JoystickButton(operatorController, XboxController.Button.kBack.value)
+    // operator start button --> increment hood angle up
+    new JoystickButton(operatorController, XboxController.Button.kStart.value)
       .whenPressed(new InstantCommand(s_hood::incrementUp, s_hood));
 
-    // operator pad down --> increment hood angle down
-    new JoystickButton(operatorController, XboxController.Button.kStart.value)
+    // operator back button --> increment hood angle down
+    new JoystickButton(operatorController, XboxController.Button.kBack.value)
       .whenPressed(new InstantCommand(s_hood::incrementDown, s_hood));
     
+    // operator right bumper --> forward climb
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
-      .whenPressed(new RunCommand(s_climb::start, s_climb))
-      .whenReleased(new RunCommand(s_climb  ::stop, s_climb));
+      .whenPressed(new InstantCommand(s_climb::fastClimbForward, s_climb))
+      .whenReleased(new InstantCommand(s_climb::stop, s_climb));
     
+    // operator left bumper --> backward climb
     new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-      .whenPressed(new RunCommand(s_climb::reverse, s_climb))
-      .whenReleased(new RunCommand(s_climb::stop, s_climb));
+      .whenPressed(new InstantCommand(s_climb::fastClimbReverse, s_climb))
+      .whenReleased(new InstantCommand(s_climb::stop, s_climb));
 
-          //new JoystickButton(driveController, XboxController.Button.kY.value)
-    //  .whenPressed(new RunCommand(m_hood::setZero, m_hood));
-    // new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-    //   .whenPressed(new InstantCommand(s_hood::incrementUp, s_hood));
-    // //  .whenReleased(new RunCommand(m_hood::stopHood,m_hood));
-    // new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
-    //   .whenPressed(new InstantCommand(s_hood::incrementDown, s_hood));
+    // operator click left joystick --> rezero and reset hood
+    // press will drop hood, release will set zero and then reset setpoint
+    new JoystickButton(operatorController, XboxController.Button.kStickLeft.value)
+      .whenPressed(new InstantCommand(s_hood::stopHood, s_hood))
+      .whenReleased(new SequentialCommandGroup(
+        new InstantCommand(s_hood::setZero, s_hood),
+        new InstantCommand(s_hood::initLineSetpoint, s_hood)
+      ));
   }
 
   /**
@@ -145,8 +156,29 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
+
+  // shoot and move off init
+  public SequentialCommandGroup getAutonomousCommand() {
+    return new SequentialCommandGroup(
+      c_autoShoot,
+      new RunCommand(() -> s_drivetrain.curveDrive(0.3, 0, false), s_drivetrain).withTimeout(2)
+    );
+  }
+
+  // move off init
+  public SequentialCommandGroup getSecondAutonomousCommand() {
+    return new SequentialCommandGroup(
+      new RunCommand(() -> s_drivetrain.curveDrive(0.3, 0, false), s_drivetrain).withTimeout(2)
+    );
+  }
+
+  // shoot without moving
+  public SequentialCommandGroup getThirdAutonomousCommand() {
+    return new SequentialCommandGroup(c_autoShoot);
+  }
+
+  // nothing
+  public SequentialCommandGroup getFourthAutonomousCommand() {
     return null;
   }
 }

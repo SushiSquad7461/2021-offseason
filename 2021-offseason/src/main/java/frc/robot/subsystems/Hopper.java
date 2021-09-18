@@ -44,7 +44,7 @@ public class Hopper extends SubsystemBase {
   }
 
   public void shootForward() {
-    //moveForward();
+    moveForward();
     kicker.set(ControlMode.PercentOutput, Constants.kHopper.KICKER_FORWARD);
   }
 
