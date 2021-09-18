@@ -168,6 +168,7 @@ public class RobotContainer {
   // move off init
   public SequentialCommandGroup getSecondAutonomousCommand() {
     return new SequentialCommandGroup(
+      new InstantCommand(s_intake::actuateIntake, s_intake),
       new RunCommand(() -> s_drivetrain.curveDrive(0.3, 0, false), s_drivetrain).withTimeout(2)
     );
   }
@@ -179,7 +180,9 @@ public class RobotContainer {
 
   // nothing
   public SequentialCommandGroup getFourthAutonomousCommand() {
-    return null;
+    return new SequentialCommandGroup(
+      new InstantCommand(s_intake::actuateIntake, s_intake)
+    );
   }
 }
  
