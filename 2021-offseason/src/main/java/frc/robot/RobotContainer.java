@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,30 +23,28 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Flywheel s_flywheel = new Flywheel();
 
-  //private final Hopper m_hopper = new Hopper();
-  private final Hood m_hood = new Hood();
+  private final Hopper s_hopper = new Hopper();
+  private final Hood s_hood = new Hood();
 
-  //private final Intake s_intake = new Intake();
+  private final Intake s_intake = new Intake();
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   private XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
-  //private final Drivetrain s_drivetrain;
+  private final Drivetrain s_drivetrain;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    /*
+    
     s_drivetrain = new Drivetrain();
     // Configure the button bindings
     s_drivetrain.setDefaultCommand(new RunCommand(
       () -> s_drivetrain.curveDrive(OI.getTriggers(driveController), 
         OI.getLeftStick(driveController),
         driveController.getXButton()),
-      s_drivetrain)); */
+      s_drivetrain)); 
     configureButtonBindings();
   }
 
@@ -61,25 +58,23 @@ public class RobotContainer {
   //Assign operator controller buttons A and Y to startIntake and startReverse respectively
   private void configureButtonBindings() {
     // A button -> run intake forward
-    /*
+    
     new JoystickButton(operatorController, XboxController.Button.kA.value)
         .whenPressed(new RunCommand(s_intake::startIntake, s_intake))
         .whenReleased(new RunCommand(s_intake::stopIntake, s_intake));   
-
+    
     // B button -> run intake reverse
     new JoystickButton(operatorController, XboxController.Button.kB.value)
       .whenPressed(new RunCommand(s_intake::startReverse, s_intake))
       .whenPressed(new RunCommand(s_intake::stopIntake, s_intake)); 
-    new JoystickButton(operatorController, XboxController.Button.kY.value)
-      .whenPressed(new RunCommand(m_hopper::moveBackward, m_hopper))
-      .whenReleased(new RunCommand(m_hopper::stop, m_hopper)); */
+    
     //new JoystickButton(driveController, XboxController.Button.kY.value)
     //  .whenPressed(new RunCommand(m_hood::setZero, m_hood));
     new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-      .whenPressed(new InstantCommand(m_hood::incrementUp, m_hood));
+      .whenPressed(new InstantCommand(s_hood::incrementUp, s_hood));
     //  .whenReleased(new RunCommand(m_hood::stopHood,m_hood));
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
-      .whenPressed(new InstantCommand(m_hood::incrementDown, m_hood));
+      .whenPressed(new InstantCommand(s_hood::incrementDown, s_hood));
     new JoystickButton(operatorController, XboxController.Button.kX.value)
       .whenPressed(new RunCommand(s_hopper::moveForward, s_hopper))
       .whenReleased(new RunCommand(s_hopper::stop, s_hopper));
@@ -88,7 +83,7 @@ public class RobotContainer {
       .whenPressed(new RunCommand(s_hopper::moveBackward, s_hopper))
       .whenReleased(new RunCommand(s_hopper::stop, s_hopper));
 
-      new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+      new JoystickButton(operatorController, XboxController.Button.kA.value)
       .whenPressed(new RunCommand(() -> s_flywheel.setGoal(Constants.kFlywheel.GOAL), s_flywheel))
       //.whenPressed(new RunCommand(() -> s_flywheel.runShooter(), s_flywheel))
       .whenReleased(new RunCommand(() -> s_flywheel.setGoal(0), s_flywheel));

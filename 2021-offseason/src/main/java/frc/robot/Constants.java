@@ -22,10 +22,10 @@ import com.revrobotics.CANSparkMaxLowLevel;
 public final class Constants {
 
     public static final class kHood {
-        public static final int MOTOR_ID = 13;
+        public static final int MOTOR_ID = 4;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final double MAX_SPEED = 0.3;
-        public static final double HOOD_INCREMENT = 5;
+        public static final double HOOD_INCREMENT = 1;
         public static final double kP = 0.1;
         public static final double kI = 0;
         public static final double kD = 0;
@@ -77,8 +77,8 @@ public final class Constants {
         public static final int INTAKE_PORT = 7;
         public static final int PCM_PORT = 17;
         public static final double INTAKE_SPEED = 1.0;
-        public static final int SOLENOID_FRONT = 0;
-        public static final int SOLENOID_BACK = 1;
+        public static final int SOLENOID_FRONT = 1;
+        public static final int SOLENOID_BACK = 0;
         public static final boolean INVERTED = false;
     }
 
@@ -87,9 +87,10 @@ public final class Constants {
         public static final int RIGHT_ID = 11;
         public static final int CENTER_ID = 8;
         public static final int KICKER_ID = 5;
-        public static final double FORWARD_SPEED = 0.2;
+        public static final double FORWARD_SPEED = 0.7;
+        public static final int CURRENT_LIMIT = 40;
         public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
-        public static final boolean INVERTED = false;
+        public static final boolean INVERTED = true;
     }
 
     public static final class kOI {

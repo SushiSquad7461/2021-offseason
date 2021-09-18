@@ -23,6 +23,16 @@ public class Hopper extends SubsystemBase {
     center = new TalonSRX(Constants.kHopper.CENTER_ID);
     kicker = new VictorSPX(Constants.kHopper.KICKER_ID);
 
+    left.configFactoryDefault();
+    right.configFactoryDefault();
+    center.configFactoryDefault();
+    kicker.configFactoryDefault();
+
+    left.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
+    right.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
+    center.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
+    //kicker.configPeakCurrentLimit(Constants.kHopper.CURRENT_LIMIT);
+
     right.follow(left);
     kicker.follow(left);
     center.follow(left);
