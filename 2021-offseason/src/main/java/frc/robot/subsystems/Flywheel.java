@@ -114,9 +114,6 @@ public class Flywheel extends SubsystemBase {
       flywheelMain.set(output+fForward);
       flywheelFollower.set(output+fForward);
     }
-    
-    //flywheelMain.set(output+fForward);
-
   }
 
   protected double getMeasurement() {

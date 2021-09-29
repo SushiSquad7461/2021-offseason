@@ -40,18 +40,18 @@ public class Intake extends SubsystemBase {
 
   public void startIntake() {
     //SmartDashboard.putNumber("key2", Constants.kIntake.INTAKE_SPEED);
-    moveIntake(Constants.kIntake.INTAKE_SPEED);
+    setMotorPower(Constants.kIntake.INTAKE_SPEED);
   }
 
   public void stopIntake() {
-    moveIntake(0);
+    setMotorPower(0);
   }
 
   public void startReverse() {
-    moveIntake(-Constants.kIntake.INTAKE_SPEED);
+    setMotorPower(-Constants.kIntake.INTAKE_SPEED);
   }
 
-  public void moveIntake(double velocity) {
+  public void setMotorPower(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
     //SmartDashboard.putNumber("key", velocity);
   }

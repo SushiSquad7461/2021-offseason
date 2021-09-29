@@ -41,11 +41,14 @@ public class Hopper extends SubsystemBase {
     right.setInverted(Constants.kHopper.INVERTED);
     center.setInverted(Constants.kHopper.INVERTED);
     kicker.setInverted(Constants.kHopper.INVERTED);
+
+    left.follow(center);
+    right.follow(center);
   }
 
   public void shootForward() {
     moveForward();
-    moveWallsForward();
+    //moveWallsForward();
     kicker.set(ControlMode.PercentOutput, Constants.kHopper.KICKER_FORWARD);
   }
 
@@ -54,23 +57,15 @@ public class Hopper extends SubsystemBase {
     kicker.set(ControlMode.PercentOutput, Constants.kHopper.KICKER_REVERSE);
   }
 
-  private void moveWallsForward() {
-    left.set(ControlMode.PercentOutput, Constants.kHopper.LEFT_SPEED);
-    right.set(ControlMode.PercentOutput, Constants.kHopper.RIGHT_SPEED);
-  }
   public void moveForward() {
     center.set(ControlMode.PercentOutput, Constants.kHopper.FLOOR_SPEED);
   }
 
   public void moveBackward() {
-    left.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
-    right.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
     center.set(ControlMode.PercentOutput, Constants.kHopper.REVERSE_SPEED);
   }
 
   public void stopHopper() {
-    left.set(ControlMode.PercentOutput, 0);
-    right.set(ControlMode.PercentOutput, 0);
     center.set(ControlMode.PercentOutput, 0);
     kicker.set(ControlMode.PercentOutput, 0);
   }
