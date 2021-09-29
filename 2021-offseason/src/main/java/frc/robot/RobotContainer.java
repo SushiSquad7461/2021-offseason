@@ -179,7 +179,8 @@ public class RobotContainer {
 
   // shoot without moving
   public SequentialCommandGroup getThirdAutonomousCommand() {
-    return new SequentialCommandGroup(c_autoShoot);
+    // return new SequentialCommandGroup(c_autoShoot);
+    return null;
   }
 
   // nothing
