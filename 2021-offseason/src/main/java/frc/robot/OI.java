@@ -12,4 +12,8 @@ public class OI {
     public static double getLeftStick(XboxController controller) {
         return Math.pow(controller.getX(Hand.kLeft), 3);
     }
+
+    public static double getRightStick(XboxController controller) {
+        return Math.pow(controller.getY(Hand.kRight), 3);
+    }
 }

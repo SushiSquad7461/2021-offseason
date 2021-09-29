@@ -57,7 +57,8 @@ public final class Constants {
             hoodAngleTreeMap.put(new InterpolatingDouble(230.0), new InterpolatingDouble(67.0));
         }
 
-        public static final double INIT_LINE_ANGLE = 7.8;
+        public static final double INIT_LINE_ANGLE = 7.1;
+        public static final double ANGLE_TOLERANCE = 0.03; // percentage / 100
     }
 
     public static final class kDrivetrain {
@@ -78,7 +79,7 @@ public final class Constants {
     public static final class kIntake { 
         public static final int INTAKE_PORT = 7;
         public static final int PCM_PORT = 17;
-        public static final double INTAKE_SPEED = 1.0;
+        public static final double INTAKE_SPEED = 0.60007461;
         public static final int SOLENOID_FRONT = 1;
         public static final int SOLENOID_BACK = 0;
         public static final boolean INVERTED = true;
@@ -89,9 +90,9 @@ public final class Constants {
         public static final int RIGHT_ID = 11;
         public static final int CENTER_ID = 8;
         public static final int KICKER_ID = 5;
-        public static final double LEFT_SPEED = 0.5;
-        public static final double RIGHT_SPEED = 0.7;
-        public static final double FLOOR_SPEED = 0.3;
+        public static final double LEFT_SPEED = 0.6;
+        public static final double RIGHT_SPEED = 0.9;
+        public static final double FLOOR_SPEED = 0.5;
         public static final double KICKER_FORWARD = 1;
         public static final double KICKER_REVERSE = -1;
         public static final int CURRENT_LIMIT = 40;
@@ -145,8 +146,8 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 40;
         public static final double OPEN_LOOP_RAMP = 1;
 
-        public static final double MAX_SPEED = 0.7461; // maybe max out ?
-        public static final double SLOW_SPEED = 0.3; // should tune, test in pit
+        public static final double MAX_SPEED = 1; // maybe max out ?
+        public static final double SLOW_SPEED = 0.1; // should tune, test in pit
 
 
 }}

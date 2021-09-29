@@ -135,6 +135,11 @@ public class Flywheel extends SubsystemBase {
     //SmartDashboard.putNumber("Goal", goal);
     pidController.setGoal(goal);
   }
+
+  public void setToGoal() {
+    SmartDashboard.putBoolean("Revving flywheel", true);
+    pidController.setGoal(Constants.kFlywheel.GOAL);
+  }
   
   public void runShooter() {
     double speed = 1;
@@ -143,6 +148,7 @@ public class Flywheel extends SubsystemBase {
   }
   
   public void stopShooter() {
+    SmartDashboard.putBoolean("Revving flywheel", false);
     flywheelMain.set(0);
     flywheelFollower.set(0);
   }

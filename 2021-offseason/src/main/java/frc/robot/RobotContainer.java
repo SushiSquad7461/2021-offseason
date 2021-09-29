@@ -4,8 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -35,24 +40,26 @@ public class RobotContainer {
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   private final XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
-  private final AutoShoot c_autoShoot;
+  private final AutoShoot c_autoShoot, c_autoShoot2, c_autoShoot3;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
     s_drivetrain = new Drivetrain();
-    s_drivetrain.setDefaultCommand(new RunCommand(
-      () -> s_drivetrain.curveDrive(OI.getTriggers(driveController), 
-        OI.getLeftStick(driveController),
-        driveController.getXButton()),
-      s_drivetrain));
+    // s_drivetrain.setDefaultCommand(new RunCommand(
+    //   () -> s_drivetrain.curveDrive(OI.getTriggers(driveController), 
+    //     OI.getLeftStick(driveController),
+    //     driveController.getXButton()),
+    //   s_drivetrain));
 
     // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT AND USE BUMPERS
     s_climb.setDefaultCommand(new RunCommand(
-      () -> s_climb.climbAnalog(Math.pow(OI.getTriggers(operatorController), 3)), s_climb)
+      () -> s_climb.climbAnalog(OI.getRightStick(driveController)), s_climb)
     );
 
     c_autoShoot = new AutoShoot(s_flywheel, s_hopper, s_intake, s_hood);
+    c_autoShoot2 = new AutoShoot(s_flywheel, s_hopper, s_intake, s_hood);
+    c_autoShoot3 = new AutoShoot(s_flywheel, s_hopper, s_intake, s_hood);
 
     configureButtonBindings();
   }
@@ -80,8 +87,8 @@ public class RobotContainer {
       ));
 
     // drive right bumper --> extend intake
-    new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
-      .whenPressed(new InstantCommand(s_intake::actuateIntake, s_intake));
+    // new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
+    //   .whenPressed(new InstantCommand(s_intake::actuateIntake, s_intake));
 
     // drive A --> run hopper + kicker (shoot)
     new JoystickButton(driveController, XboxController.Button.kA.value)
@@ -101,11 +108,12 @@ public class RobotContainer {
 
     // drive start button --> slow climb forward
     new JoystickButton(driveController, XboxController.Button.kStart.value)
-      .whenPressed(new InstantCommand(s_climb::fastClimbForward, s_climb))
+      .whenPressed(new InstantCommand(s_climb::slowClimbForward, s_climb))
       .whenReleased(new InstantCommand(s_climb::stop, s_climb));
 
     // operator A --> rev flywheel
-    new JoystickButton(operatorController, XboxController.Button.kA.value)
+    //new JoystickButton(operatorController, XboxController.Button.kA.value)
+    new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
       .whenPressed(new RunCommand(() -> s_flywheel.setGoal(Constants.kFlywheel.GOAL), s_flywheel))
       .whenReleased(new RunCommand(() -> s_flywheel.setGoal(0), s_flywheel));
     
@@ -114,13 +122,13 @@ public class RobotContainer {
       .whenPressed(new InstantCommand(s_intake::startReverse, s_intake))
       .whenReleased(new InstantCommand(s_intake::stopIntake, s_intake)); 
 
-    // operator X --> reverse hopper
-    new JoystickButton(operatorController, XboxController.Button.kX.value)
+    // operator Y --> reverse hopper
+    new JoystickButton(operatorController, XboxController.Button.kY.value)
       .whenPressed(new InstantCommand(s_hopper::moveBackward, s_hopper))
       .whenReleased(new InstantCommand(s_hopper::stopHopper, s_hopper));
     
-    // operator Y --> reverse kicker
-    new JoystickButton(operatorController, XboxController.Button.kY.value)
+    // operator X --> reverse kicker
+    new JoystickButton(operatorController, XboxController.Button.kX.value)
       .whenPressed(new InstantCommand(s_hopper::shootBackward, s_hopper))
       .whenReleased(new InstantCommand(s_hopper::stopHopper, s_hopper));
 
@@ -157,17 +165,9 @@ public class RobotContainer {
   }
 
   // rumbles operator controller to flywheel speed lol
-  public void setOperatorRumble() {
+  public void setRumbles() {
+    driveController.setRumble(GenericHID.RumbleType.kRightRumble, s_flywheel.goalPercentage());
     operatorController.setRumble(GenericHID.RumbleType.kRightRumble, s_flywheel.goalPercentage());
-  }
-
-  // rumbles drive controller when flywheel is at speed
-  public void setDriveRumble() {
-    if (s_flywheel.atSpeed()) {
-      driveController.setRumble(GenericHID.RumbleType.kRightRumble, 1);
-    } else {
-      driveController.setRumble(GenericHID.RumbleType.kRightRumble, 0);
-    }
   }
 
   /**
@@ -179,8 +179,10 @@ public class RobotContainer {
   // shoot and move off init
   public SequentialCommandGroup getAutonomousCommand() {
     return new SequentialCommandGroup(
-      c_autoShoot,
-      new RunCommand(() -> s_drivetrain.curveDrive(0.3, 0, false), s_drivetrain).withTimeout(2)
+      new InstantCommand(() -> s_hopper.shootBackward()).withTimeout(0.5),
+      new InstantCommand(() -> s_hopper.stopHopper()),
+      c_autoShoot.withTimeout(8.00007461),
+      new RunCommand(() -> s_drivetrain.curveDrive(-0.3, 0, false), s_drivetrain).withTimeout(2)
     );
   }
 
@@ -188,19 +190,31 @@ public class RobotContainer {
   public SequentialCommandGroup getSecondAutonomousCommand() {
     return new SequentialCommandGroup(
       new InstantCommand(s_intake::actuateIntake, s_intake),
-      new RunCommand(() -> s_drivetrain.curveDrive(0.3, 0, false), s_drivetrain).withTimeout(2)
+      new RunCommand(() -> s_drivetrain.curveDrive(-0.3, 0, false), s_drivetrain).withTimeout(2)
     );
   }
 
   // shoot without moving
   public SequentialCommandGroup getThirdAutonomousCommand() {
-    return new SequentialCommandGroup(c_autoShoot);
+    return new SequentialCommandGroup(c_autoShoot2.withTimeout(6));
   }
 
   // nothing
   public SequentialCommandGroup getFourthAutonomousCommand() {
     return new SequentialCommandGroup(
       new InstantCommand(s_intake::actuateIntake, s_intake)
+    );
+  }
+
+  // delayed auto
+  public SequentialCommandGroup getFifthAutonomousCommand() {
+    return new SequentialCommandGroup(
+      new RunCommand(() -> s_drivetrain.curveDrive(0, 0, false), s_drivetrain).withTimeout(4),  
+      new InstantCommand(s_flywheel::setToGoal, s_flywheel),
+      new RunCommand(() -> s_drivetrain.curveDrive(0, 0, false), s_drivetrain).withTimeout(4),  
+      //new WaitCommand(10),
+      c_autoShoot3.withTimeout(4),
+      new RunCommand(() -> s_drivetrain.curveDrive(-0.3, 0, false), s_drivetrain).withTimeout(1)
     );
   }
 }
