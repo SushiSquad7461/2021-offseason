@@ -43,8 +43,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     drivetrain = new Drivetrain();
-    drivetrain.setDefaultCommand(new RunCommand(() -> drivetrain.curveDrive(OI.getTriggers(driveController),
-        OI.getLeftStick(driveController), driveController.getXButton()), drivetrain));
+    // drivetrain.setDefaultCommand(new RunCommand(() -> drivetrain.curveDrive(OI.getTriggers(driveController),
+    //     OI.getLeftStick(driveController), driveController.getXButton()), drivetrain));
 
     // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT AND USE BUMPERS
     climb.setDefaultCommand(
@@ -74,8 +74,8 @@ public class RobotContainer {
             new InstantCommand(hopper::stopHopper, hopper)));
 
     // drive right bumper --> extend intake
-    new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
-        .whenPressed(new InstantCommand(intake::actuateIntake, intake));
+    // new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
+    //     .whenPressed(new InstantCommand(intake::actuateIntake, intake));
 
     // drive A --> run hopper + kicker (shoot)
     new JoystickButton(driveController, XboxController.Button.kA.value)
@@ -95,7 +95,9 @@ public class RobotContainer {
         .whenReleased(new InstantCommand(climb::stop, climb));
 
     // operator A --> rev flywheel
-    new JoystickButton(operatorController, XboxController.Button.kA.value)
+    // new JoystickButton(operatorController, XboxController.Button.kA.value)
+    // drive right bumper --> rev flywheel
+    new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
         .whenPressed(new RunCommand(() -> flywheel.setGoal(Constants.kFlywheel.GOAL), flywheel))
         .whenReleased(new RunCommand(() -> flywheel.setGoal(0), flywheel));
 
