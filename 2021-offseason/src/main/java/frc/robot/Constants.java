@@ -20,6 +20,8 @@ import com.revrobotics.CANSparkMaxLowLevel;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final boolean SINGLE_CONTROLLER_MODE = true;
+    public static final boolean ENABLE_DRIVE = false;
 
     public static final class kHood {
         public static final int MOTOR_ID = 4;

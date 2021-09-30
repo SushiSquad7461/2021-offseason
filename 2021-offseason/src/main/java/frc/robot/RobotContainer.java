@@ -48,8 +48,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
     drivetrain = new Drivetrain();
-    drivetrain.setDefaultCommand(new RunCommand(() -> drivetrain.curveDrive(OI.getTriggers(driveController),
-        OI.getLeftStick(driveController), driveController.getXButton()), drivetrain));
+
+    if (Constants.ENABLE_DRIVE) {
+      drivetrain.setDefaultCommand(new RunCommand(() -> drivetrain.curveDrive(OI.getTriggers(driveController),
+          OI.getLeftStick(driveController), driveController.getXButton()), drivetrain));
+    }
 
     // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT AND USE BUMPERS
     climb.setDefaultCommand(
@@ -63,15 +66,16 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-
-    // drive Y --> invert direction
-    new JoystickButton(driveController, XboxController.Button.kY.value)
-        .whenPressed(new InstantCommand(drivetrain::invertDirection, drivetrain));
-
-    // drive B --> slow mode
-    new JoystickButton(driveController, XboxController.Button.kB.value)
-        .whenPressed(new InstantCommand(drivetrain::startSlow, drivetrain))
-        .whenReleased(new InstantCommand(drivetrain::endSlow, drivetrain));
+    if (Constants.ENABLE_DRIVE) {
+      // drive Y --> invert direction
+      new JoystickButton(driveController, XboxController.Button.kY.value)
+          .whenPressed(new InstantCommand(drivetrain::invertDirection, drivetrain));
+  
+      // drive B --> slow mode
+      new JoystickButton(driveController, XboxController.Button.kB.value)
+          .whenPressed(new InstantCommand(drivetrain::startSlow, drivetrain))
+          .whenReleased(new InstantCommand(drivetrain::endSlow, drivetrain));
+    }
 
     // drive left bumper --> run intake + hopper (intake)
     new JoystickButton(driveController, XboxController.Button.kBumperLeft.value)
@@ -80,9 +84,16 @@ public class RobotContainer {
         .whenReleased(new ParallelCommandGroup(new InstantCommand(intake::stopIntake, intake),
             new InstantCommand(hopper::stopHopper, hopper)));
 
-    // drive right bumper --> extend intake
-    new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
-        .whenPressed(new InstantCommand(intake::actuateIntake, intake));
+    JoystickButton driveRightBumperButton = new JoystickButton(driveController, XboxController.Button.kBumperRight.value);
+    if (Constants.SINGLE_CONTROLLER_MODE) {
+      // drive right bumper --> rev flywheel
+      driveRightBumperButton
+        .whenPressed(new RunCommand(() -> flywheel.setGoal(Constants.kFlywheel.GOAL), flywheel))
+        .whenReleased(new RunCommand(() -> flywheel.setGoal(0), flywheel));
+    } else {
+      // drive right bumper --> extend intake
+      driveRightBumperButton.whenPressed(new InstantCommand(intake::actuateIntake, intake));
+    }
 
     // drive A --> run hopper + kicker (shoot)
     new JoystickButton(driveController, XboxController.Button.kA.value)
