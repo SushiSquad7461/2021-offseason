@@ -90,9 +90,9 @@ public final class Constants {
         public static final int RIGHT_ID = 11;
         public static final int CENTER_ID = 8;
         public static final int KICKER_ID = 5;
-        public static final double LEFT_SPEED = 0.6;
-        public static final double RIGHT_SPEED = 0.9;
-        public static final double FLOOR_SPEED = 0.5;
+        public static final double LEFT_SPEED = 0.5;
+        public static final double RIGHT_SPEED = 0.7;
+        public static final double FLOOR_SPEED = 1.0;
         public static final double KICKER_FORWARD = 1;
         public static final double KICKER_REVERSE = -1;
         public static final int CURRENT_LIMIT = 40;
