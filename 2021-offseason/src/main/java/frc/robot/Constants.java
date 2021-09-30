@@ -91,7 +91,7 @@ public final class Constants {
         public static final int KICKER_ID = 5;
         public static final double LEFT_SPEED = 0.5;
         public static final double RIGHT_SPEED = 0.7;
-        public static final double FLOOR_SPEED = 0.3;
+        public static final double FLOOR_SPEED = 0.7;
         public static final double KICKER_FORWARD = 1;
         public static final double KICKER_REVERSE = -1;
         public static final int CURRENT_LIMIT = 40;
