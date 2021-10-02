@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("move without shooting", m_robotContainer.getSecondAutonomousCommand());
     autoChooser.addOption("shoot without moving", m_robotContainer.getThirdAutonomousCommand());
     autoChooser.addOption("do nothing", m_robotContainer.getFourthAutonomousCommand());
+    autoChooser.addOption("delayed shoot+move", m_robotContainer.getFifthAutonomousCommand());
     SmartDashboard.putData("auto paths", autoChooser);
   }
 
@@ -92,7 +93,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    m_robotContainer.setDriveRumble();
+    m_robotContainer.setOperatorRumble();
+  }
 
   @Override
   public void testInit() {

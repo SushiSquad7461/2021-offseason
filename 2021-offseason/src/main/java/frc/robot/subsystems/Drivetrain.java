@@ -51,8 +51,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn) {
+    angularVelocity = isQuickturn?angularVelocity*0.5:angularVelocity;
     if (slow) {
-      diffDrive.curvatureDrive(linearVelocity, angularVelocity * angleInvert * Constants.kDrivetrain.SLOW_SPEED, isQuickturn);
+      diffDrive.curvatureDrive(linearVelocity * Constants.kDrivetrain.SLOW_SPEED, angularVelocity * angleInvert, isQuickturn);
     } else {
       diffDrive.curvatureDrive(linearVelocity, angularVelocity * angleInvert, isQuickturn);
     }

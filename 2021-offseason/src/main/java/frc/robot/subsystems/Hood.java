@@ -59,6 +59,7 @@ import frc.robot.Constants;
         //SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
         //SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
         SmartDashboard.putNumber("hood angle", hoodEncoder.getPosition());
+        SmartDashboard.putBoolean("at angle", atAngle());
         //if (isTaring) tareHoodPeriodic();
     }
 
@@ -111,5 +112,11 @@ import frc.robot.Constants;
     public void stopHood() {
         hoodMain.set(0);
         //SmartDashboard.putString("hood", "notrunninhood");
+    }
+
+    public boolean atAngle() {
+        double lowerBound = Constants.kHood.INIT_LINE_ANGLE * Constants.kHood.ANGLE_TOLERANCE;
+        double upperBound = Constants.kHood.INIT_LINE_ANGLE * (2 - Constants.kHood.ANGLE_TOLERANCE);
+        return (hoodEncoder.getPosition() >= lowerBound && hoodEncoder.getPosition() <= upperBound);
     }
 }
