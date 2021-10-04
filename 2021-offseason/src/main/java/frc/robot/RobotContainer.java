@@ -37,6 +37,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Climb climb = new Climb();
   private final Drivetrain drivetrain;
+  private final ShiftControl shiftControl = new ShiftControl();
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   private final XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
@@ -77,6 +78,8 @@ public class RobotContainer {
           .whenReleased(new InstantCommand(drivetrain::endSlow, drivetrain));
     }
 
+
+
     // drive left bumper --> run intake + hopper (intake)
     new JoystickButton(driveController, XboxController.Button.kBumperLeft.value)
         .whenPressed(new ParallelCommandGroup(new InstantCommand(intake::startIntake, intake),
@@ -94,11 +97,19 @@ public class RobotContainer {
       // drive right bumper --> extend intake
       driveRightBumperButton.whenPressed(new InstantCommand(intake::actuateIntake, intake));
     }
+    //shift key changes state of shiftActive which will be used to reverse actions
+    new JoystickButton(driveController, XboxController.Button.kStart.value)
+      .whenPressed(new InstantCommand(shiftControl::enableShift, shiftControl))
+      .whenReleased(new InstantCommand(shiftControl::disableShift, shiftControl));
 
     // drive A --> run hopper + kicker (shoot)
     new JoystickButton(driveController, XboxController.Button.kA.value)
-        .whenPressed(new ParallelCommandGroup(new InstantCommand(intake::startIntake, intake),
-            new InstantCommand(hopper::shootForward, hopper)))
+        .whenPressed(
+            pickCommand(
+              new ParallelCommandGroup(new InstantCommand(intake::startIntake, intake), new InstantCommand(hopper::shootForward, hopper)), 
+              new ParallelCommandGroup(new InstantCommand(intake::startReverse, intake), new InstantCommand(hopper::shootBackward, hopper))
+              )
+            )
         .whenReleased(new ParallelCommandGroup(new InstantCommand(intake::stopIntake, intake),
             new InstantCommand(hopper::stopHopper, hopper)));
 
@@ -213,5 +224,14 @@ public class RobotContainer {
       c_autoShoot3.withTimeout(4),
       new RunCommand(() -> drivetrain.curveDrive(-0.3, 0, false), drivetrain).withTimeout(1)
     );
+  }
+  
+  //picking certain command that depends if the shift key is pressed
+  private Command pickCommand(Command command1, Command command2){
+    if(shiftControl.getShiftState()){
+      return command2;
+    } else{
+      return command1;
+    }
   }
 }
