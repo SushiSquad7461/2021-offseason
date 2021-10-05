@@ -20,8 +20,8 @@ import com.revrobotics.CANSparkMaxLowLevel;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final boolean SINGLE_CONTROLLER_MODE = true;
-    public static final boolean ENABLE_DRIVE = false;
+    public static final boolean SINGLE_CONTROLLER_MODE = false;
+    public static final boolean ENABLE_DRIVE = true;
 
     public static final class kHood {
         public static final int MOTOR_ID = 4;
@@ -94,10 +94,10 @@ public final class Constants {
         public static final int KICKER_ID = 5;
         public static final double LEFT_SPEED = 0.5;
         public static final double RIGHT_SPEED = 0.7;
-        public static final double FLOOR_SPEED = 1.0;
+        public static final double FLOOR_SPEED = 0.7;
         public static final double KICKER_FORWARD = 1;
         public static final double KICKER_REVERSE = -1;
-        public static final int CURRENT_LIMIT = 40;
+        public static final int CURRENT_LIMIT = 20;
         public static final double REVERSE_SPEED = -1;
         public static final boolean INVERTED = false;
     }
@@ -127,7 +127,7 @@ public final class Constants {
         public static final int ERR_TOLERANCE = 0;
 
         public static final int GOAL = 3000;
-        public static final double GOAL_TOLERANCE = 0.95; // percentage of goal that counts
+        public static final double GOAL_TOLERANCE = 0.90; // percentage of goal that counts
 
         // feedforward constants
         public static final double kS = 0.71212;

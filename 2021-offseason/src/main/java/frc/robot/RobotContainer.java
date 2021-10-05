@@ -41,6 +41,7 @@ public class RobotContainer {
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   private final XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
+  private final RunKicker runKicker;
   private final AutoShoot c_autoShoot, c_autoShoot2, c_autoShoot3;
 
   /**
@@ -62,6 +63,8 @@ public class RobotContainer {
     c_autoShoot2 = new AutoShoot(flywheel, hopper, intake, hood);
     c_autoShoot3 = new AutoShoot(flywheel, hopper, intake, hood);
 
+    runKicker = new RunKicker(flywheel, hopper, intake, hood);
+
     configureButtonBindings();
   }
 
@@ -80,7 +83,7 @@ public class RobotContainer {
     // drive left bumper --> run intake + hopper (intake)
     new JoystickButton(driveController, XboxController.Button.kBumperLeft.value)
         .whenPressed(new ParallelCommandGroup(new InstantCommand(intake::startIntake, intake),
-            new InstantCommand(hopper::moveForward, hopper)))
+            new InstantCommand(hopper::moveFloor, hopper)))
         .whenReleased(new ParallelCommandGroup(new InstantCommand(intake::stopIntake, intake),
             new InstantCommand(hopper::stopHopper, hopper)));
 
@@ -97,10 +100,7 @@ public class RobotContainer {
 
     // drive A --> run hopper + kicker (shoot)
     new JoystickButton(driveController, XboxController.Button.kA.value)
-        .whenPressed(new ParallelCommandGroup(new InstantCommand(intake::startIntake, intake),
-            new InstantCommand(hopper::shootForward, hopper)))
-        .whenReleased(new ParallelCommandGroup(new InstantCommand(intake::stopIntake, intake),
-            new InstantCommand(hopper::stopHopper, hopper)));
+      .whileHeld(runKicker);
 
     // drive back button --> slow climb reverse
     new JoystickButton(driveController, XboxController.Button.kBack.value)
@@ -113,9 +113,9 @@ public class RobotContainer {
         .whenReleased(new InstantCommand(climb::stop, climb));
 
     // operator A --> rev flywheel
-    // new JoystickButton(operatorController, XboxController.Button.kA.value)
+    new JoystickButton(operatorController, XboxController.Button.kA.value)
     // drive right bumper --> rev flywheel
-    new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
+    //new JoystickButton(driveController, XboxController.Button.kBumperRight.value)
         .whenPressed(new RunCommand(() -> flywheel.setGoal(Constants.kFlywheel.GOAL), flywheel))
         .whenReleased(new RunCommand(() -> flywheel.setGoal(0), flywheel));
 

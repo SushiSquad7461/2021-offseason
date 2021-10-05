@@ -21,9 +21,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-    import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonCamera;
 
-    public class Hood extends SubsystemBase {
+public class Hood extends SubsystemBase {
     private final CANSparkMax hoodMain;
     private final CANEncoder hoodEncoder;
     private final CANPIDController hoodController;
@@ -47,7 +47,7 @@ import frc.robot.Constants;
         this.hoodController.setP(Constants.kHood.kP);
         this.hoodController.setI(Constants.kHood.kI);
         this.hoodController.setD(Constants.kHood.kD);
-        this.camera = new PhotonCamera("myCamera");
+        this.camera = new PhotonCamera("photonvision");
         //initialSetpoint = hoodEncoder.getPosition();
         initialSetpoint = Constants.kHood.INIT_LINE_ANGLE;
         set(initialSetpoint);
@@ -56,6 +56,16 @@ import frc.robot.Constants;
     }
     @Override
     public void periodic() {
+        boolean targets = camera.getLatestResult().hasTargets();
+        if (targets) {
+            SmartDashboard.putNumber("Yaw", camera.getLatestResult().getBestTarget().getYaw());
+            SmartDashboard.putNumber("Pitch", camera.getLatestResult().getBestTarget().getPitch());
+        } else {
+            SmartDashboard.putNumber("Yaw", -69);
+            SmartDashboard.putNumber("Pitch", -69);
+        }
+        SmartDashboard.putBoolean("targets", targets);
+        
         //SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
         //SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
         SmartDashboard.putNumber("hood angle", hoodEncoder.getPosition());
