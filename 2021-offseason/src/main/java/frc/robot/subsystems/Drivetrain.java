@@ -9,9 +9,14 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;  
+
 public class Drivetrain extends SubsystemBase {
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
   private final DifferentialDrive diffDrive;
+  private PhotonCamera camera;
+
 
   public Drivetrain() {
     frontLeft = new CANSparkMax(Constants.kDrivetrain.FRONT_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
@@ -38,10 +43,18 @@ public class Drivetrain extends SubsystemBase {
     frontRight.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
     backLeft.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
     backRight.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
+    this.camera = new PhotonCamera("myCamera");
   }
 
   public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn) {
     diffDrive.curvatureDrive(linearVelocity, angularVelocity, isQuickturn);
+  }
+
+  public void alignToTarget() {
+    var result = camera.getLatestResult();
+        if (result.hasTargets()) {
+            double yaw = result.getBestTarget().getYaw(); 
+        } 
   }
 
   @Override
