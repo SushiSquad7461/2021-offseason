@@ -84,13 +84,6 @@ public class Drivetrain extends SubsystemBase {
     slow = false;
   }
 
-  public void alignToTarget() {
-    var result = camera.getLatestResult();
-    if (result.hasTargets()) {
-      double yaw = result.getBestTarget().getYaw();
-    }
-  }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
