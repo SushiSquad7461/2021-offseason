@@ -54,6 +54,7 @@ public class Drivetrain extends SubsystemBase {
     var result = camera.getLatestResult();
         if (result.hasTargets()) {
             double yaw = result.getBestTarget().getYaw(); 
+            curveDrive(0, ((yaw>0) ? Constants.kDrivetrain.TURN_SPEED : -Constants.kDrivetrain.TURN_SPEED), true);
         } 
   }
 

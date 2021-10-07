@@ -28,6 +28,7 @@ public final class Constants {
         public static final double SLOW_SPEED = 0.1;
 
         public static final boolean DRIVE_INVERTED = false;
+        public static final double TURN_SPEED = 0.1;
     }
   
     public static final class kIntake { 
