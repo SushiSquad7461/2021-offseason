@@ -1,5 +1,11 @@
 name: Continuous integration
-on: [push, pull_request]
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   build:
     name: Build
@@ -11,6 +17,7 @@ jobs:
           cd 2021-offseason
           ./gradlew downloadAll
           ./gradlew jar
+
   lint:
     name: Run checkstyle linter
     runs-on: ubuntu-latest
