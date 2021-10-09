@@ -36,20 +36,17 @@ public class RobotContainer {
   private final Hood hood = new Hood();
   private final Intake intake = new Intake();
   private final Climb climb = new Climb();
-  private final Drivetrain drivetrain;
+  private final Drivetrain drivetrain = new Drivetrain();
 
   private final XboxController driveController = new XboxController(Constants.kOI.DRIVE_CONTROLLER);
   private final XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
   private final RunKicker runKicker;
-  private final AutoShoot c_autoShoot, c_autoShoot2, c_autoShoot3;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    drivetrain = new Drivetrain();
-
     if (Constants.ENABLE_DRIVE) {
       drivetrain.setDefaultCommand(new RunCommand(() -> drivetrain.curveDrive(OI.getTriggers(driveController),
           OI.getLeftStick(driveController), driveController.getXButton()), drivetrain));
@@ -58,10 +55,6 @@ public class RobotContainer {
     // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT AND USE BUMPERS
     climb.setDefaultCommand(
         new RunCommand(() -> climb.climbAnalog(Math.pow(OI.getTriggers(operatorController), 3)), climb));
-
-    c_autoShoot = new AutoShoot(flywheel, hopper, intake, hood);
-    c_autoShoot2 = new AutoShoot(flywheel, hopper, intake, hood);
-    c_autoShoot3 = new AutoShoot(flywheel, hopper, intake, hood);
 
     runKicker = new RunKicker(flywheel, hopper, intake, hood);
 
@@ -185,7 +178,7 @@ public class RobotContainer {
       () -> this.drivetrain.curveDrive(Constants.kDrivetrain.AUTO_SPEED, 0, false),
       drivetrain).withTimeout(2);
 
-    return new SequentialCommandGroup(c_autoShoot, delayDrive);
+    return new SequentialCommandGroup(new AutoShoot(flywheel, hopper, intake, hood), delayDrive);
   }
 
   // move off init
@@ -201,7 +194,7 @@ public class RobotContainer {
 
   // shoot without moving
   public SequentialCommandGroup getThirdAutonomousCommand() {
-    return new SequentialCommandGroup(c_autoShoot2.withTimeout(6));
+    return new SequentialCommandGroup(new AutoShoot(flywheel, hopper, intake, hood).withTimeout(6));
   }
 
   // nothing
@@ -216,7 +209,7 @@ public class RobotContainer {
       new InstantCommand(flywheel::setToGoal, flywheel),
       new RunCommand(() -> drivetrain.curveDrive(0, 0, false), drivetrain).withTimeout(4),  
       //new WaitCommand(10),
-      c_autoShoot3.withTimeout(4),
+      new AutoShoot(flywheel, hopper, intake, hood).withTimeout(4),
       new RunCommand(() -> drivetrain.curveDrive(-Constants.kDrivetrain.AUTO_SPEED, 0, false), drivetrain).withTimeout(1)
     );
   }
