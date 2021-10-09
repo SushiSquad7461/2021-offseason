@@ -7,12 +7,14 @@ package frc.robot;
 import com.revrobotics.CANSparkMaxLowLevel;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This class should not be used for any other
+ * purpose. All constants should be declared globally (i.e. public static). Do
+ * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
     public static final class kDrivetrain {
@@ -30,8 +32,16 @@ public final class Constants {
         public static final boolean DRIVE_INVERTED = false;
         public static final double TURN_SPEED = 0.1;
     }
-  
-    public static final class kIntake { 
+
+    public static final class kCamera {
+        public static final double DRIVE_ALIGNMENT_TOLERANCE = 0;
+
+        public static final double P = 0;
+        public static final double I = 0;
+        public static final double D = 0;
+    }
+
+    public static final class kIntake {
         public static final int INTAKE_PORT = 10;
         public static final int INTAKE_SPEED = 1;
         public static final int SOLENOID_FRONT = 0;
@@ -53,5 +63,5 @@ public final class Constants {
         public static final int DRIVE_CONTROLLER = 0;
         public static final int OPERATOR_CONTROLLER = 1;
     }
-    
+
 }

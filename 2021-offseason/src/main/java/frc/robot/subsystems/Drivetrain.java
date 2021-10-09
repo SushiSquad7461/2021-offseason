@@ -8,15 +8,14 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
 import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonUtils;  
+import org.photonvision.PhotonUtils;
 
 public class Drivetrain extends SubsystemBase {
+
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
   private final DifferentialDrive diffDrive;
-  private PhotonCamera camera;
-
+  private final PhotonCamera camera;
 
   public Drivetrain() {
     frontLeft = new CANSparkMax(Constants.kDrivetrain.FRONT_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
@@ -25,7 +24,7 @@ public class Drivetrain extends SubsystemBase {
     backRight = new CANSparkMax(Constants.kDrivetrain.BACK_RIGHT_ID, Constants.kDrivetrain.MOTOR_TYPE);
 
     diffDrive = new DifferentialDrive(frontLeft, frontRight);
-    //front motors are controlled, others follow corresponding
+    // front motors are controlled, others follow corresponding
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
@@ -52,10 +51,11 @@ public class Drivetrain extends SubsystemBase {
 
   public void alignToTarget() {
     var result = camera.getLatestResult();
-        if (result.hasTargets()) {
-            double yaw = result.getBestTarget().getYaw(); 
-            curveDrive(0, ((yaw>0) ? Constants.kDrivetrain.TURN_SPEED : -Constants.kDrivetrain.TURN_SPEED), true);
-        } 
+    if (result.hasTargets()) {
+      double yaw = result.getBestTarget().getYaw();
+      double angularVelocity = Constants.kDrivetrain.TURN_SPEED * (yaw > 0 ? 1 : -1);
+      this.curveDrive(0, angularVelocity, true);
+    }
   }
 
   @Override
