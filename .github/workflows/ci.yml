@@ -7,11 +7,9 @@ jobs:
     container: gradle:jdk11
     steps:
       - uses: actions/checkout@v2
-      - uses: axel-op/googlejavaformat-action@v3
-        with:
-          args: "--skip-sorting-imports --replace"
-          # Recommended if you use MacOS:
-          # githubToken: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: axel-op/googlejavaformat-action@v3
+      #  with:
+      #    args: "--skip-sorting-imports --replace"
       - run: |
           cd 2021-offseason
           ./gradlew downloadAll
