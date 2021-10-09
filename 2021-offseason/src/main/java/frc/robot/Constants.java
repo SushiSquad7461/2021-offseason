@@ -80,13 +80,20 @@ public final class Constants {
         public static final boolean DRIVE_INVERTED = false;
     }
 
+    public static final class kCamera {
+        public static final double DRIVE_ALIGNMENT_TOLERANCE = 0;
+
+        public static final double P = 0;
+        public static final double I = 0;
+        public static final double D = 0;
+    }
+
     public static final class kIntake {
-        public static final int INTAKE_PORT = 7;
-        public static final int PCM_PORT = 17;
-        public static final double INTAKE_SPEED = 0.60007461;
-        public static final int SOLENOID_FRONT = 1;
-        public static final int SOLENOID_BACK = 0;
-        public static final boolean INVERTED = true;
+        public static final int INTAKE_PORT = 10;
+        public static final int INTAKE_SPEED = 1;
+        public static final int SOLENOID_FRONT = 0;
+        public static final int SOLENOID_BACK = 1;
+        public static final boolean INVERTED = false;
     }
 
     public static final class kHopper {

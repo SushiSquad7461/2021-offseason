@@ -8,16 +8,16 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 
 public class Drivetrain extends SubsystemBase {
+
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
   private final DifferentialDrive diffDrive;
   private int angleInvert;
   private boolean slow;
-  private PhotonCamera camera;
+  private final PhotonCamera camera;
 
   public Drivetrain() {
     frontLeft = new CANSparkMax(Constants.kDrivetrain.FRONT_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
