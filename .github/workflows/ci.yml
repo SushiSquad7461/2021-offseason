@@ -1,5 +1,11 @@
 name: Continuous integration
-on: [push, pull_request]
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   build:
     name: Build
@@ -7,10 +13,18 @@ jobs:
     container: gradle:jdk11
     steps:
       - uses: actions/checkout@v2
-      # - uses: axel-op/googlejavaformat-action@v3
-      #  with:
-      #    args: "--skip-sorting-imports --replace"
       - run: |
           cd 2021-offseason
           ./gradlew downloadAll
           ./gradlew jar
+
+  lint:
+    name: Run checkstyle linter
+    runs-on: ubuntu-latest
+    container: gradle:jdk11
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd 2021-offseason
+          ./gradlew downloadAll
+          ./gradlew check
