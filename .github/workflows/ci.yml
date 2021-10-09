@@ -12,7 +12,7 @@ jobs:
           ./gradlew downloadAll
           ./gradlew jar
   lint:
-    name: Run linter / style check
+    name: Run checkstyle linter
     runs-on: ubuntu-latest
     container: gradle:jdk11
     steps:
