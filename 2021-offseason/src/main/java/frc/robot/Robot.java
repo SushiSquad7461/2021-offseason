@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-   * //SmartDashboard integrated updating.
+   * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = autoChooser.getSelected();
+    m_autonomousCommand = this.autoChooser.getSelected();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

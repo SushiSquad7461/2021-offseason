@@ -170,11 +170,7 @@ public class RobotContainer {
 
   // rumbles drive controller when flywheel is at speed
   public void setDriveRumble() {
-    if (flywheel.atSpeed()) {
-      driveController.setRumble(GenericHID.RumbleType.kRightRumble, 1);
-    } else {
-      driveController.setRumble(GenericHID.RumbleType.kRightRumble, 0);
-    }
+    driveController.setRumble(GenericHID.RumbleType.kRightRumble, flywheel.atSpeed() ? 1 : 0);
   }
 
   /**
@@ -185,14 +181,22 @@ public class RobotContainer {
 
   // shoot and move off init
   public SequentialCommandGroup getAutonomousCommand() {
-    return new SequentialCommandGroup(c_autoShoot,
-        new RunCommand(() -> drivetrain.curveDrive(0.3, 0, false), drivetrain).withTimeout(2));
+    var delayDrive = new RunCommand(
+      () -> this.drivetrain.curveDrive(Constants.kDrivetrain.AUTO_SPEED, 0, false),
+      drivetrain).withTimeout(2);
+
+    return new SequentialCommandGroup(c_autoShoot, delayDrive);
   }
 
   // move off init
   public SequentialCommandGroup getSecondAutonomousCommand() {
-    return new SequentialCommandGroup(new InstantCommand(intake::actuateIntake, intake),
-        new RunCommand(() -> drivetrain.curveDrive(0.3, 0, false), drivetrain).withTimeout(2));
+    var actuateIntake = new InstantCommand(intake::actuateIntake, intake);
+
+    var delayDrive = new RunCommand(
+      () -> this.drivetrain.curveDrive(Constants.kDrivetrain.AUTO_SPEED, 0, false),
+      drivetrain).withTimeout(2);
+
+    return new SequentialCommandGroup(actuateIntake, delayDrive);
   }
 
   // shoot without moving
@@ -213,7 +217,7 @@ public class RobotContainer {
       new RunCommand(() -> drivetrain.curveDrive(0, 0, false), drivetrain).withTimeout(4),  
       //new WaitCommand(10),
       c_autoShoot3.withTimeout(4),
-      new RunCommand(() -> drivetrain.curveDrive(-0.3, 0, false), drivetrain).withTimeout(1)
+      new RunCommand(() -> drivetrain.curveDrive(-Constants.kDrivetrain.AUTO_SPEED, 0, false), drivetrain).withTimeout(1)
     );
   }
 }

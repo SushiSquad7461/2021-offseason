@@ -74,6 +74,7 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 35;
         public static final int OPEN_LOOP_RAMP = 0;
         public static final double SLOW_SPEED = 0.2;
+        public static final double AUTO_SPEED = 0.3;
 
         public static final boolean DRIVE_INVERTED = false;
     }
@@ -108,7 +109,6 @@ public final class Constants {
     }
 
     public static final class kFlywheel {
-       
         // motors
         public static final int MAIN_ID = 3;
         public static final int FOLLOWER_ID = 13;
@@ -133,12 +133,10 @@ public final class Constants {
         public static final double kS = 0.71212;
         public static final double kV = 0.02364;
         public static final double kA = 0.016388;
-        
     }
+
     public static final class kClimb {
-        public static final
-                CANSparkMaxLowLevel.MotorType MOTOR_TYPE =
-                CANSparkMaxLowLevel.MotorType.kBrushless;
+        public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
 
         public static final int WINCH_LEFT = 12;
         public static final int WINCH_RIGHT = 2;
@@ -150,6 +148,5 @@ public final class Constants {
 
         public static final double MAX_SPEED = 1; // maybe max out ?
         public static final double SLOW_SPEED = 0.1; // should tune, test in pit
-
-
-}}
+    }
+}

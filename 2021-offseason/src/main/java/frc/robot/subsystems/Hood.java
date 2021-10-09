@@ -125,8 +125,10 @@ public class Hood extends SubsystemBase {
     }
 
     public boolean atAngle() {
+        double hoodPosition = this.hoodEncoder.getPosition();
         double lowerBound = Constants.kHood.INIT_LINE_ANGLE * Constants.kHood.ANGLE_TOLERANCE;
         double upperBound = Constants.kHood.INIT_LINE_ANGLE * (2 - Constants.kHood.ANGLE_TOLERANCE);
-        return (hoodEncoder.getPosition() >= lowerBound && hoodEncoder.getPosition() <= upperBound);
+
+        return hoodPosition >= lowerBound && hoodPosition <= upperBound;
     }
 }
