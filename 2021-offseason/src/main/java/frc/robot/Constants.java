@@ -78,6 +78,7 @@ public final class Constants {
         public static final double AUTO_SPEED = 0.3;
 
         public static final boolean DRIVE_INVERTED = false;
+        public static final double TURN_SPEED = 0.1;
     }
 
     public static final class kCamera {

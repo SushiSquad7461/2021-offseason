@@ -84,6 +84,15 @@ public class Drivetrain extends SubsystemBase {
     slow = false;
   }
 
+  public void alignToTarget() {
+    var result = camera.getLatestResult();
+    if (result.hasTargets()) {
+      double yaw = result.getBestTarget().getYaw();
+      double angularVelocity = Constants.kDrivetrain.TURN_SPEED * (yaw > 0 ? 1 : -1);
+      this.curveDrive(0, angularVelocity, true);
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
