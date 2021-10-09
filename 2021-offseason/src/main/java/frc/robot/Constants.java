@@ -94,6 +94,7 @@ public final class Constants {
         public static final int SOLENOID_FRONT = 0;
         public static final int SOLENOID_BACK = 1;
         public static final boolean INVERTED = false;
+        public static final int PCM_PORT = 0;
     }
 
     public static final class kHopper {

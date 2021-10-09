@@ -9,7 +9,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.PhotonPipelineResult;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
