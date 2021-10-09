@@ -20,12 +20,14 @@ import com.revrobotics.CANSparkMaxLowLevel;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final boolean SINGLE_CONTROLLER_MODE = false;
+    public static final boolean ENABLE_DRIVE = true;
 
     public static final class kHood {
-        public static final int MOTOR_ID = 13;
+        public static final int MOTOR_ID = 4;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final double MAX_SPEED = 0.3;
-        public static final double HOOD_INCREMENT = 5;
+        public static final double HOOD_INCREMENT = 0.5;
         public static final double kP = 0.1;
         public static final double kI = 0;
         public static final double kD = 0;
@@ -56,19 +58,23 @@ public final class Constants {
             hoodAngleTreeMap.put(new InterpolatingDouble(220.0), new InterpolatingDouble(66.0));
             hoodAngleTreeMap.put(new InterpolatingDouble(230.0), new InterpolatingDouble(67.0));
         }
+
+        public static final double INIT_LINE_ANGLE = 7.1;
+        public static final double ANGLE_TOLERANCE = 0.03; // percentage / 100
     }
 
     public static final class kDrivetrain {
         public static final int FRONT_LEFT_ID = 1;
-        public static final int FRONT_RIGHT_ID = 14;
+        public static final int FRONT_RIGHT_ID = 15;
         public static final int BACK_LEFT_ID = 42;
-        public static final int BACK_RIGHT_ID = 15;
+        public static final int BACK_RIGHT_ID = 14;
 
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
 
         public static final int CURRENT_LIMIT = 35;
         public static final int OPEN_LOOP_RAMP = 0;
-        public static final double SLOW_SPEED = 0.1;
+        public static final double SLOW_SPEED = 0.2;
+        public static final double AUTO_SPEED = 0.3;
 
         public static final boolean DRIVE_INVERTED = false;
     }
@@ -76,10 +82,10 @@ public final class Constants {
     public static final class kIntake { 
         public static final int INTAKE_PORT = 7;
         public static final int PCM_PORT = 17;
-        public static final double INTAKE_SPEED = 1.0;
-        public static final int SOLENOID_FRONT = 0;
-        public static final int SOLENOID_BACK = 1;
-        public static final boolean INVERTED = false;
+        public static final double INTAKE_SPEED = 0.60007461;
+        public static final int SOLENOID_FRONT = 1;
+        public static final int SOLENOID_BACK = 0;
+        public static final boolean INVERTED = true;
     }
 
     public static final class kHopper {
@@ -87,8 +93,13 @@ public final class Constants {
         public static final int RIGHT_ID = 11;
         public static final int CENTER_ID = 8;
         public static final int KICKER_ID = 5;
-        public static final double FORWARD_SPEED = 0.2;
-        public static final double REVERSE_SPEED = FORWARD_SPEED * -1;
+        public static final double LEFT_SPEED = 0.5;
+        public static final double RIGHT_SPEED = 0.7;
+        public static final double FLOOR_SPEED = 0.7;
+        public static final double KICKER_FORWARD = 1;
+        public static final double KICKER_REVERSE = -1;
+        public static final int CURRENT_LIMIT = 20;
+        public static final double REVERSE_SPEED = -1;
         public static final boolean INVERTED = false;
     }
 
@@ -98,7 +109,6 @@ public final class Constants {
     }
 
     public static final class kFlywheel {
-       
         // motors
         public static final int MAIN_ID = 3;
         public static final int FOLLOWER_ID = 13;
@@ -109,21 +119,34 @@ public final class Constants {
         public static final double OPEN_LOOP_RAMP = 1;
 
         // pid constants
-        public static final double kP = 0.0007;
+        public static final double kP = 0.001;
         public static final double kI = 0;
-        public static final double kD = 0.001;  
+        public static final double kD = 0.0005;  
         public static final double MAX_VELOCITY = 0;
         public static final double MAX_ACCELERATION = 0;
         public static final int ERR_TOLERANCE = 0;
 
-        public static final int GOAL = 2000;
+        public static final int GOAL = 3000;
+        public static final double GOAL_TOLERANCE = 0.90; // percentage of goal that counts
 
         // feedforward constants
         public static final double kS = 0.71212;
         public static final double kV = 0.02364;
         public static final double kA = 0.016388;
-        
     }
 
+    public static final class kClimb {
+        public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
 
+        public static final int WINCH_LEFT = 12;
+        public static final int WINCH_RIGHT = 2;
+
+        public static final boolean WINCH_INVERTED = true;
+
+        public static final int CURRENT_LIMIT = 40;
+        public static final double OPEN_LOOP_RAMP = 1;
+
+        public static final double MAX_SPEED = 1; // maybe max out ?
+        public static final double SLOW_SPEED = 0.1; // should tune, test in pit
+    }
 }

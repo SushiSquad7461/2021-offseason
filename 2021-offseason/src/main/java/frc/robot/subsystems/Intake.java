@@ -21,10 +21,11 @@ public class Intake extends SubsystemBase {
   public Intake() {
     intakeTalon = new TalonSRX(Constants.kIntake.INTAKE_PORT);
     intakeTalon.setInverted(Constants.kIntake.INVERTED);
-    solenoid = new DoubleSolenoid(Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
+    solenoid = new DoubleSolenoid(Constants.kIntake.PCM_PORT, Constants.kIntake.SOLENOID_FRONT, Constants.kIntake.SOLENOID_BACK);
 
     solenoid.set(DoubleSolenoid.Value.kOff);
-    solenoid.set(DoubleSolenoid.Value.kForward);
+    solenoid.set(DoubleSolenoid.Value.kReverse);
+    SmartDashboard.putBoolean("intake extended", false);
   }
 
   @Override
@@ -38,28 +39,30 @@ public class Intake extends SubsystemBase {
   }  
 
   public void startIntake() {
-    SmartDashboard.putNumber("key2", Constants.kIntake.INTAKE_SPEED);
-    moveIntake(Constants.kIntake.INTAKE_SPEED);
+    //SmartDashboard.putNumber("key2", Constants.kIntake.INTAKE_SPEED);
+    setMotorPower(Constants.kIntake.INTAKE_SPEED);
   }
 
   public void stopIntake() {
-    moveIntake(0);
+    setMotorPower(0);
   }
 
   public void startReverse() {
-    moveIntake(-Constants.kIntake.INTAKE_SPEED);
+    setMotorPower(-Constants.kIntake.INTAKE_SPEED);
   }
 
-  public void moveIntake(double velocity) {
+  public void setMotorPower(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
-    SmartDashboard.putNumber("key", velocity);
+    //SmartDashboard.putNumber("key", velocity);
   }
 
   public void actuateIntake() {
-    solenoid.set(Value.kForward);
+    solenoid.set(Value.kReverse);
+    SmartDashboard.putBoolean("intake extended", true);
   }
 
   public void retractIntake() {
-    solenoid.set(Value.kReverse);
+    solenoid.set(Value.kForward);
+    SmartDashboard.putBoolean("intake extended", false);
   }
 }

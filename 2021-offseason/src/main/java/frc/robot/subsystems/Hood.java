@@ -36,8 +36,8 @@ public class Hood extends SubsystemBase {
     private double initialSetpoint;
     
     public Hood() {
-        SmartDashboard.putNumber("kP", Constants.kHood.kP);
-        SmartDashboard.putNumber("kD", Constants.kHood.kD);
+        //SmartDashboard.putNumber("kP", Constants.kHood.kP);
+        //SmartDashboard.putNumber("kD", Constants.kHood.kD);
         this.hoodMain = new CANSparkMax(Constants.kHood.MOTOR_ID, Constants.kHood.MOTOR_TYPE);
         hoodMain.setInverted(true);
         hoodMain.setIdleMode(CANSparkMax.IdleMode.kCoast);
@@ -47,15 +47,29 @@ public class Hood extends SubsystemBase {
         this.hoodController.setP(Constants.kHood.kP);
         this.hoodController.setI(Constants.kHood.kI);
         this.hoodController.setD(Constants.kHood.kD);
-        this.camera = new PhotonCamera("myCamera");
-        initialSetpoint = hoodEncoder.getPosition();
+        this.camera = new PhotonCamera("photonvision");
+        //initialSetpoint = hoodEncoder.getPosition();
+        initialSetpoint = Constants.kHood.INIT_LINE_ANGLE;
+        set(initialSetpoint);
+        
         //setZero();
     }
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
-        SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
-        SmartDashboard.putNumber("hood encoder position", hoodEncoder.getPosition());
+        boolean targets = camera.getLatestResult().hasTargets();
+        if (targets) {
+            SmartDashboard.putNumber("Yaw", camera.getLatestResult().getBestTarget().getYaw());
+            SmartDashboard.putNumber("Pitch", camera.getLatestResult().getBestTarget().getPitch());
+        } else {
+            SmartDashboard.putNumber("Yaw", -69);
+            SmartDashboard.putNumber("Pitch", -69);
+        }
+        SmartDashboard.putBoolean("targets", targets);
+        
+        //SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
+        //SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
+        SmartDashboard.putNumber("hood angle", hoodEncoder.getPosition());
+        SmartDashboard.putBoolean("at angle", atAngle());
         //if (isTaring) tareHoodPeriodic();
     }
 
@@ -79,7 +93,7 @@ public class Hood extends SubsystemBase {
 
     public void set(double setpoint) {
         this.hoodController.setReference(setpoint + Constants.kHood.kFF, ControlType.kPosition);
-        SmartDashboard.putNumber("hood setpoint", setpoint);
+        //SmartDashboard.putNumber("hood setpoint", setpoint);
     }
     public void incrementUp() {
         increaseSetpoint(Constants.kHood.HOOD_INCREMENT);
@@ -96,13 +110,25 @@ public class Hood extends SubsystemBase {
         increaseSetpoint(setpoint-currentDegree);
     } 
 
+    public void initLineSetpoint() {
+        set(Constants.kHood.INIT_LINE_ANGLE);
+    }
+
     public void runHood() {
         hoodMain.set(0.2);
-        SmartDashboard.putString("hood", "runninghood");
+        //SmartDashboard.putString("hood", "runninghood");
     }
 
     public void stopHood() {
         hoodMain.set(0);
-        SmartDashboard.putString("hood", "notrunninhood");
+        //SmartDashboard.putString("hood", "notrunninhood");
+    }
+
+    public boolean atAngle() {
+        double hoodPosition = this.hoodEncoder.getPosition();
+        double lowerBound = Constants.kHood.INIT_LINE_ANGLE * Constants.kHood.ANGLE_TOLERANCE;
+        double upperBound = Constants.kHood.INIT_LINE_ANGLE * (2 - Constants.kHood.ANGLE_TOLERANCE);
+
+        return hoodPosition >= lowerBound && hoodPosition <= upperBound;
     }
 }

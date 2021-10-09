@@ -70,7 +70,7 @@ public class Flywheel extends SubsystemBase {
     flywheelMain.setIdleMode(IdleMode.kCoast);
     flywheelFollower.setIdleMode(IdleMode.kCoast);
     
-    SmartDashboard.putNumber(new Boolean(flywheelFollower.getInverted()).toString(), 69);
+    //SmartDashboard.putNumber(new Boolean(flywheelFollower.getInverted()).toString(), 69);
 
 
     pidController.setTolerance(0,Constants.kFlywheel.ERR_TOLERANCE);
@@ -81,16 +81,19 @@ public class Flywheel extends SubsystemBase {
   public void periodic() {
     double output = pidController.calculate(flywheelEncoder.getVelocity());
     useOutput(output, pidController.getSetpoint());
+
+    SmartDashboard.putNumber("flywheel rpm", flywheelEncoder.getVelocity());
+    SmartDashboard.putBoolean("at speed", atSpeed());
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Main motor inverted", flywheelMain.getInverted());
-    SmartDashboard.putBoolean("Second motor inverted", flywheelFollower.getInverted());
-    SmartDashboard.putNumber("main motor output", flywheelMain.getAppliedOutput());
-    SmartDashboard.putNumber("second motor output", flywheelFollower.getAppliedOutput());
-    SmartDashboard.putNumber("Main motor current", flywheelMain.getOutputCurrent());
-    SmartDashboard.putNumber("Second motor current", flywheelFollower.getOutputCurrent());
-    SmartDashboard.putNumber("rpm", flywheelEncoder.getVelocity());
-    // SmartDashboard.putNumber("main sticky faults", flywheelMain.getStickyFaults());
-    // SmartDashboard.putNumber("secondary sticky faults", flywheelFollower.getStickyFaults());
+    //SmartDashboard.putBoolean("Main motor inverted", flywheelMain.getInverted());
+    //SmartDashboard.putBoolean("Second motor inverted", flywheelFollower.getInverted());
+    //SmartDashboard.putNumber("main motor output", flywheelMain.getAppliedOutput());
+    //SmartDashboard.putNumber("second motor output", flywheelFollower.getAppliedOutput());
+    //SmartDashboard.putNumber("Main motor current", flywheelMain.getOutputCurrent());
+    //SmartDashboard.putNumber("Second motor current", flywheelFollower.getOutputCurrent());
+    //SmartDashboard.putNumber("rpm", flywheelEncoder.getVelocity());
+    // //SmartDashboard.putNumber("main sticky faults", flywheelMain.getStickyFaults());
+    // //SmartDashboard.putNumber("secondary sticky faults", flywheelFollower.getStickyFaults());
   }
 
   @Override
@@ -100,10 +103,10 @@ public class Flywheel extends SubsystemBase {
 
   //will automatically be called periodically
   protected void useOutput(double output, TrapezoidProfile.State setpoint) {
-    SmartDashboard.putNumber("velocity ff setpoint", setpoint.position);
-    SmartDashboard.putNumber("acceleration ff setpoint", setpoint.velocity);
+    //SmartDashboard.putNumber("velocity ff setpoint", setpoint.position);
+    //SmartDashboard.putNumber("acceleration ff setpoint", setpoint.velocity);
     double fForward = feedForward.calculate(setpoint.position, setpoint.velocity)/(12*8);
-    SmartDashboard.putNumber("feedforward", fForward);
+    //SmartDashboard.putNumber("feedforward", fForward);
     if (pidController.getGoal().position == 0) {
       flywheelMain.set(0);
       flywheelFollower.set(0);
@@ -111,18 +114,28 @@ public class Flywheel extends SubsystemBase {
       flywheelMain.set(output+fForward);
       flywheelFollower.set(output+fForward);
     }
-    
-    //flywheelMain.set(output+fForward);
-
   }
 
   protected double getMeasurement() {
     return flywheelMain.getEncoder().getVelocity();
   }
 
+  public boolean atSpeed() {
+    return flywheelEncoder.getVelocity() >= Constants.kFlywheel.GOAL * Constants.kFlywheel.GOAL_TOLERANCE;
+  }
+
+  public double goalPercentage() {
+    return flywheelEncoder.getVelocity() / Constants.kFlywheel.GOAL;
+  }
+
   public void setGoal(double goal) {
-    SmartDashboard.putNumber("Goal", goal);
+    //SmartDashboard.putNumber("Goal", goal);
     pidController.setGoal(goal);
+  }
+
+  public void setToGoal() {
+    SmartDashboard.putBoolean("Revving flywheel", true);
+    pidController.setGoal(Constants.kFlywheel.GOAL);
   }
   
   public void runShooter() {
@@ -132,6 +145,7 @@ public class Flywheel extends SubsystemBase {
   }
   
   public void stopShooter() {
+    SmartDashboard.putBoolean("Revving flywheel", false);
     flywheelMain.set(0);
     flywheelFollower.set(0);
   }
