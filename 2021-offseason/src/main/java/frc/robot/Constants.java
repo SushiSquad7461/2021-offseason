@@ -33,30 +33,30 @@ public final class Constants {
     public static final double kD = 0;
     public static final double kFF = 0.0;
     public static final double SETPOINT = (45.0/360.0) * (332.0/14.0) * 15;
-    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> hoodAngleTreeMap = new InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble>();
+    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> HOOD_ANGLE_MAP = new InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble>();
     public static final double[] ZONE_SETPOINTS = {37.0, 56.0, 80.0, 80.0};
     public static final int LIMIT_PORT = -1;
 
     static {
-      hoodAngleTreeMap.put(new InterpolatingDouble(50.0), new InterpolatingDouble(39.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(60.0), new InterpolatingDouble(41.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(70.0), new InterpolatingDouble(45.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(80.0), new InterpolatingDouble(49.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(90.0), new InterpolatingDouble(52.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(100.0), new InterpolatingDouble(54.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(110.0), new InterpolatingDouble(56.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(120.0), new InterpolatingDouble(57.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(130.0), new InterpolatingDouble(58.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(140.0), new InterpolatingDouble(59.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(150.0), new InterpolatingDouble(62.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(160.0), new InterpolatingDouble(64.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(170.0), new InterpolatingDouble(65.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(180.0), new InterpolatingDouble(65.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(190.0), new InterpolatingDouble(65.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(200.0), new InterpolatingDouble(66.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(210.0), new InterpolatingDouble(65.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(220.0), new InterpolatingDouble(66.0));
-      hoodAngleTreeMap.put(new InterpolatingDouble(230.0), new InterpolatingDouble(67.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(50.0), new InterpolatingDouble(39.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(60.0), new InterpolatingDouble(41.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(70.0), new InterpolatingDouble(45.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(80.0), new InterpolatingDouble(49.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(90.0), new InterpolatingDouble(52.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(100.0), new InterpolatingDouble(54.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(110.0), new InterpolatingDouble(56.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(120.0), new InterpolatingDouble(57.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(130.0), new InterpolatingDouble(58.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(140.0), new InterpolatingDouble(59.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(150.0), new InterpolatingDouble(62.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(160.0), new InterpolatingDouble(64.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(170.0), new InterpolatingDouble(65.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(180.0), new InterpolatingDouble(65.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(190.0), new InterpolatingDouble(65.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(200.0), new InterpolatingDouble(66.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(210.0), new InterpolatingDouble(65.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(220.0), new InterpolatingDouble(66.0));
+      HOOD_ANGLE_MAP.put(new InterpolatingDouble(230.0), new InterpolatingDouble(67.0));
     }
 
     public static final double INIT_LINE_ANGLE = 7.1;

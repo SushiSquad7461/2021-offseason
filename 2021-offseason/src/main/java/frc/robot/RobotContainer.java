@@ -4,24 +4,21 @@
 
 package frc.robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Flywheel;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import frc.robot.commands.AutoShoot;
+import frc.robot.commands.RunKicker;
+import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

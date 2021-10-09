@@ -7,10 +7,17 @@ jobs:
     container: gradle:jdk11
     steps:
       - uses: actions/checkout@v2
-      # - uses: axel-op/googlejavaformat-action@v3
-      #  with:
-      #    args: "--skip-sorting-imports --replace"
       - run: |
           cd 2021-offseason
           ./gradlew downloadAll
           ./gradlew jar
+  lint:
+    name: Run linter / style check
+    runs-on: ubuntu-latest
+    container: gradle:jdk11
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd 2021-offseason
+          ./gradlew downloadAll
+          ./gradlew check
