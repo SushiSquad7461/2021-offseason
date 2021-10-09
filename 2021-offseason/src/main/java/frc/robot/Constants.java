@@ -115,7 +115,7 @@ public final class Constants {
     public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
     public static final boolean MAIN_INVERTED = true;
     public static final boolean FOLLOWER_INVERTED = false;  
-    public static final int CURRENT_LIMIT = 80;
+    public static final int CURRENT_LIMIT = 45;
     public static final double OPEN_LOOP_RAMP = 1;
 
     // pid constants
@@ -130,9 +130,9 @@ public final class Constants {
     public static final double GOAL_TOLERANCE = 0.90; // percentage of goal that counts
 
     // feedforward constants
-    public static final double kS = 0.71212;
-    public static final double kV = 0.02364;
-    public static final double kA = 0.016388;
+    public static final double kS = -0.7938;
+    public static final double kV = 0.16662;
+    public static final double kA = 0.63739;
   }
 
   public static final class kClimb {

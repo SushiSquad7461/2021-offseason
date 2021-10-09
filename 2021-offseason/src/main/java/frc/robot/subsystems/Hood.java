@@ -56,6 +56,7 @@ public class Hood extends SubsystemBase {
   }
   @Override
   public void periodic() {
+    /*
     boolean targets = camera.getLatestResult().hasTargets();
     if (targets) {
       SmartDashboard.putNumber("Yaw", camera.getLatestResult().getBestTarget().getYaw());
@@ -64,12 +65,12 @@ public class Hood extends SubsystemBase {
       SmartDashboard.putNumber("Yaw", -69);
       SmartDashboard.putNumber("Pitch", -69);
     }
-    SmartDashboard.putBoolean("targets", targets);
+    SmartDashboard.putBoolean("targets", targets); 
     
     //SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
     //SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
     SmartDashboard.putNumber("hood angle", hoodEncoder.getPosition());
-    SmartDashboard.putBoolean("at angle", atAngle());
+    SmartDashboard.putBoolean("at angle", atAngle()); */
     //if (isTaring) tareHoodPeriodic();
   }
 
