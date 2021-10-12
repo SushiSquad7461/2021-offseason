@@ -1,4 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
+ // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
@@ -82,11 +82,11 @@ public final class Constants {
     }
 
     public static final class kCamera {
-        public static final double DRIVE_ALIGNMENT_TOLERANCE = 0;
+        public static final double DRIVE_ALIGNMENT_TOLERANCE = 3.2;
 
-        public static final double P = 0;
+        public static final double P = 0.06007461;
         public static final double I = 0;
-        public static final double D = 0;
+        public static final double D = 0.01;
     }
 
     public static final class kIntake {

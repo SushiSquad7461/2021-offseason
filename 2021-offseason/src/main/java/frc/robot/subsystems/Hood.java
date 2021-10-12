@@ -35,7 +35,8 @@ public class Hood extends SubsystemBase {
   private boolean isTaring = false;
   private double initialSetpoint;
   
-  public Hood() {
+  public Hood(PhotonCamera camera) {
+    this.camera = camera;
     //SmartDashboard.putNumber("kP", Constants.kHood.kP);
     //SmartDashboard.putNumber("kD", Constants.kHood.kD);
     this.hoodMain = new CANSparkMax(Constants.kHood.MOTOR_ID, Constants.kHood.MOTOR_TYPE);

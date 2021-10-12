@@ -5,7 +5,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.FaultID;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.photonvision.PhotonCamera;
@@ -96,6 +99,15 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("frontleft fault", frontLeft.getFaults());
+    SmartDashboard.putNumber("frontright fault", frontRight.getFaults());
+    SmartDashboard.putNumber("backleft fault", backLeft.getFaults());
+    SmartDashboard.putNumber("backright fault", backRight.getFaults());
+
+    SmartDashboard.putNumber("frontleft applied output", frontLeft.getAppliedOutput());
+    SmartDashboard.putNumber("frontright applied output", frontRight.getAppliedOutput());
+    SmartDashboard.putNumber("backleft applied output", backLeft.getAppliedOutput());
+    SmartDashboard.putNumber("backright applied output", backRight.getAppliedOutput());
   }
 
   @Override
