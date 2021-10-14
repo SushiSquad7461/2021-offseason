@@ -84,6 +84,9 @@ public final class Constants {
     public static final class kCamera {
         public static final double DRIVE_ALIGNMENT_TOLERANCE = 3.2;
 
+        public static final double CAMERA_HEIGHT_METERS = 0.521;
+        public static final double TARGET_HEIGHT_METERS = 2.3;
+        public static final double CAMERA_PITCH_RADIANS = 0.523;
         public static final double P = 0.06007461;
         public static final double I = 0;
         public static final double D = 0.01;
@@ -126,14 +129,14 @@ public final class Constants {
         public static final boolean MAIN_INVERTED = true;
         public static final boolean FOLLOWER_INVERTED = false;
         public static final int CURRENT_LIMIT = 80;
-        public static final double OPEN_LOOP_RAMP = 1;
+        public static final double OPEN_LOOP_RAMP = 3;
 
         // pid constants
         public static final double kP = 0.001;
         public static final double kI = 0;
         public static final double kD = 0.0005;
         public static final double MAX_VELOCITY = 0;
-        public static final double MAX_ACCELERATION = 0;
+        public static final double MAX_ACCELERATION = 30;
         public static final int ERR_TOLERANCE = 0;
 
         public static final int GOAL = 3000;
