@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -31,9 +33,10 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final PhotonCamera camera = new PhotonCamera("photonvision");
   private final Flywheel flywheel = new Flywheel();
   private final Hopper hopper = new Hopper();
-  private final Hood hood = new Hood();
+  private final Hood hood = new Hood(camera);
   private final Intake intake = new Intake();
   private final Climb climb = new Climb();
   private final Drivetrain drivetrain = new Drivetrain();
@@ -42,6 +45,8 @@ public class RobotContainer {
   private final XboxController operatorController = new XboxController(Constants.kOI.OPERATOR_CONTROLLER);
 
   private final RunKicker runKicker;
+
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -154,6 +159,9 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kStickLeft.value)
         .whenPressed(new InstantCommand(hood::stopHood, hood)).whenReleased(new SequentialCommandGroup(
             new InstantCommand(hood::setZero, hood), new InstantCommand(hood::initLineSetpoint, hood)));
+
+    new JoystickButton(operatorController, XboxController.Button.kB.value)
+        .whenHeld(new AlignToTarget(drivetrain, camera));
   }
 
   // rumbles operator controller to flywheel speed lol

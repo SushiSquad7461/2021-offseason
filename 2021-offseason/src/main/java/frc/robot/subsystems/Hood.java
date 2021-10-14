@@ -17,11 +17,14 @@ import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonPipelineResult;
 
 public class Hood extends SubsystemBase {
   private final CANSparkMax hoodMain;
@@ -34,8 +37,10 @@ public class Hood extends SubsystemBase {
   //private final DigitalInput limitswitch = new DigitalInput(Constants.kHood.LIMIT_PORT);
   private boolean isTaring = false;
   private double initialSetpoint;
+  private NetworkTableInstance nInstance;
   
-  public Hood() {
+  public Hood(PhotonCamera camera) {
+    this.camera = camera;
     //SmartDashboard.putNumber("kP", Constants.kHood.kP);
     //SmartDashboard.putNumber("kD", Constants.kHood.kD);
     this.hoodMain = new CANSparkMax(Constants.kHood.MOTOR_ID, Constants.kHood.MOTOR_TYPE);
@@ -51,26 +56,21 @@ public class Hood extends SubsystemBase {
     //initialSetpoint = hoodEncoder.getPosition();
     initialSetpoint = Constants.kHood.INIT_LINE_ANGLE;
     set(initialSetpoint);
+    nInstance = NetworkTableInstance.getDefault();
+
     
     //setZero();
   }
   @Override
   public void periodic() {
-    boolean targets = camera.getLatestResult().hasTargets();
-    if (targets) {
-      SmartDashboard.putNumber("Yaw", camera.getLatestResult().getBestTarget().getYaw());
-      SmartDashboard.putNumber("Pitch", camera.getLatestResult().getBestTarget().getPitch());
-    } else {
-      SmartDashboard.putNumber("Yaw", -69);
-      SmartDashboard.putNumber("Pitch", -69);
-    }
-    SmartDashboard.putBoolean("targets", targets);
-    
-    //SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
-    //SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());
-    SmartDashboard.putNumber("hood angle", hoodEncoder.getPosition());
-    SmartDashboard.putBoolean("at angle", atAngle());
-    //if (isTaring) tareHoodPeriodic();
+    NetworkTable photonTable = nInstance.getTable("photonvision").getSubTable("photonvision");
+    //PhotonPipelineResult result = camera.getLatestResult();
+    double pitch = photonTable.getEntry("targetPitch").getDouble(200);
+    // double range = PhotonUtils.calculateDistanceToTargetMeters(Constants.kCamera.CAMERA_HEIGHT_METERS, Constants.kCamera.TARGET_HEIGHT_METERS,
+    //               Constants.kCamera.CAMERA_PITCH_RADIANS, pitch);
+    double range = PhotonUtils.calculateDistanceToTargetMeters(0.521, 2.3, 0.523, pitch); 
+    SmartDashboard.putNumber("Pitch (hood)", pitch);
+    SmartDashboard.putNumber("range", range);
   }
 
   

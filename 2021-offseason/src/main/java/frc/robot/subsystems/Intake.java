@@ -53,7 +53,8 @@ public class Intake extends SubsystemBase {
 
   public void setMotorPower(double velocity) {
     intakeTalon.set(ControlMode.PercentOutput, velocity);
-    //SmartDashboard.putNumber("key", velocity);
+    SmartDashboard.putNumber("intake talon output", velocity);
+    SmartDashboard.putNumber("intake talon current", intakeTalon.getStatorCurrent());
   }
 
   public void actuateIntake() {

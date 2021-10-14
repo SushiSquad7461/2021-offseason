@@ -5,15 +5,22 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.FaultID;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 
 public class Drivetrain extends SubsystemBase {
+
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
   private final DifferentialDrive diffDrive;
   private int angleInvert;
   private boolean slow;
+  private final PhotonCamera camera;
 
   public Drivetrain() {
     frontLeft = new CANSparkMax(Constants.kDrivetrain.FRONT_LEFT_ID, Constants.kDrivetrain.MOTOR_TYPE);
@@ -27,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
     backRight.restoreFactoryDefaults();
 
     diffDrive = new DifferentialDrive(frontLeft, frontRight);
-    //front motors are controlled, others follow corresponding
+    // front motors are controlled, others follow corresponding
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
@@ -48,6 +55,7 @@ public class Drivetrain extends SubsystemBase {
     frontRight.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
     backLeft.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
     backRight.setSmartCurrentLimit(Constants.kDrivetrain.CURRENT_LIMIT);
+    this.camera = new PhotonCamera("myCamera");
   }
 
   public void curveDrive(double linearVelocity, double angularVelocity, boolean isQuickturn) {
@@ -56,7 +64,8 @@ public class Drivetrain extends SubsystemBase {
     }
 
     if (slow) {
-      diffDrive.curvatureDrive(linearVelocity * Constants.kDrivetrain.SLOW_SPEED, angularVelocity * angleInvert, isQuickturn);
+      diffDrive.curvatureDrive(linearVelocity * Constants.kDrivetrain.SLOW_SPEED, angularVelocity * angleInvert,
+          isQuickturn);
     } else {
       diffDrive.curvatureDrive(linearVelocity, angularVelocity * angleInvert, isQuickturn);
     }
@@ -78,9 +87,27 @@ public class Drivetrain extends SubsystemBase {
     slow = false;
   }
 
+  public void alignToTarget() {
+    var result = camera.getLatestResult();
+    if (result.hasTargets()) {
+      double yaw = result.getBestTarget().getYaw();
+      double angularVelocity = Constants.kDrivetrain.TURN_SPEED * (yaw > 0 ? 1 : -1);
+      this.curveDrive(0, angularVelocity, true);
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("frontleft fault", frontLeft.getFaults());
+    SmartDashboard.putNumber("frontright fault", frontRight.getFaults());
+    SmartDashboard.putNumber("backleft fault", backLeft.getFaults());
+    SmartDashboard.putNumber("backright fault", backRight.getFaults());
+
+    SmartDashboard.putNumber("frontleft applied output", frontLeft.getAppliedOutput());
+    SmartDashboard.putNumber("frontright applied output", frontRight.getAppliedOutput());
+    SmartDashboard.putNumber("backleft applied output", backLeft.getAppliedOutput());
+    SmartDashboard.putNumber("backright applied output", backRight.getAppliedOutput());
   }
 
   @Override
