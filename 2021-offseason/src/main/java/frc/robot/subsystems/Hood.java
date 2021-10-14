@@ -57,15 +57,15 @@ public class Hood extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    boolean targets = camera.getLatestResult().hasTargets();
-    if (targets) {
-      SmartDashboard.putNumber("Yaw", camera.getLatestResult().getBestTarget().getYaw());
-      SmartDashboard.putNumber("Pitch", camera.getLatestResult().getBestTarget().getPitch());
-    } else {
-      SmartDashboard.putNumber("Yaw", -69);
-      SmartDashboard.putNumber("Pitch", -69);
-    }
-    SmartDashboard.putBoolean("targets", targets);
+    // boolean targets = camera.getLatestResult().hasTargets();
+    // if (targets) {
+    //   SmartDashboard.putNumber("Yaw", camera.getLatestResult().getBestTarget().getYaw());
+    //   SmartDashboard.putNumber("Pitch", camera.getLatestResult().getBestTarget().getPitch());
+    // } else {
+    //   SmartDashboard.putNumber("Yaw", -69);
+    //   SmartDashboard.putNumber("Pitch", -69);
+    // }
+    // SmartDashboard.putBoolean("targets", targets);
     
     //SmartDashboard.putNumber("hood applied output", hoodMain.getAppliedOutput());
     //SmartDashboard.putNumber("hood current", hoodMain.getOutputCurrent());

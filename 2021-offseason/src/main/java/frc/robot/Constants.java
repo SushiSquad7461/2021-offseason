@@ -90,11 +90,11 @@ public final class Constants {
     }
 
     public static final class kIntake {
-        public static final int INTAKE_PORT = 10;
+        public static final int INTAKE_PORT = 7;
         public static final int INTAKE_SPEED = 1;
         public static final int SOLENOID_FRONT = 0;
         public static final int SOLENOID_BACK = 1;
-        public static final boolean INVERTED = false;
+        public static final boolean INVERTED = true;
         public static final int PCM_PORT = 0;
     }
 
