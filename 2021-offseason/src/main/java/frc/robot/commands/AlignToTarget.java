@@ -40,7 +40,11 @@ public class AlignToTarget extends CommandBase {
         this.pid.setSetpoint(0); // yaw target should always be 0
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(drivetrain);
-        nInstance = NetworkTableInstance.getDefault();
+        try {
+            nInstance = NetworkTableInstance.getDefault();
+        } catch(NullPointerException error) {
+            error.printStackTrace();
+        }
     }
 
     // Called when the command is initially scheduled.
@@ -62,8 +66,12 @@ public class AlignToTarget extends CommandBase {
             System.out.println("this is what the yaw is " + yaw);
             double angularVelocity = pid.calculate(-yaw);
             drivetrain.curveDrive(0, angularVelocity, true);
-            SmartDashboard.putNumber("YAWE", result.getBestTarget().getYaw());
-            SmartDashboard.putNumber("Piss",result.getBestTarget().getPitch()); 
+            try {
+                SmartDashboard.putNumber("YAWE", result.getBestTarget().getYaw());
+                SmartDashboard.putNumber("Piss",result.getBestTarget().getPitch()); 
+            } catch(NullPointerException err) {
+                err.printStackTrace();
+            }
             SmartDashboard.putNumber("yaw from nt", yaw);
         } else {
             SmartDashboard.putNumber("YAWE", -69.0);
