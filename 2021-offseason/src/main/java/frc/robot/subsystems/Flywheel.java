@@ -107,6 +107,7 @@ public class Flywheel extends SubsystemBase {
     //SmartDashboard.putNumber("acceleration ff setpoint", setpoint.velocity);
     double fForward = feedForward.calculate(setpoint.position, setpoint.velocity)/(12*8);
     //SmartDashboard.putNumber("feedforward", fForward);
+    SmartDashboard.putNumber("flywheel velocity set", setpoint.position);
     if (pidController.getGoal().position == 0) {
       flywheelMain.set(0);
       flywheelFollower.set(0);
