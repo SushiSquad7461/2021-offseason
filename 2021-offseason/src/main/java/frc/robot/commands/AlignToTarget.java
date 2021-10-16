@@ -37,7 +37,7 @@ public class AlignToTarget extends CommandBase {
         this.drivetrain = drivetrain;
         this.camera = camera;
         this.pid = new PIDController(Constants.kCamera.P, Constants.kCamera.I, Constants.kCamera.D);
-        this.pid.setSetpoint(0); // yaw target should always be 0
+        this.pid.setSetpoint(Constants.kCamera.DRIVE_ALIGNMENT_TARGET); // yaw target should always be 0
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(drivetrain);
         try {
@@ -98,6 +98,6 @@ public class AlignToTarget extends CommandBase {
         NetworkTable photonTable = nInstance.getTable("photonvision").getSubTable("photonvision");
         result = camera.getLatestResult();
         double yaw = photonTable.getEntry("targetYaw").getDouble(200);
-        return Math.abs(yaw)<Constants.kCamera.DRIVE_ALIGNMENT_TOLERANCE;
+        return Math.abs(yaw) + Constants.kCamera.DRIVE_ALIGNMENT_TARGET < Constants.kCamera.DRIVE_ALIGNMENT_TOLERANCE;
     }
 }

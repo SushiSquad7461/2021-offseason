@@ -56,8 +56,8 @@ public class Flywheel extends SubsystemBase {
     flywheelMain.setSmartCurrentLimit(Constants.kFlywheel.CURRENT_LIMIT);
     flywheelFollower.setSmartCurrentLimit(Constants.kFlywheel.CURRENT_LIMIT);
 
-    flywheelMain.setInverted(Constants.kFlywheel.MAIN_INVERTED);
-    flywheelFollower.setInverted(Constants.kFlywheel.FOLLOWER_INVERTED);
+    flywheelMain.setInverted(!Constants.kFlywheel.MAIN_INVERTED);
+    flywheelFollower.setInverted(!Constants.kFlywheel.FOLLOWER_INVERTED);
 
     flywheelMain.setOpenLoopRampRate(Constants.kFlywheel.OPEN_LOOP_RAMP);
     flywheelFollower.setOpenLoopRampRate(Constants.kFlywheel.OPEN_LOOP_RAMP);

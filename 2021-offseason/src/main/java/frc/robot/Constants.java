@@ -84,6 +84,8 @@ public final class Constants {
     public static final class kCamera {
         public static final double DRIVE_ALIGNMENT_TOLERANCE = 3.2;
 
+        public static final double DRIVE_ALIGNMENT_TARGET = 0;
+
         public static final double CAMERA_HEIGHT_METERS = 0.521;
         public static final double TARGET_HEIGHT_METERS = 2.3;
         public static final double CAMERA_PITCH_RADIANS = 0.523;
@@ -123,8 +125,8 @@ public final class Constants {
 
     public static final class kFlywheel {
         // motors
-        public static final int MAIN_ID = 3;
-        public static final int FOLLOWER_ID = 13;
+        public static final int MAIN_ID = 13;
+        public static final int FOLLOWER_ID = 3;
         public static final CANSparkMaxLowLevel.MotorType MOTOR_TYPE = CANSparkMaxLowLevel.MotorType.kBrushless;
         public static final boolean MAIN_INVERTED = true;
         public static final boolean FOLLOWER_INVERTED = false;
@@ -139,8 +141,8 @@ public final class Constants {
         public static final double MAX_ACCELERATION = 0;
         public static final int ERR_TOLERANCE = 0;
 
-        public static final int GOAL = 3000;
-        public static final double GOAL_TOLERANCE = 0.90; // percentage of goal that counts
+        public static final int GOAL = 4000;
+        public static final double GOAL_TOLERANCE = 0.95; // percentage of goal that counts
 
         // feedforward constants
         public static final double kS = 0.71212;
