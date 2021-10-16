@@ -58,12 +58,12 @@ public class Intake extends SubsystemBase {
   }
 
   public void actuateIntake() {
-    solenoid.set(Value.kReverse);
+    solenoid.set(Value.kForward);
     SmartDashboard.putBoolean("intake extended", true);
   }
 
   public void retractIntake() {
-    solenoid.set(Value.kForward);
+    solenoid.set(Value.kReverse);
     SmartDashboard.putBoolean("intake extended", false);
   }
 }

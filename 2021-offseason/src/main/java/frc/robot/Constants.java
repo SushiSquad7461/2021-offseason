@@ -60,7 +60,7 @@ public final class Constants {
             hoodAngleTreeMap.put(new InterpolatingDouble(230.0), new InterpolatingDouble(67.0));
         }
 
-        public static final double INIT_LINE_ANGLE = 7.1;
+        public static final double INIT_LINE_ANGLE = 8.1;
         public static final double ANGLE_TOLERANCE = 0.03; // percentage / 100
     }
 
@@ -98,7 +98,7 @@ public final class Constants {
         public static final int SOLENOID_FRONT = 0;
         public static final int SOLENOID_BACK = 1;
         public static final boolean INVERTED = true;
-        public static final int PCM_PORT = 0;
+        public static final int PCM_PORT = 17;
     }
 
     public static final class kHopper {
@@ -129,14 +129,14 @@ public final class Constants {
         public static final boolean MAIN_INVERTED = true;
         public static final boolean FOLLOWER_INVERTED = false;
         public static final int CURRENT_LIMIT = 80;
-        public static final double OPEN_LOOP_RAMP = 3;
+        public static final double OPEN_LOOP_RAMP = 2;
 
         // pid constants
         public static final double kP = 0.001;
         public static final double kI = 0;
         public static final double kD = 0.0005;
         public static final double MAX_VELOCITY = 0;
-        public static final double MAX_ACCELERATION = 30;
+        public static final double MAX_ACCELERATION = 0;
         public static final int ERR_TOLERANCE = 0;
 
         public static final int GOAL = 3000;

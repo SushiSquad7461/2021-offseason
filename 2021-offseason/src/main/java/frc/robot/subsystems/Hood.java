@@ -59,10 +59,11 @@ public class Hood extends SubsystemBase {
     nInstance = NetworkTableInstance.getDefault();
 
     
-    //setZero();
+    setZero();
   }
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("hood angle", hoodEncoder.getPosition());
     NetworkTable photonTable = nInstance.getTable("photonvision").getSubTable("photonvision");
     //PhotonPipelineResult result = camera.getLatestResult();
     double pitch = photonTable.getEntry("targetPitch").getDouble(200);
@@ -78,6 +79,7 @@ public class Hood extends SubsystemBase {
   public void setZero() {
     // isTaring = true;
     currentDegree = 0;
+    hoodEncoder.setPosition(0);
     initialSetpoint = hoodEncoder.getPosition();
   }
   /*

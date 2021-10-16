@@ -59,7 +59,7 @@ public class RobotContainer {
 
     // IF THIS IS PROBLEMATIC JUST COMMENT IT OUT AND USE BUMPERS
     climb.setDefaultCommand(
-        new RunCommand(() -> climb.climbAnalog(Math.pow(OI.getTriggers(operatorController), 3)), climb));
+        new RunCommand(() -> climb.climbAnalog(OI.getRightStick(driveController)), climb));
 
     runKicker = new RunKicker(flywheel, hopper, intake, hood);
 
@@ -100,6 +100,7 @@ public class RobotContainer {
     new JoystickButton(driveController, XboxController.Button.kA.value)
       .whileHeld(runKicker);
 
+    /*
     // drive back button --> slow climb reverse
     new JoystickButton(driveController, XboxController.Button.kBack.value)
         .whenPressed(new InstantCommand(climb::slowClimbReverse, climb))
@@ -108,7 +109,7 @@ public class RobotContainer {
     // drive start button --> slow climb forward
     new JoystickButton(driveController, XboxController.Button.kStart.value)
         .whenPressed(new InstantCommand(climb::fastClimbForward, climb))
-        .whenReleased(new InstantCommand(climb::stop, climb));
+        .whenReleased(new InstantCommand(climb::stop, climb)); */
 
     // operator A --> rev flywheel
     new JoystickButton(operatorController, XboxController.Button.kA.value)
@@ -157,10 +158,13 @@ public class RobotContainer {
     // operator click left joystick --> rezero and reset hood
     // press will drop hood, release will set zero and then reset setpoint
     new JoystickButton(operatorController, XboxController.Button.kStickLeft.value)
-        .whenPressed(new InstantCommand(hood::stopHood, hood)).whenReleased(new SequentialCommandGroup(
-            new InstantCommand(hood::setZero, hood), new InstantCommand(hood::initLineSetpoint, hood)));
+        .whenPressed(new InstantCommand(hood::stopHood, hood))
+        .whenReleased(new SequentialCommandGroup(
+            new InstantCommand(hood::setZero, hood), 
+            new InstantCommand(hood::initLineSetpoint, hood)));
 
-    new JoystickButton(operatorController, XboxController.Button.kB.value)
+
+    new JoystickButton(driveController, XboxController.Button.kB.value)
         .whenHeld(new AlignToTarget(drivetrain, camera));
   }
 
