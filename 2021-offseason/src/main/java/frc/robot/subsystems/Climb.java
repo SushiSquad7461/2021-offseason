@@ -16,22 +16,16 @@ public class Climb extends SubsystemBase {
     winch_right = new CANSparkMax(Constants.kClimb.WINCH_RIGHT, Constants.kClimb.MOTOR_TYPE);
     winch_left = new CANSparkMax(Constants.kClimb.WINCH_LEFT, Constants.kClimb.MOTOR_TYPE);
     
-    winch_left.restoreFactoryDefaults();
-    winch_right.restoreFactoryDefaults();
-
-    winch_left.setInverted(true);
-    winch_right.setInverted(false);
-
-    winch_left.setOpenLoopRampRate(Constants.kClimb.OPEN_LOOP_RAMP);
-    winch_right.setOpenLoopRampRate(Constants.kClimb.OPEN_LOOP_RAMP);
-
-    winch_left.setSmartCurrentLimit(Constants.kClimb.CURRENT_LIMIT);
-    winch_right.setSmartCurrentLimit(Constants.kClimb.CURRENT_LIMIT);
-  
-    winch_left.burnFlash();
-    winch_right.burnFlash();
+    initializeMotor(winch_left, true);
+    initializeMotor(winch_right, false);
   }
-
+  public void initializeMotor(CANSparkMax motor, boolean inverted) {
+    motor.restoreFactoryDefaults();
+    motor.setInverted(inverted);
+    motor.setOpenLoopRampRate(Constants.kClimb.OPEN_LOOP_RAMP);
+    motor.setSmartCurrentLimit(Constants.kClimb.CURRENT_LIMIT);
+    motor.burnFlash();
+  }
   public void fastClimbForward() {
     //SmartDashboard.putBoolean("running climb", true);
     winch_left.set(-Constants.kClimb.MAX_SPEED);
